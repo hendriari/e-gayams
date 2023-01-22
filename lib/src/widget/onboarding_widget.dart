@@ -14,7 +14,7 @@ Widget onboardingWidget({
         height: AdaptSize.screenWidth / 1000 * 800,
       ),
       SizedBox(
-        height: AdaptSize.pixel28,
+        height: AdaptSize.pixel36,
       ),
       Text(
         title,
@@ -29,6 +29,7 @@ Widget onboardingWidget({
             .textTheme
             .bodyText1!
             .copyWith(fontSize: AdaptSize.pixel14),
+        textAlign: TextAlign.center,
       ),
     ],
   );

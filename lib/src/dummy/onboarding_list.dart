@@ -3,17 +3,17 @@ import 'package:kkn_siwalan/src/dummy/onboarding_model.dart';
 List<OnBoardingModel> onBoardingList = [
   OnBoardingModel(
     image: 'assets/image/onboarding1.png',
-    title: 'Testing 1',
-    subtitle: 'Makan',
+    title: 'Penunjang UMKM Siwalan',
+    subtitle: 'Ragam UMKM di Kelurahan Siwalan',
   ),
   OnBoardingModel(
-    image: 'assets/image/onboarding1.png',
-    title: 'Testing 2',
+    image: 'assets/image/onboarding2.png',
+    title: 'Memperluas',
     subtitle: 'Minum',
   ),
   OnBoardingModel(
-    image: 'assets/image/onboarding1.png',
-    title: 'Testing 3',
+    image: 'assets/image/onboarding3.png',
+    title: 'Order Lebih Mudah',
     subtitle: 'Tidur',
   ),
 ];
