@@ -38,4 +38,9 @@ class NavigasiViewModel {
       ),
     );
   }
+
+  /// common naviagsi back
+  void navigasiBack(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

@@ -73,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               SizedBox(
-                height: AdaptSize.pixel24,
+                height: AdaptSize.pixel28,
               ),
 
               /// username
@@ -82,12 +82,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textEditingController: _username,
                 label: 'Username',
                 hint: 'Jhon Doe',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 formFieldValidator: (value) =>
                     FormValidators.usernameValidate(value: _username.text),
               ),
 
               SizedBox(
-                height: AdaptSize.pixel16,
+                height: AdaptSize.pixel14,
               ),
 
               /// email
@@ -97,28 +98,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textInputType: TextInputType.emailAddress,
                 label: 'Email',
                 hint: 'example@gmail.com',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 formFieldValidator: (value) => FormValidators.commonValidate(
                     value: _email.text, values: 'Email'),
               ),
 
               SizedBox(
-                height: AdaptSize.pixel16,
-              ),
-
-              /// alamat
-              formFieldWidget(
-                context: context,
-                obscureText: false,
-                textEditingController: _alamat,
-                textInputType: TextInputType.streetAddress,
-                label: 'Alamat',
-                hint: 'Jl. Jalan',
-                formFieldValidator: (value) => FormValidators.commonValidate(
-                    value: _alamat.text, values: 'Alamat'),
-              ),
-
-              SizedBox(
-                height: AdaptSize.pixel16,
+                height: AdaptSize.pixel14,
               ),
 
               Text(
@@ -176,7 +162,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               SizedBox(
-                height: AdaptSize.pixel16,
+                height: AdaptSize.pixel14,
+              ),
+
+              /// alamat
+              formFieldWidget(
+                context: context,
+                obscureText: false,
+                textEditingController: _alamat,
+                textInputType: TextInputType.streetAddress,
+                label: 'Alamat',
+                hint: 'Jl. Jalan',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                formFieldValidator: (value) => FormValidators.commonValidate(
+                    value: _alamat.text, values: 'Alamat'),
+              ),
+
+              SizedBox(
+                height: AdaptSize.pixel14,
               ),
 
               /// rt rw
@@ -190,6 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.number,
                     label: 'RT',
                     hint: 'RT 01',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     formFieldValidator: (value) => FormValidators.rtrwValidate(
                         rukun: _rt.text, value: 'RT', values: 'RT'),
                   ),
@@ -200,6 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textInputType: TextInputType.number,
                     label: 'RW',
                     hint: 'RW 01',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     formFieldValidator: (value) => FormValidators.rtrwValidate(
                         rukun: _rw.text, value: 'RW', values: 'RW'),
                   ),
@@ -207,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               SizedBox(
-                height: AdaptSize.pixel16,
+                height: AdaptSize.pixel14,
               ),
 
               /// password
@@ -218,6 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textEditingController: _password,
                 label: 'Password',
                 hint: '*********',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 formFieldValidator: (value) => FormValidators.passwordValidate(
                   password: _password.text,
                   confirmPassword: _password.text,
@@ -229,13 +235,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   splashRadius: .1,
                   icon: Icon(
                     Icons.remove_red_eye_outlined,
-                    color: MyColor.neutral700,
+                    color: MyColor.warning600,
                   ),
                 ),
               ),
 
               SizedBox(
-                height: AdaptSize.pixel16,
+                height: AdaptSize.pixel14,
               ),
 
               /// confrim password
@@ -246,6 +252,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 textEditingController: _confirmPassword,
                 label: 'Confirm Password',
                 hint: '********',
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 formFieldValidator: (value) => FormValidators.passwordValidate(
                   confirmPassword: _confirmPassword.text,
                   password: _password.text,
@@ -257,7 +264,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   splashRadius: .1,
                   icon: Icon(
                     Icons.remove_red_eye_outlined,
-                    color: MyColor.neutral700,
+                    color: MyColor.warning600,
                   ),
                 ),
               ),
@@ -293,11 +300,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               /// login button
               Center(
                 child: richTextWidget(
-                    text1: 'Sudah Punya Akun ?',
-                    textStyle1: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .copyWith(fontSize: AdaptSize.pixel12),
+                    text1: 'Sudah Punya Akun?',
+                    textStyle1: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontSize: AdaptSize.pixel12, color: MyColor.neutral600),
                     text2: ' Login',
                     textStyle2: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: AdaptSize.pixel12,

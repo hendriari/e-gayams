@@ -5,10 +5,11 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 Widget formFieldWidget({
   required BuildContext context,
   required TextEditingController textEditingController,
-  bool? obscureText,
-  Widget? suffix,
   required String hint,
   required String label,
+  bool? obscureText,
+  Widget? suffix,
+  AutovalidateMode? autovalidateMode,
   TextInputType? textInputType,
   FormFieldValidator<String>? formFieldValidator,
   double? height,
@@ -20,6 +21,7 @@ Widget formFieldWidget({
     width: width,
     child: TextFormField(
       controller: textEditingController,
+      autovalidateMode: autovalidateMode,
       obscureText: obscureText ?? false,
       keyboardType: textInputType,
       cursorColor: MyColor.neutral600,
@@ -27,7 +29,7 @@ Widget formFieldWidget({
       validator: formFieldValidator,
       decoration: InputDecoration(
         filled: true,
-        fillColor: MyColor.neutral900,
+        fillColor: MyColor.neutral800,
         suffixIcon: suffix,
         hintText: hint,
         hintStyle: Theme.of(context)
