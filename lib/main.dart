@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kkn_siwalan/firebase_options.dart';
-import 'package:kkn_siwalan/src/screen/splashscreen1.dart';
+import 'package:kkn_siwalan/src/screen/landing/splashscreen1.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/text_theme.dart';
+import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/menu_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/onboarding_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => OnBoardingViewModel()),
+        ChangeNotifierProvider(create: (_) => LoginRegisterViewModel()),
+        ChangeNotifierProvider(create: (_) => MenuViewModel()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -31,6 +35,7 @@ class MyApp extends StatelessWidget {
           colorScheme: Theme.of(context)
               .colorScheme
               .copyWith(secondary: MyColor.neutral900),
+          scaffoldBackgroundColor: MyColor.neutral900,
           textTheme: myTextTheme,
         ),
         debugShowCheckedModeBanner: false,

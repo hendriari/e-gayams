@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
-import 'package:kkn_siwalan/src/screen/onboarding_screen.dart';
+import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 
 class NavigasiViewModel {
   /// navigate to onboarding
@@ -42,5 +44,29 @@ class NavigasiViewModel {
   /// common naviagsi back
   void navigasiBack(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  /// navigasi signin
+  void navigasiMenuScreen(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        CupertinoModalPopupRoute(
+          builder: (context) => const MenuScreen(),
+        ),
+        (route) => false);
+  }
+
+  /// navigasi logout
+  void navigasiLogout(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondAnimation) =>
+              const LoginScreen(),
+          transitionsBuilder: (context, animation, secondAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
+        (route) => false);
   }
 }

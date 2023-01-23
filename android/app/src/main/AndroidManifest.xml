@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kkn_siwalan">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
-        android:label="kkn_siwalan"
+        android:label="e-siwalan"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

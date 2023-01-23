@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/form_validators.dart';
+import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/rich_text_widget.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -79,28 +81,39 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               /// password
-              formFieldWidget(
-                context: context,
-                textEditingController: _password,
-                hint: 'Password',
-                label: 'Password',
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                formFieldValidator: (value) => FormValidators.passwordValidate(
-                    password: _password.text,
-                    confirmPassword: _password.text,
-                    value: 'Password'),
-                suffix: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.remove_red_eye_outlined),
-                  padding: EdgeInsets.zero,
-                  color: MyColor.warning600,
-                ),
-              ),
+              Consumer<LoginRegisterViewModel>(
+                  builder: (context, value, child) {
+                return formFieldWidget(
+                  context: context,
+                  textEditingController: _password,
+                  hint: 'Password',
+                  label: 'Password',
+                  obscureText: value.visiblePasswordLogin,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  formFieldValidator: (value) =>
+                      FormValidators.passwordValidate(
+                          password: _password.text,
+                          confirmPassword: _password.text,
+                          value: 'Password'),
+                  suffix: IconButton(
+                    onPressed: () {
+                      value.visibleLogin();
+                    },
+                    splashRadius: .1,
+                    icon: value.visiblePasswordLogin
+                        ? const Icon(Icons.remove_red_eye_outlined)
+                        : const Icon(Icons.visibility_off_outlined),
+                    padding: EdgeInsets.zero,
+                    color: MyColor.warning600,
+                  ),
+                );
+              }),
 
               SizedBox(
                 height: AdaptSize.pixel16,
               ),
 
+              /// reset password
               Align(
                 alignment: Alignment.centerRight,
                 child: richTextWidget(
@@ -118,24 +131,36 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               /// button login
-              buttonWidget(
-                sizeWidth: double.infinity,
-                sizeHeight: AdaptSize.screenWidth / 1000 * 150,
-                backgroundColor: MyColor.warning600,
-                foregroundColor: MyColor.neutral900,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    debugPrint(_email.text);
-                  }
-                },
-                child: Text(
-                  'Login',
-                  style: Theme.of(context).textTheme.button!.copyWith(
-                        fontSize: AdaptSize.pixel16,
-                        color: MyColor.neutral900,
-                      ),
-                ),
-              ),
+              Consumer<LoginRegisterViewModel>(
+                  builder: (context, value, child) {
+                return buttonWidget(
+                  sizeWidth: double.infinity,
+                  sizeHeight: AdaptSize.screenWidth / 1000 * 150,
+                  backgroundColor: MyColor.warning600,
+                  foregroundColor: MyColor.neutral900,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      debugPrint(_email.text);
+                      value.userLogin(
+                        context: context,
+                        email: _email.text,
+                        password: _password.text,
+                      );
+                    }
+                  },
+                  child: value.loginLoading
+                      ? CircularProgressIndicator(
+                          color: MyColor.neutral900,
+                        )
+                      : Text(
+                          'Login',
+                          style: Theme.of(context).textTheme.button!.copyWith(
+                                fontSize: AdaptSize.pixel16,
+                                color: MyColor.neutral900,
+                              ),
+                        ),
+                );
+              }),
 
               const Spacer(),
 

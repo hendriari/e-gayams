@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/form_validators.dart';
+import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/rich_text_widget.dart';
 import 'package:kkn_siwalan/src/widget/string_radio_button.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -216,82 +218,114 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               /// password
-              formFieldWidget(
-                context: context,
-                obscureText: true,
-                textInputType: TextInputType.visiblePassword,
-                textEditingController: _password,
-                label: 'Password',
-                hint: '*********',
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                formFieldValidator: (value) => FormValidators.passwordValidate(
-                  password: _password.text,
-                  confirmPassword: _password.text,
-                  value: "Password",
-                ),
-                suffix: IconButton(
-                  onPressed: () {},
-                  padding: EdgeInsets.zero,
-                  splashRadius: .1,
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: MyColor.warning600,
+              Consumer<LoginRegisterViewModel>(
+                  builder: (context, value, child) {
+                return formFieldWidget(
+                  context: context,
+                  obscureText: value.visiblePasswordRegister,
+                  textInputType: TextInputType.visiblePassword,
+                  textEditingController: _password,
+                  label: 'Password',
+                  hint: '*********',
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  formFieldValidator: (value) =>
+                      FormValidators.passwordValidate(
+                    password: _password.text,
+                    confirmPassword: _password.text,
+                    value: "Password",
                   ),
-                ),
-              ),
+                  suffix: IconButton(
+                    onPressed: () {
+                      value.visibleRegister();
+                    },
+                    padding: EdgeInsets.zero,
+                    splashRadius: .1,
+                    icon: Icon(
+                      value.visiblePasswordRegister
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.visibility_off_outlined,
+                      color: MyColor.warning600,
+                    ),
+                  ),
+                );
+              }),
 
               SizedBox(
                 height: AdaptSize.pixel14,
               ),
 
               /// confrim password
-              formFieldWidget(
-                context: context,
-                obscureText: true,
-                textInputType: TextInputType.visiblePassword,
-                textEditingController: _confirmPassword,
-                label: 'Confirm Password',
-                hint: '********',
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                formFieldValidator: (value) => FormValidators.passwordValidate(
-                  confirmPassword: _confirmPassword.text,
-                  password: _password.text,
-                  value: "Confirm Password",
-                ),
-                suffix: IconButton(
-                  onPressed: () {},
-                  padding: EdgeInsets.zero,
-                  splashRadius: .1,
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
-                    color: MyColor.warning600,
+              Consumer<LoginRegisterViewModel>(
+                  builder: (context, value, child) {
+                return formFieldWidget(
+                  context: context,
+                  obscureText: value.visibleConfirmPassword,
+                  textInputType: TextInputType.visiblePassword,
+                  textEditingController: _confirmPassword,
+                  label: 'Confirm Password',
+                  hint: '********',
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  formFieldValidator: (value) =>
+                      FormValidators.passwordValidate(
+                    confirmPassword: _confirmPassword.text,
+                    password: _password.text,
+                    value: "Confirm Password",
                   ),
-                ),
-              ),
+                  suffix: IconButton(
+                    onPressed: () {
+                      value.visibleConfrimRegister();
+                    },
+                    padding: EdgeInsets.zero,
+                    splashRadius: .1,
+                    icon: Icon(
+                      value.visibleConfirmPassword
+                          ? Icons.remove_red_eye_outlined
+                          : Icons.visibility_off_outlined,
+                      color: MyColor.warning600,
+                    ),
+                  ),
+                );
+              }),
 
               SizedBox(
                 height: AdaptSize.pixel28,
               ),
 
               /// button daftar
-              buttonWidget(
-                sizeWidth: double.infinity,
-                sizeHeight: AdaptSize.screenWidth / 1000 * 150,
-                backgroundColor: MyColor.warning600,
-                foregroundColor: MyColor.neutral900,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    debugPrint(_username.text);
-                  }
-                },
-                child: Text(
-                  'Daftar',
-                  style: Theme.of(context).textTheme.button!.copyWith(
-                        color: MyColor.neutral900,
-                        fontSize: AdaptSize.pixel16,
-                      ),
-                ),
-              ),
+              Consumer<LoginRegisterViewModel>(
+                  builder: (context, value, child) {
+                return buttonWidget(
+                  sizeWidth: double.infinity,
+                  sizeHeight: AdaptSize.screenWidth / 1000 * 150,
+                  backgroundColor: MyColor.warning600,
+                  foregroundColor: MyColor.neutral900,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      value.createUsers(
+                        context: context,
+                        email: _email.text,
+                        password: _password.text,
+                        username: _username.text,
+                        jenisKelamin: _gender.value,
+                        alamat: _alamat.text,
+                        rt: _rt.text,
+                        rw: _rw.text,
+                      );
+                    }
+                  },
+                  child: value.buttonRegisterLoading
+                      ? CircularProgressIndicator(
+                          color: MyColor.neutral900,
+                        )
+                      : Text(
+                          'Daftar',
+                          style: Theme.of(context).textTheme.button!.copyWith(
+                                color: MyColor.neutral900,
+                                fontSize: AdaptSize.pixel16,
+                              ),
+                        ),
+                );
+              }),
 
               SizedBox(
                 height: AdaptSize.pixel75,
@@ -300,7 +334,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               /// login button
               Center(
                 child: richTextWidget(
-                    text1: 'Sudah Punya Akun?',
+                    text1: 'Sudah punya akun?',
                     textStyle1: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: AdaptSize.pixel12, color: MyColor.neutral600),
                     text2: ' Login',
