@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/screen/menu/home_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/profile_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/account/profile_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/wishlist_screen.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';

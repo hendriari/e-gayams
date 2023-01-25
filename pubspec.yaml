@@ -45,6 +45,9 @@ dependencies:
   cloud_firestore: ^4.3.1
   firebase_storage: ^11.0.10
   email_validator: ^2.1.17
+  faker: ^2.1.0
+  intl: any
+
 
 
 dev_dependencies:
@@ -57,6 +60,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

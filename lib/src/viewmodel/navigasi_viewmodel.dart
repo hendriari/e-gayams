@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/home_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 
 class NavigasiViewModel {
@@ -68,5 +67,18 @@ class NavigasiViewModel {
           ),
         ),
         (route) => false);
+  }
+
+  /// common navigasi account menu
+  void navigasiAccountMenu({
+    required BuildContext context,
+    required Widget route,
+  }) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => route,
+      ),
+    );
   }
 }

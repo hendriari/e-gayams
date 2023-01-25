@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textEditingController: _email,
                   hint: 'example@gmail.com',
                   label: 'Email',
+                  textInputType: TextInputType.emailAddress,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   formFieldValidator: (value) =>
                       value == null || !EmailValidator.validate(value)

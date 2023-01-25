@@ -65,4 +65,15 @@ class FirebaseAuthServices {
       email: email,
     );
   }
+
+  /// get user detail
+  Future<UserModel> getUserDetail() async {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+
+    DocumentSnapshot documentSnapshot =
+    await _firestore.collection('newUser').doc(currentUser.uid).get();
+
+    return UserModel.fromSnap(documentSnapshot);
+  }
+
 }

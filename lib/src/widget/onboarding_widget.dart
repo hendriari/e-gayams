@@ -14,7 +14,7 @@ Widget onboardingWidget({
         height: AdaptSize.screenWidth / 1000 * 800,
       ),
       SizedBox(
-        height: AdaptSize.pixel36,
+        height: AdaptSize.pixel40 + AdaptSize.pixel10,
       ),
       Text(
         title,

@@ -2,35 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 
-Widget formFieldWidget({
+Widget readOnlyForm({
   required BuildContext context,
   required String hint,
-  required String label,
   Function()? onTap,
-  TextEditingController? textEditingController,
-  bool? obscureText,
   bool? readOnly,
   Widget? suffix,
   Widget? prefixIcon,
-  AutovalidateMode? autovalidateMode,
-  TextInputType? textInputType,
-  FormFieldValidator<String>? formFieldValidator,
   double? height,
   double? width,
-  int? maxLines,
 }) {
   return SizedBox(
     height: height,
     width: width,
     child: TextFormField(
-      controller: textEditingController,
-      autovalidateMode: autovalidateMode,
-      obscureText: obscureText ?? false,
-      keyboardType: textInputType,
       cursorColor: MyColor.neutral600,
-      maxLines: maxLines ?? 1,
-      readOnly: readOnly ?? false,
-      validator: formFieldValidator,
+      readOnly: true,
       onTap: onTap,
       decoration: InputDecoration(
         filled: true,
@@ -39,11 +26,6 @@ Widget formFieldWidget({
         prefixIcon: prefixIcon,
         hintText: hint,
         hintStyle: Theme.of(context)
-            .textTheme
-            .bodyText1!
-            .copyWith(color: MyColor.neutral600, fontSize: AdaptSize.pixel14),
-        label: Text(label),
-        labelStyle: Theme.of(context)
             .textTheme
             .bodyText1!
             .copyWith(color: MyColor.neutral600, fontSize: AdaptSize.pixel14),

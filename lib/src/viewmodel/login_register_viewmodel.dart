@@ -69,7 +69,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         height: AdaptSize.screenWidth / 1000 * 500,
         width: AdaptSize.screenWidth / 1000 * 500,
         description: 'Register berhasil !',
-        image: 'smile',
+        image: 'success',
       );
       Future.delayed(const Duration(seconds: 2), () {
         NavigasiViewModel().navigateToLogin(context);
@@ -80,7 +80,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         height: AdaptSize.screenWidth / 1000 * 650,
         width: AdaptSize.screenWidth / 1000 * 800,
         description: e.toString(),
-        image: 'crying',
+        image: 'error',
       );
       _buttonRegisterLoading = false;
       notifyListeners();
@@ -107,7 +107,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         height: AdaptSize.screenWidth / 1000 * 500,
         width: AdaptSize.screenWidth / 1000 * 500,
         description: 'Login berhasil',
-        image: 'smile',
+        image: 'success',
       );
       Future.delayed(const Duration(seconds: 2), () {
         NavigasiViewModel().navigasiMenuScreen(context);
@@ -118,7 +118,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         height: AdaptSize.screenWidth / 1000 * 650,
         width: AdaptSize.screenWidth / 1000 * 800,
         description: e.toString(),
-        image: 'crying',
+        image: 'error',
       );
       _loginLoading = false;
       notifyListeners();
