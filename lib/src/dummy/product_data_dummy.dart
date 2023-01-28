@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/model/product_model.dart';
@@ -24,9 +26,34 @@ class ProductDummyData with ChangeNotifier {
           ],
           productDescrtiption: _faker.lorem.sentence(),
           productLocation: _faker.address.country() + _faker.address.city(),
+          productBenefit: [
+            _faker.lorem.sentence(),
+            _faker.lorem.sentence(),
+            _faker.lorem.sentence(),
+            _faker.lorem.sentence(),
+          ],
+          productPrice: Random().nextInt(100000),
+          productCategory: [
+            _faker.food.cuisine(),
+            _faker.food.cuisine(),
+            _faker.food.cuisine(),
+          ],
         ),
       );
     }
     _productModel = dataInstance;
+  }
+
+  /// filter dummy by id
+  ProductModel? filterProductById({
+    required String productID,
+  }) {
+    ProductModel? product;
+    for (var element in productModel) {
+      if (element.productId == productID) {
+        product = element;
+      }
+    }
+    return product;
   }
 }

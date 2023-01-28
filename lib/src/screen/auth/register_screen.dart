@@ -320,7 +320,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       : Text(
                           'Daftar',
                           style: Theme.of(context).textTheme.button!.copyWith(
-                                color: MyColor.neutral900,
                                 fontSize: AdaptSize.pixel16,
                               ),
                         ),

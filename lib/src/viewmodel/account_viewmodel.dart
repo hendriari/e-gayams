@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/services/firestore.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/widget/response_dialog.dart';
@@ -66,6 +67,32 @@ class AccountViewModel with ChangeNotifier {
         image: 'cancel.png',
         description: e.toString(),
       );
+    }
+  }
+
+  void changePassword({
+    required BuildContext context,
+    required String email,
+  }) {
+    _saveLoading = !_saveLoading;
+    notifyListeners();
+    try {
+      FirebaseAuthServices().changePassword(email: email);
+      _saveLoading = false;
+      ResponseDialog.responseInfoDialog(
+        context: context,
+        image: 'success',
+        description: 'Cek email sekarang !',
+      );
+      notifyListeners();
+    } on FirebaseException catch (e) {
+      ResponseDialog.responseInfoDialog(
+        context: context,
+        image: 'error',
+        description: e.toString(),
+      );
+      _saveLoading = false;
+      notifyListeners();
     }
   }
 }

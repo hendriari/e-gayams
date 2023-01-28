@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 
 class NavigasiViewModel {
@@ -78,6 +79,18 @@ class NavigasiViewModel {
       context,
       CupertinoPageRoute(
         builder: (context) => route,
+      ),
+    );
+  }
+
+  /// forgot password
+  void forgotPassword (BuildContext context){
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => const ChangePasswordScreen(
+          titleAppbar: 'Forgot Password',
+        ),
       ),
     );
   }

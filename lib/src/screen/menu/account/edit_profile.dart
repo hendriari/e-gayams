@@ -3,6 +3,7 @@ import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/form_validators.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
@@ -24,18 +25,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final ValueNotifier<String> _gender = ValueNotifier<String>('female');
   final GlobalKey<FormState> _formKey = GlobalKey();
 
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserViewModel>().refreshUsers();
+  }
 
   @override
   void dispose() {
     super.dispose();
     _usernameController.dispose();
     _alamatController.dispose();
-    _rwController.dispose();
+    _rtController.dispose();
     _rwController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = Provider.of<UserViewModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: defaultAppBar(
@@ -69,11 +76,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 context: context,
                 textEditingController: _usernameController,
                 label: 'Username',
-                hint: 'Jhon Doe',
+                hint: profileProvider.usermodel!.username,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                formFieldValidator: (value) =>
-                    FormValidators.usernameValidate(
-                        value: _usernameController.text),
+                formFieldValidator: (value) => FormValidators.usernameValidate(
+                    value: _usernameController.text),
               ),
 
               SizedBox(
@@ -145,11 +151,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 textEditingController: _alamatController,
                 textInputType: TextInputType.streetAddress,
                 label: 'Alamat',
-                hint: 'Jl. Jalan',
+                hint: profileProvider.usermodel!.alamat,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                formFieldValidator: (value) =>
-                    FormValidators.commonValidate(
-                        value: _alamatController.text, values: 'Alamat'),
+                formFieldValidator: (value) => FormValidators.commonValidate(
+                    value: _alamatController.text, values: 'Alamat'),
               ),
 
               SizedBox(
@@ -166,13 +171,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     textEditingController: _rtController,
                     textInputType: TextInputType.number,
                     label: 'RT',
-                    hint: 'rt 01',
+                    hint: profileProvider.usermodel!.rt,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    formFieldValidator: (value) =>
-                        FormValidators.rtrwValidate(
-                            rukun: _rtController.text,
-                            value: 'RT',
-                            values: 'RT'),
+                    formFieldValidator: (value) => FormValidators.rtrwValidate(
+                        rukun: _rtController.text, value: 'RT', values: 'RT'),
                   ),
                   formFieldWidget(
                     width: AdaptSize.screenWidth / 2.15,
@@ -180,13 +182,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     textEditingController: _rwController,
                     textInputType: TextInputType.number,
                     label: 'RW',
-                    hint: 'rw 01',
+                    hint: profileProvider.usermodel!.rw,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    formFieldValidator: (value) =>
-                        FormValidators.rtrwValidate(
-                            rukun: _rwController.text,
-                            value: 'RW',
-                            values: 'RW'),
+                    formFieldValidator: (value) => FormValidators.rtrwValidate(
+                        rukun: _rwController.text, value: 'RW', values: 'RW'),
                   ),
                 ],
               ),
@@ -214,30 +213,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         rt: _rtController.text,
                         rw: _rwController.text,
                       );
-                      // value.createUsers(
-                      //   context: context,
-                      //   email: _email.text,
-                      //   password: _password.text,
-                      //   username: _username.text,
-                      //   jenisKelamin: _gender.value,
-                      //   alamat: _alamat.text,
-                      //   rt: _rt.text,
-                      //   rw: _rw.text,
-                      // );
                     }
                   },
                   child: value.saveLoading
                       ? CircularProgressIndicator(
-                    color: MyColor.neutral900,
-                  )
+                          color: MyColor.neutral900,
+                        )
                       : Text(
-                    'Simpan',
-                    style:
-                    Theme.of(context).textTheme.button!.copyWith(
-                      color: MyColor.neutral900,
-                      fontSize: AdaptSize.pixel16,
-                    ),
-                  ),
+                          'Simpan',
+                          style: Theme.of(context).textTheme.button!.copyWith(
+                                fontSize: AdaptSize.pixel16,
+                              ),
+                        ),
                 );
               }),
 

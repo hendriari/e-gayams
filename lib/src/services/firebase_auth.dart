@@ -71,9 +71,8 @@ class FirebaseAuthServices {
     User currentUser = FirebaseAuth.instance.currentUser!;
 
     DocumentSnapshot documentSnapshot =
-    await _firestore.collection('newUser').doc(currentUser.uid).get();
+        await _firestore.collection('newUser').doc(currentUser.uid).get();
 
     return UserModel.fromSnap(documentSnapshot);
   }
-
 }

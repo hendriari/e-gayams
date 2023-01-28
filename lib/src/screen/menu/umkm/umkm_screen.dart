@@ -2,25 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/dummy/product_data_dummy.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/profile_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/umkm/detail_product_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/product_card.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class UmkmScreen extends StatefulWidget {
+  const UmkmScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UmkmScreen> createState() => _UmkmScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _UmkmScreenState extends State<UmkmScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
+    // context.read<UserViewModel>().refreshUsers();
     context.read<ProductDummyData>().addDataDummy(11);
   }
 
@@ -38,32 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// name
-            Row(
-              children: [
-                Text(
-                  'Hello ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6!
-                      .copyWith(fontSize: AdaptSize.pixel20),
-                ),
-                Consumer<UserViewModel>(builder: (context, value, child) {
-                  return Text(value.usermodel?.username ?? 'errors',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .copyWith(fontSize: AdaptSize.pixel20));
-                })
-              ],
-            ),
-
             Text(
               'Cari produk di Kelurahan Siwalan?',
               style: Theme.of(context)
                   .textTheme
                   .headline6!
-                  .copyWith(fontSize: AdaptSize.pixel14),
+                  .copyWith(fontSize: AdaptSize.pixel18),
             ),
 
             SizedBox(
@@ -93,7 +73,28 @@ class _HomeScreenState extends State<HomeScreen> {
               height: AdaptSize.pixel16,
             ),
 
-            boldTitleText(context: context, text: 'UMKM RW 01'),
+            /// bold text rw 1
+            Row(
+              children: [
+                boldTitleText(
+                  context: context,
+                  text: 'UMKM RW 01',
+                ),
+                const Spacer(),
+                InkWell(
+                  splashColor: MyColor.neutral900,
+                  onTap: () {},
+                  child: boldTitleText(
+                    context: context,
+                    text: 'All',
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: AdaptSize.pixel14,
+                ),
+              ],
+            ),
 
             Consumer<ProductDummyData>(builder: (context, value, child) {
               return SizedBox(
@@ -110,10 +111,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, index) {
                         return productCard(
                           context: context,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => DetailProductScreen(
+                                  id: value.productModel[index].productId,
+                                ),
+                              ),
+                            );
+                          },
                           itemCount: value.productModel.length,
                           image: value.productModel[index].productImage,
                           productName: value.productModel[index].productName,
                           location: value.productModel[index].productLocation,
+                          price: value.productModel[index].productPrice,
                         );
                       }),
                 ),
@@ -124,7 +136,28 @@ class _HomeScreenState extends State<HomeScreen> {
               height: AdaptSize.pixel16,
             ),
 
-            boldTitleText(context: context, text: 'UMKM RW 02'),
+            /// bold text rw 2
+            Row(
+              children: [
+                boldTitleText(
+                  context: context,
+                  text: 'UMKM RW 02',
+                ),
+                const Spacer(),
+                InkWell(
+                  splashColor: MyColor.neutral900,
+                  onTap: () {},
+                  child: boldTitleText(
+                    context: context,
+                    text: 'All',
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: AdaptSize.pixel14,
+                ),
+              ],
+            ),
 
             Consumer<ProductDummyData>(builder: (context, value, child) {
               return SizedBox(
@@ -145,6 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           image: value.productModel[index].productImage,
                           productName: value.productModel[index].productName,
                           location: value.productModel[index].productLocation,
+                          price: value.productModel[index].productPrice,
                         );
                       }),
                 ),
@@ -155,7 +189,28 @@ class _HomeScreenState extends State<HomeScreen> {
               height: AdaptSize.pixel16,
             ),
 
-            boldTitleText(context: context, text: 'UMKM RW 03'),
+            /// bold text rw 3
+            Row(
+              children: [
+                boldTitleText(
+                  context: context,
+                  text: 'UMKM RW 03',
+                ),
+                const Spacer(),
+                InkWell(
+                  splashColor: MyColor.neutral900,
+                  onTap: () {},
+                  child: boldTitleText(
+                    context: context,
+                    text: 'All',
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: AdaptSize.pixel14,
+                ),
+              ],
+            ),
 
             Consumer<ProductDummyData>(builder: (context, value, child) {
               return SizedBox(
@@ -176,6 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           image: value.productModel[index].productImage,
                           productName: value.productModel[index].productName,
                           location: value.productModel[index].productLocation,
+                          price: value.productModel[index].productPrice,
                         );
                       }),
                 ),
@@ -186,7 +242,29 @@ class _HomeScreenState extends State<HomeScreen> {
               height: AdaptSize.pixel16,
             ),
 
-            boldTitleText(context: context, text: 'UMKM RW 04'),
+            /// bold text rw 4
+            Row(
+              children: [
+                boldTitleText(
+                  context: context,
+                  text: 'UMKM RW 04',
+                ),
+                const Spacer(),
+                InkWell(
+                  splashColor: MyColor.neutral900,
+                  onTap: () {},
+                  child: boldTitleText(
+                    context: context,
+                    text: 'All',
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: AdaptSize.pixel14,
+                ),
+              ],
+            ),
+
             Consumer<ProductDummyData>(builder: (context, value, child) {
               return SizedBox(
                 height: AdaptSize.screenWidth / 1000 * 800,
@@ -206,6 +284,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           image: value.productModel[index].productImage,
                           productName: value.productModel[index].productName,
                           location: value.productModel[index].productLocation,
+                          price: value.productModel[index].productPrice,
                         );
                       }),
                 ),

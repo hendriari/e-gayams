@@ -124,7 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: AdaptSize.pixel10, color: MyColor.neutral600),
                     textStyle2: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: AdaptSize.pixel10, color: MyColor.warning600),
-                    recognizer2: TapGestureRecognizer()..onTap = () async {}),
+                    recognizer2: TapGestureRecognizer()
+                      ..onTap = () async {
+                        NavigasiViewModel().forgotPassword(context);
+                      }),
               ),
 
               SizedBox(
@@ -157,7 +160,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Login',
                           style: Theme.of(context).textTheme.button!.copyWith(
                                 fontSize: AdaptSize.pixel16,
-                                color: MyColor.neutral900,
                               ),
                         ),
                 );

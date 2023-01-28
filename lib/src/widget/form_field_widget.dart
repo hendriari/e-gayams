@@ -34,35 +34,35 @@ Widget formFieldWidget({
       onTap: onTap,
       decoration: InputDecoration(
         filled: true,
-        fillColor: MyColor.neutral800,
+        fillColor: MyColor.neutral700.withOpacity(.3),
         suffixIcon: suffix,
         prefixIcon: prefixIcon,
         hintText: hint,
         hintStyle: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: MyColor.neutral600, fontSize: AdaptSize.pixel14),
+            .copyWith(color: MyColor.neutral500, fontSize: AdaptSize.pixel14),
         label: Text(label),
         labelStyle: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: MyColor.neutral600, fontSize: AdaptSize.pixel14),
+            .copyWith(color: MyColor.neutral500, fontSize: AdaptSize.pixel14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         errorBorder: OutlineInputBorder(

@@ -55,9 +55,12 @@ class MenuScreen extends StatelessWidget {
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_filled),
                 label: 'Home',
+              ),BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_cart_outlined),
+                label: 'UMKM',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_outline),
+                icon: Icon(Icons.bookmarks_outlined),
                 label: 'Wishlist',
               ),
               BottomNavigationBarItem(
