@@ -8,6 +8,7 @@ class ProductModel {
   List productBenefit;
   int productPrice;
   List productCategory;
+  String productRW;
 
   ProductModel({
     required this.productId,
@@ -19,5 +20,6 @@ class ProductModel {
     required this.productBenefit,
     required this.productPrice,
     required this.productCategory,
+    required this.productRW,
   });
 }

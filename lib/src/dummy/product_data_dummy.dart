@@ -38,6 +38,7 @@ class ProductDummyData with ChangeNotifier {
             _faker.food.cuisine(),
             _faker.food.cuisine(),
           ],
+          productRW: Random().nextInt(4).toString(),
         ),
       );
     }

@@ -5,9 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:kkn_siwalan/src/dummy/product_data_dummy.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
+import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailProductScreen extends StatelessWidget {
   final String id;
@@ -23,6 +25,9 @@ class DetailProductScreen extends StatelessWidget {
         Provider.of<ProductDummyData>(context, listen: false).filterProductById(
       productID: id,
     );
+
+    final userData =
+        Provider.of<UserViewModel>(context, listen: false).usermodel;
     return Scaffold(
       body: Stack(
         children: [
@@ -193,7 +198,7 @@ class DetailProductScreen extends StatelessWidget {
                 /// product price
                 Text(
                   NumberFormat.currency(
-                          locale: 'id', symbol: 'Rp', decimalDigits: 0)
+                          locale: 'id', symbol: 'Rp ', decimalDigits: 0)
                       .format(productById.productPrice),
                   style: Theme.of(context)
                       .textTheme
@@ -281,7 +286,7 @@ class DetailProductScreen extends StatelessWidget {
                                         .copyWith(
                                           fontSize: AdaptSize.pixel14,
                                         ),
-                                    maxLines: 1,
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -415,28 +420,41 @@ class DetailProductScreen extends StatelessWidget {
                           ),
                     ),
                   ),
-                  Container(
-                    width: AdaptSize.screenWidth / 2,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: MyColor.neutral700,
-                          blurRadius: 3,
-                          blurStyle: BlurStyle.solid,
-                        )
-                      ],
+                  InkWell(
+                    splashColor: MyColor.neutral900,
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(10),
                     ),
-                    child: Text(
-                      'CHAT PENJUAL',
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                            color: MyColor.neutral900,
-                            fontSize: AdaptSize.pixel15,
+                    onTap: () {
+                      launchUrl(
+                          Uri.parse(
+                            'https://wa.me/+6285878376402?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${productById.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
                           ),
+                          mode: LaunchMode.externalApplication);
+                    },
+                    child: Container(
+                      width: AdaptSize.screenWidth / 2,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(10),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: MyColor.neutral700,
+                            blurRadius: 3,
+                            blurStyle: BlurStyle.solid,
+                          )
+                        ],
+                      ),
+                      child: Text(
+                        'CHAT PENJUAL',
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                              color: MyColor.neutral900,
+                              fontSize: AdaptSize.pixel15,
+                            ),
+                      ),
                     ),
                   ),
                 ],
