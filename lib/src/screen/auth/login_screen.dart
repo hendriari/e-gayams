@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                     recognizer2: TapGestureRecognizer()
                       ..onTap = () async {
-                        NavigasiViewModel().navigasiBack(context);
+                        NavigasiViewModel().navigateToRegister(context);
                       }),
               ),
             ],

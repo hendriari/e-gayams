@@ -4,8 +4,26 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/menu_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class MenuScreen extends StatelessWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+class MenuScreen extends StatefulWidget {
+  final int currentIndex;
+
+  const MenuScreen({
+    Key? key,
+    this.currentIndex = 0,
+  }) : super(key: key);
+
+  @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero,(){
+      context.read<MenuViewModel>().menuIndex(index: widget.currentIndex);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +73,8 @@ class MenuScreen extends StatelessWidget {
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_filled),
                 label: 'Home',
-              ),BottomNavigationBarItem(
+              ),
+              BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart_outlined),
                 label: 'UMKM',
               ),

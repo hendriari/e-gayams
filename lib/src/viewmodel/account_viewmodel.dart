@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/services/firestore.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
+import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 
 class AccountViewModel with ChangeNotifier {
@@ -58,6 +59,12 @@ class AccountViewModel with ChangeNotifier {
         image: 'oke.png',
         description: 'Update Berhasil',
       );
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        NavigasiViewModel().navigasiToMenuWithIndex(
+          context: context,
+          index: 3,
+        );
+      });
       notifyListeners();
     } on FirebaseException catch (e) {
       debugPrint(e.toString());

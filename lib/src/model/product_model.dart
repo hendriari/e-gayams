@@ -9,6 +9,7 @@ class ProductModel {
   int productPrice;
   List productCategory;
   String productRW;
+  String sellerName;
 
   ProductModel({
     required this.productId,
@@ -21,5 +22,6 @@ class ProductModel {
     required this.productPrice,
     required this.productCategory,
     required this.productRW,
+    required this.sellerName,
   });
 }

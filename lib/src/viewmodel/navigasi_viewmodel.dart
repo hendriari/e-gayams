@@ -108,4 +108,19 @@ class NavigasiViewModel {
       ),
     );
   }
+
+  /// back to menu with index
+  void navigasiToMenuWithIndex({
+    required BuildContext context,
+    required int index,
+  }) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+          builder: (context) => MenuScreen(
+            currentIndex: index,
+          ),
+        ),
+        (route) => false);
+  }
 }

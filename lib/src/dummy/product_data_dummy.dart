@@ -39,6 +39,7 @@ class ProductDummyData with ChangeNotifier {
             _faker.food.cuisine(),
           ],
           productRW: Random().nextInt(4).toString(),
+          sellerName: _faker.person.name(),
         ),
       );
     }

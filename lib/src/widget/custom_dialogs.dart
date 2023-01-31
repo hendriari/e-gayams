@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
@@ -16,7 +17,7 @@ class CustomDialogs {
     Function()? onPress1,
     Function()? onPress2,
   }) {
-    return showDialog(
+    return showCupertinoModalPopup(
         context: context,
         builder: (context) {
           return Center(

@@ -25,6 +25,13 @@ class MenuViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void menuIndex({
+    required int index,
+  }) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+
   Future<bool> onWillPop(BuildContext context) async {
     if (_currentIndex > 0) {
       _currentIndex = 0;
