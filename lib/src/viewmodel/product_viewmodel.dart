@@ -6,47 +6,20 @@ class ProductViewModel with ChangeNotifier {
   Stream<QuerySnapshot<Map<String, dynamic>>> productStream =
       FirebaseFirestore.instance.collection('productMitra').snapshots();
 
-  // Stream<QuerySnapshot<Map<String, dynamic>>> wishListStream =
-  //     FirebaseFirestore.instance.collection('productMitra').doc('productId').snapshots();
+  final List<UserWishlistModel> productWishlist = [];
 
-  // List<Map<String, dynamic>> productList = [];
-  //
-  // search({
-  //   required String query,
-  // }) async {
-  //   productList = await searchProduct(query: query);
-  //   notifyListeners();
-  // }
-  //
-  // Future<List<Map<String, dynamic>>> searchProduct({
-  //   required String query,
-  // }) async {
-  //   QuerySnapshot<Map<String, dynamic>> response = await FirebaseFirestore
-  //       .instance
-  //       .collection('productMitra')
-  //       .where('sellerName', isEqualTo: query)
-  //       .where('productLocation', isEqualTo: query)
-  //       .where('productRT', isEqualTo: query)
-  //       .where('productRW', isEqualTo: query)
-  //       .get();
-  //   return response.docs.map((e) => e.data()).toList();
-  // }
-  //
-  // List searchResult = [];
-  //
-  // void searchFromFirebase(String query) async {
-  //   FirebaseFirestore.instance
-  //       .collection('productMitra')
-  //       .where('productName', isEqualTo: query);
-  //   notifyListeners();
-  // }
-
-  final List<ProductModel> productWishlist = [];
-
-  void addProductWishList(ProductModel productModel) {
-    productWishlist.add(productModel);
+  void addProductWishList(UserWishlistModel wishlist) {
+    onTaped = true;
+    productWishlist.add(wishlist);
     notifyListeners();
   }
 
+  late bool onTaped = false;
 
+  /// delete list
+  void removeWhislistOffice(int index) {
+    onTaped = false;
+    productWishlist.removeAt(index);
+    notifyListeners();
+  }
 }

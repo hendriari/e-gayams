@@ -2,10 +2,12 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
+import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
@@ -37,7 +39,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   Widget build(BuildContext context) {
     final userData =
         Provider.of<UserViewModel>(context, listen: false).usermodel;
-    // final productData = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
@@ -117,85 +118,53 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           ),
                         ),
                       ),
+
                       /// wish list button
-                      // Positioned(
-                      //   right: AdaptSize.pixel8,
-                      //   top: AdaptSize.pixel2,
-                      //   child: IconButton(
-                      //     onPressed: () async {
-                      //       // final addWishListProduct = UserWishlistModel(
-                      //       //   productId: widget.product['productId'],
-                      //       //   uid: userData!.uid,
-                      //       //   productName: widget.product['productName'],
-                      //       //   productImage: widget.product['productImage'],
-                      //       //   productGridImage:
-                      //       //       widget.product['productGridImage'],
-                      //       //   productDescrtiption:
-                      //       //       widget.product['productDescription'],
-                      //       //   productLocation:
-                      //       //       widget.product['productLocation'],
-                      //       //   productBenefit: widget.product['productBenefit'],
-                      //       //   productPrice: widget.product['productPrice'],
-                      //       //   productCategory:
-                      //       //       widget.product['productCategory'],
-                      //       //   productRW: widget.product['productRW'],
-                      //       //   productRT: widget.product['productRT'],
-                      //       //   sellerName: widget.product['sellerName'],
-                      //       //   datePublished: widget.product['datePublished'],
-                      //       // );
-                      //       //
-                      //       // productData.addProductWishList(addWishListProduct);
-                      //       // productData.addProductWishList(
-                      //       // ProductModel(
-                      //       //   productId: widget.product['productId'],
-                      //       //   uid: userData!.uid,
-                      //       //   productName: widget.product['productName'],
-                      //       //   productImage: widget.product['productImage'],
-                      //       //   productGridImage:
-                      //       //       widget.product['productGridImage'],
-                      //       //   productDescrtiption:
-                      //       //       widget.product['productDescription'],
-                      //       //   productLocation:
-                      //       //       widget.product['productLocation'],
-                      //       //   productBenefit:
-                      //       //       widget.product['productBenefit'],
-                      //       //   productPrice: widget.product['productPrice'],
-                      //       //   productCategory:
-                      //       //       widget.product['productCategory'],
-                      //       //   productRW: widget.product['productRW'],
-                      //       //   productRT: widget.product['productRT'],
-                      //       //   sellerName: widget.product['sellerName'],
-                      //       //   datePublished: widget.product['datePublished'],
-                      //       // ),
-                      //       // );
-                      //
-                      //       // await FirestoreServices().addToWishList(
-                      //       //   productId: widget.product['productId'],
-                      //       //   uid: userData!.uid,
-                      //       //   productName: widget.product['productName'],
-                      //       //   productImage: widget.product['productImage'],
-                      //       //   productGridImage:
-                      //       //       widget.product['productGridImage'],
-                      //       //   productDescrtiption:
-                      //       //   widget.product['productDescription'],
-                      //       //   productLocation:
-                      //       //       widget.product['productLocation'],
-                      //       //   productBenefit: widget.product['productBenefit'],
-                      //       //   productPrice: widget.product['productPrice'],
-                      //       //   productCategory:
-                      //       //       widget.product['productCategory'],
-                      //       //   productRW: widget.product['productRW'],
-                      //       //   productRT: widget.product['productRT'],
-                      //       //   sellerName: widget.product['sellerName'],
-                      //       // );
-                      //     },
-                      //     icon: Icon(
-                      //       Icons.bookmark_outline,
-                      //       size: AdaptSize.pixel22,
-                      //       color: MyColor.neutral900,
-                      //     ),
-                      //   ),
-                      // ),
+                      Positioned(
+                        right: AdaptSize.pixel8,
+                        top: AdaptSize.pixel2,
+                        child: Consumer<ProductViewModel>(
+                            builder: (context, value, child) {
+                          return IconButton(
+                            onPressed: () async {
+                              var addWishListProduct = UserWishlistModel(
+                                productId: widget.product['productId'],
+                                uid: userData!.uid,
+                                productName: widget.product['productName'],
+                                productImage: widget.product['productImage'],
+                                productGridImage:
+                                    widget.product['productGridImage'],
+                                productDescrtiption:
+                                    widget.product['productDescription'],
+                                productLocation:
+                                    widget.product['productLocation'],
+                                productBenefit:
+                                    widget.product['productBenefit'],
+                                productPrice: widget.product['productPrice'],
+                                productCategory:
+                                    widget.product['productCategory'],
+                                productRW: widget.product['productRW'],
+                                productRT: widget.product['productRT'],
+                                sellerName: widget.product['sellerName'],
+                              );
+
+                              value.addProductWishList(addWishListProduct);
+                              debugPrint('test success');
+                            },
+                            icon: value.onTaped
+                                ? Icon(
+                                    Icons.bookmark,
+                                    size: AdaptSize.pixel22,
+                                    color: MyColor.warning500,
+                                  )
+                                : Icon(
+                                    Icons.bookmark_outline,
+                                    size: AdaptSize.pixel22,
+                                    color: MyColor.neutral900,
+                                  ),
+                          );
+                        }),
+                      ),
                     ],
                   ),
 

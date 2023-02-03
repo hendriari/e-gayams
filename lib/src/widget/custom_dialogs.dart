@@ -104,4 +104,86 @@ class CustomDialogs {
           );
         });
   }
+
+  /// dialog remove whitlist item
+  static Widget dialogRemoveWhislist({
+    context,
+    Function()? onPressed1,
+    Function()? onPressed2,
+  }) {
+    return Center(
+      child: Container(
+        height: 120,
+        width: double.infinity,
+        margin: EdgeInsets.all(AdaptSize.pixel10),
+        decoration: BoxDecoration(
+          color: MyColor.neutral900,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: AdaptSize.pixel6,
+                  top: AdaptSize.pixel6,
+                  left: AdaptSize.pixel8),
+              child: SizedBox(
+                width: AdaptSize.screenWidth / 1.15384615385,
+                child: Text(
+                  "Apa Anda yakin akan menghapus item dari Wishlist ?",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(fontSize: AdaptSize.pixel14),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: AdaptSize.pixel6, right: AdaptSize.pixel8),
+              child: SizedBox(
+                width: AdaptSize.screenWidth / 1.15385,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    buttonWidget(
+                      onPressed: onPressed1,
+                      sizeHeight: AdaptSize.screenWidth / 9,
+                      backgroundColor: MyColor.danger400,
+                      child: Text(
+                        'Cancel',
+                        style: Theme.of(context).textTheme.button!.copyWith(
+                              fontSize: AdaptSize.pixel12,
+                              color: MyColor.neutral900,
+                            ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: AdaptSize.pixel8,
+                    ),
+                    buttonWidget(
+                      onPressed: onPressed2,
+                      sizeHeight: AdaptSize.screenWidth / 9,
+                      backgroundColor: MyColor.neutral900,
+                      side: BorderSide(
+                        color: MyColor.neutral400,
+                        width: 1,
+                      ),
+                      child: Text(
+                        'Delete',
+                        style: Theme.of(context).textTheme.button!.copyWith(
+                              fontSize: AdaptSize.pixel12,
+                              color: MyColor.neutral400,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

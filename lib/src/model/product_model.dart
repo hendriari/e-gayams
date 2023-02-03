@@ -72,20 +72,34 @@ class ProductModel {
       };
 }
 
-class UserWishlistModel extends ProductModel {
-  UserWishlistModel(
-      {required super.uid,
-      required super.productId,
-      required super.productName,
-      required super.productImage,
-      required super.productGridImage,
-      required super.productDescrtiption,
-      required super.productLocation,
-      required super.productBenefit,
-      required super.productPrice,
-      required super.productCategory,
-      required super.productRW,
-      required super.productRT,
-      required super.sellerName,
-      required super.datePublished});
+class UserWishlistModel {
+  String uid;
+  String productId;
+  String productName;
+  String productImage;
+  List productGridImage;
+  String productDescrtiption;
+  String productLocation;
+  String productBenefit;
+  String productPrice;
+  List productCategory;
+  String productRW;
+  String productRT;
+  String sellerName;
+
+  UserWishlistModel({
+    required this.uid,
+    required this.productId,
+    required this.productName,
+    required this.productImage,
+    required this.productGridImage,
+    required this.productDescrtiption,
+    required this.productLocation,
+    required this.productBenefit,
+    required this.productPrice,
+    required this.productCategory,
+    required this.productRW,
+    required this.productRT,
+    required this.sellerName,
+  });
 }
