@@ -2,8 +2,6 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:kkn_siwalan/src/dummy/product_data_dummy.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
@@ -16,23 +14,30 @@ import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailProductScreen extends StatelessWidget {
-  final String id;
+class DetailProductScreen extends StatefulWidget {
+  final Map<String, dynamic> product;
 
   const DetailProductScreen({
     Key? key,
-    required this.id,
+    required this.product,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final productById =
-        Provider.of<ProductDummyData>(context, listen: false).filterProductById(
-      productID: id,
-    );
+  State<DetailProductScreen> createState() => _DetailProductScreenState();
+}
 
+class _DetailProductScreenState extends State<DetailProductScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserViewModel>().refreshUsers();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final userData =
         Provider.of<UserViewModel>(context, listen: false).usermodel;
+    // final productData = Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
@@ -52,7 +57,7 @@ class DetailProductScreen extends StatelessWidget {
                   Stack(
                     children: [
                       CachedNetworkImage(
-                        imageUrl: productById!.productImage,
+                        imageUrl: widget.product['productImage'],
                         imageBuilder: (context, imageProvider) => InkWell(
                           splashColor: MyColor.neutral900,
                           onTap: () {
@@ -86,7 +91,7 @@ class DetailProductScreen extends StatelessWidget {
                           child: cardShimmerWidget(
                             height: AdaptSize.screenWidth / 1000 * 800,
                             width: double.infinity,
-                            borderRadius: 10,
+                            borderRadius: 16,
                             imagesShimmer: 'logo_kkn_siwalan.png',
                           ),
                         ),
@@ -94,8 +99,8 @@ class DetailProductScreen extends StatelessWidget {
                             errorShimmerWidget(
                           height: AdaptSize.screenWidth / 1000 * 800,
                           width: double.infinity,
-                          borderRadius: 10,
-                          imagesShimmer: 'logo_kkn_siwalan.png',
+                          borderRadius: 16,
+                          imagesShimmer: 'error.png',
                         ),
                       ),
                       Positioned(
@@ -112,18 +117,85 @@ class DetailProductScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Positioned(
-                        right: AdaptSize.pixel8,
-                        top: AdaptSize.pixel2,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.bookmark_outline,
-                            size: AdaptSize.pixel22,
-                            color: MyColor.neutral900,
-                          ),
-                        ),
-                      ),
+                      /// wish list button
+                      // Positioned(
+                      //   right: AdaptSize.pixel8,
+                      //   top: AdaptSize.pixel2,
+                      //   child: IconButton(
+                      //     onPressed: () async {
+                      //       // final addWishListProduct = UserWishlistModel(
+                      //       //   productId: widget.product['productId'],
+                      //       //   uid: userData!.uid,
+                      //       //   productName: widget.product['productName'],
+                      //       //   productImage: widget.product['productImage'],
+                      //       //   productGridImage:
+                      //       //       widget.product['productGridImage'],
+                      //       //   productDescrtiption:
+                      //       //       widget.product['productDescription'],
+                      //       //   productLocation:
+                      //       //       widget.product['productLocation'],
+                      //       //   productBenefit: widget.product['productBenefit'],
+                      //       //   productPrice: widget.product['productPrice'],
+                      //       //   productCategory:
+                      //       //       widget.product['productCategory'],
+                      //       //   productRW: widget.product['productRW'],
+                      //       //   productRT: widget.product['productRT'],
+                      //       //   sellerName: widget.product['sellerName'],
+                      //       //   datePublished: widget.product['datePublished'],
+                      //       // );
+                      //       //
+                      //       // productData.addProductWishList(addWishListProduct);
+                      //       // productData.addProductWishList(
+                      //       // ProductModel(
+                      //       //   productId: widget.product['productId'],
+                      //       //   uid: userData!.uid,
+                      //       //   productName: widget.product['productName'],
+                      //       //   productImage: widget.product['productImage'],
+                      //       //   productGridImage:
+                      //       //       widget.product['productGridImage'],
+                      //       //   productDescrtiption:
+                      //       //       widget.product['productDescription'],
+                      //       //   productLocation:
+                      //       //       widget.product['productLocation'],
+                      //       //   productBenefit:
+                      //       //       widget.product['productBenefit'],
+                      //       //   productPrice: widget.product['productPrice'],
+                      //       //   productCategory:
+                      //       //       widget.product['productCategory'],
+                      //       //   productRW: widget.product['productRW'],
+                      //       //   productRT: widget.product['productRT'],
+                      //       //   sellerName: widget.product['sellerName'],
+                      //       //   datePublished: widget.product['datePublished'],
+                      //       // ),
+                      //       // );
+                      //
+                      //       // await FirestoreServices().addToWishList(
+                      //       //   productId: widget.product['productId'],
+                      //       //   uid: userData!.uid,
+                      //       //   productName: widget.product['productName'],
+                      //       //   productImage: widget.product['productImage'],
+                      //       //   productGridImage:
+                      //       //       widget.product['productGridImage'],
+                      //       //   productDescrtiption:
+                      //       //   widget.product['productDescription'],
+                      //       //   productLocation:
+                      //       //       widget.product['productLocation'],
+                      //       //   productBenefit: widget.product['productBenefit'],
+                      //       //   productPrice: widget.product['productPrice'],
+                      //       //   productCategory:
+                      //       //       widget.product['productCategory'],
+                      //       //   productRW: widget.product['productRW'],
+                      //       //   productRT: widget.product['productRT'],
+                      //       //   sellerName: widget.product['sellerName'],
+                      //       // );
+                      //     },
+                      //     icon: Icon(
+                      //       Icons.bookmark_outline,
+                      //       size: AdaptSize.pixel22,
+                      //       color: MyColor.neutral900,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
 
@@ -136,12 +208,14 @@ class DetailProductScreen extends StatelessWidget {
                         padding: EdgeInsets.only(
                           bottom: AdaptSize.pixel8,
                         ),
-                        itemCount: productById.productGridImage.length,
+                        itemCount: widget.product['productGridImage'].length,
                         scrollDirection: Axis.horizontal,
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: widget.product['productGridImage'].length < 2
+                            ? const NeverScrollableScrollPhysics()
+                            : const ScrollPhysics(),
                         itemBuilder: (context, index) {
                           return CachedNetworkImage(
-                            imageUrl: productById.productGridImage[index],
+                            imageUrl: widget.product['productGridImage'][index],
                             imageBuilder: (context, imageProvider) => InkWell(
                               splashColor: MyColor.neutral900,
                               onTap: () {
@@ -159,11 +233,10 @@ class DetailProductScreen extends StatelessWidget {
                                 );
                               },
                               child: Container(
-                                margin: index == 1
-                                    ? EdgeInsets.only(
-                                        left: AdaptSize.pixel8,
-                                        right: AdaptSize.pixel8)
-                                    : EdgeInsets.zero,
+                                margin: EdgeInsets.only(
+                                    left: AdaptSize.pixel4,
+                                    right: AdaptSize.pixel4),
+                                // : EdgeInsets.zero,
                                 width: AdaptSize.screenWidth / 1000 * 305,
                                 decoration: BoxDecoration(
                                   color: MyColor.neutral700,
@@ -179,12 +252,24 @@ class DetailProductScreen extends StatelessWidget {
                               child: cardShimmerWidget(
                                 borderRadius: 16,
                                 imagesShimmer: 'logo_kkn_siwalan.png',
+                                height: AdaptSize.screenWidth / 1000 * 300,
+                                width: AdaptSize.screenWidth / 1000 * 305,
+                                margin: EdgeInsets.only(
+                                  left: AdaptSize.pixel4,
+                                  right: AdaptSize.pixel4,
+                                ),
                               ),
                             ),
                             errorWidget: (context, url, error) =>
                                 errorShimmerWidget(
                               borderRadius: 16,
                               imagesShimmer: 'cancel.png',
+                              height: AdaptSize.screenWidth / 1000 * 300,
+                              width: AdaptSize.screenWidth / 1000 * 305,
+                              margin: EdgeInsets.only(
+                                left: AdaptSize.pixel4,
+                                right: AdaptSize.pixel4,
+                              ),
                             ),
                           );
                         }),
@@ -195,18 +280,18 @@ class DetailProductScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          productById.productName,
+                          widget.product['productName'],
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
-                              .copyWith(fontSize: AdaptSize.pixel24),
-                          maxLines: 1,
+                              .copyWith(fontSize: AdaptSize.pixel22),
+                          maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Chip(
                         label: Text(
-                          'RW ${productById.productRW}',
+                          'RW ${widget.product['productRW']}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -219,18 +304,23 @@ class DetailProductScreen extends StatelessWidget {
                     ],
                   ),
 
+                  SizedBox(
+                    height: AdaptSize.pixel5,
+                  ),
+
                   /// seller name
                   Row(
                     children: [
                       Icon(
                         CupertinoIcons.person_crop_circle_badge_checkmark,
                         size: AdaptSize.pixel20,
+                        color: MyColor.info300,
                       ),
                       SizedBox(
                         width: AdaptSize.pixel8,
                       ),
                       Text(
-                        productById.sellerName,
+                        widget.product['sellerName'],
                         style: Theme.of(context)
                             .textTheme
                             .headline6!
@@ -268,13 +358,14 @@ class DetailProductScreen extends StatelessWidget {
                       Icon(
                         CupertinoIcons.doc_text,
                         size: AdaptSize.pixel20,
+                        color: MyColor.info300,
                       ),
                       SizedBox(
                         width: AdaptSize.pixel8,
                       ),
                       Expanded(
                         child: Text(
-                          productById.productDescrtiption,
+                          widget.product['productDescription'],
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -304,50 +395,33 @@ class DetailProductScreen extends StatelessWidget {
                     text: 'Manfaat',
                   ),
 
-                  /// list manfaat
-                  MediaQuery.removePadding(
-                    removeTop: true,
-                    context: context,
-                    child: ListView.builder(
-                        padding: EdgeInsets.only(
-                          top: AdaptSize.pixel8,
-                          bottom: AdaptSize.pixel8,
+                  /// manfaat
+                  Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.rectangle_on_rectangle_angled,
+                        size: AdaptSize.pixel20,
+                        color: MyColor.info300,
+                      ),
+                      SizedBox(
+                        width: AdaptSize.pixel10,
+                      ),
+                      Expanded(
+                        child: Text(
+                          widget.product['productBenefit'],
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: AdaptSize.pixel14,
+                                  ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: productById.productBenefit.length,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Icon(
-                                    Icons.brightness_1,
-                                    size: AdaptSize.pixel10,
-                                  ),
-                                  SizedBox(
-                                    width: AdaptSize.pixel10,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      productById.productBenefit[index],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(
-                                            fontSize: AdaptSize.pixel14,
-                                          ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        }),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(
+                    height: AdaptSize.pixel8,
                   ),
 
                   Divider(
@@ -374,13 +448,14 @@ class DetailProductScreen extends StatelessWidget {
                       Icon(
                         Icons.location_on_outlined,
                         size: AdaptSize.pixel20,
+                        color: MyColor.info300,
                       ),
                       SizedBox(
                         width: AdaptSize.pixel5,
                       ),
                       Expanded(
                         child: Text(
-                          productById.productLocation,
+                          widget.product['productLocation'],
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -417,7 +492,7 @@ class DetailProductScreen extends StatelessWidget {
                         shrinkWrap: true,
                         padding: EdgeInsets.only(top: AdaptSize.pixel5),
                         scrollDirection: Axis.horizontal,
-                        itemCount: productById.productCategory.length,
+                        itemCount: widget.product['productCategory'].length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.only(right: AdaptSize.pixel8),
@@ -427,7 +502,7 @@ class DetailProductScreen extends StatelessWidget {
                                           .toInt())
                                   .withOpacity(1.0),
                               label: Text(
-                                productById.productCategory[index],
+                                widget.product['productCategory'][index],
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
@@ -488,11 +563,7 @@ class DetailProductScreen extends StatelessWidget {
 
                           ///price
                           Text(
-                            NumberFormat.currency(
-                                    locale: 'id',
-                                    symbol: 'Rp ',
-                                    decimalDigits: 0)
-                                .format(productById.productPrice),
+                            widget.product['productPrice'],
                             style:
                                 Theme.of(context).textTheme.headline6!.copyWith(
                                       color: Colors.black,
@@ -547,7 +618,7 @@ class DetailProductScreen extends StatelessWidget {
                                   onPressed: () {
                                     launchUrl(
                                         Uri.parse(
-                                          'https://wa.me/+6285878376402?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${productById.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
+                                          'https://wa.me/+62${widget.product['sellerContact']}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${widget.product['productName']}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
                                         ),
                                         mode: LaunchMode.externalApplication);
                                   },

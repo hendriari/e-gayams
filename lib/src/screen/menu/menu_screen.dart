@@ -70,10 +70,10 @@ class _MenuScreenState extends State<MenuScreen> {
             },
             currentIndex: value.currentIndex,
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled),
-                label: 'Home',
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.home_filled),
+              //   label: 'Home',
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart_outlined),
                 label: 'UMKM',

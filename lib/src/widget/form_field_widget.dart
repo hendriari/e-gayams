@@ -18,6 +18,7 @@ Widget formFieldWidget({
   double? height,
   double? width,
   int? maxLines,
+  Function(String)? onChanged,
 }) {
   return SizedBox(
     height: height,
@@ -29,6 +30,7 @@ Widget formFieldWidget({
       keyboardType: textInputType,
       cursorColor: MyColor.neutral600,
       maxLines: maxLines ?? 1,
+      onChanged: onChanged,
       readOnly: readOnly ?? false,
       validator: formFieldValidator,
       onTap: onTap,

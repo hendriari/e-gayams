@@ -24,12 +24,14 @@ class FirebaseAuthServices {
       );
 
       UserModel userModel = UserModel(
+        uid: cred.user!.uid,
         username: username,
         email: email,
         jenisKelamin: jenisKelamin,
         alamat: alamat,
         rt: rt,
         rw: rw,
+        wishList: [],
       );
 
       await _firestore

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
@@ -8,11 +7,7 @@ import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 
 Widget listProductCard({
   required BuildContext context,
-  required String image,
-  required String productName,
-  required String productLocation,
-  required int productPrice,
-  required String productRW,
+  required Map<String, dynamic> product,
   Function()? onTap,
 }) {
   return InkWell(
@@ -37,7 +32,7 @@ Widget listProductCard({
       child: Row(
         children: [
           CachedNetworkImage(
-            imageUrl: image,
+            imageUrl: product['productImage'],
             imageBuilder: (context, imageProvider) => Container(
               width: AdaptSize.screenWidth / 1000 * 380,
               margin: EdgeInsets.only(right: AdaptSize.pixel8),
@@ -57,8 +52,8 @@ Widget listProductCard({
             ),
             placeholder: (context, url) => shimmerLoading(
               child: cardShimmerWidget(
-                // height: AdaptSize.screenWidth / 1000 * 380,
                 width: AdaptSize.screenWidth / 1000 * 380,
+                margin: EdgeInsets.only(right: AdaptSize.pixel8),
                 borderRadius: 16,
                 imagesShimmer: 'logo_kkn_siwalan.png',
               ),
@@ -66,6 +61,7 @@ Widget listProductCard({
             errorWidget: (context, url, error) => errorShimmerWidget(
               // height: AdaptSize.screenWidth / 1000 * 380,
               width: AdaptSize.screenWidth / 1000 * 380,
+              margin: EdgeInsets.only(right: AdaptSize.pixel8),
               borderRadius: 16,
               imagesShimmer: 'error.png',
             ),
@@ -76,7 +72,7 @@ Widget listProductCard({
               children: [
                 ///  product name
                 Text(
-                  productName,
+                  product['productName'],
                   style: Theme.of(context)
                       .textTheme
                       .headline6!
@@ -86,12 +82,22 @@ Widget listProductCard({
                 ),
 
                 SizedBox(
-                  height: AdaptSize.pixel5,
+                  height: AdaptSize.pixel8,
+                ),
+
+                /// seller name
+                Text(
+                  product['sellerName'],
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
+                    fontSize: AdaptSize.pixel12,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
 
                 /// product location
                 Text(
-                  productLocation,
+                  product['productLocation'],
                   style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontSize: AdaptSize.pixel12,
                       ),
@@ -99,15 +105,15 @@ Widget listProductCard({
                   overflow: TextOverflow.ellipsis,
                 ),
 
+
+
                 const Spacer(),
 
                 Row(
                   children: [
                     /// product price
                     Text(
-                      NumberFormat.currency(
-                              locale: 'id', symbol: 'Rp ', decimalDigits: 0)
-                          .format(productPrice),
+                  product['productPrice'],
                       style: Theme.of(context)
                           .textTheme
                           .headline6!
@@ -117,7 +123,7 @@ Widget listProductCard({
 
                     /// product location rw
                     Text(
-                      'RW $productRW',
+                      'RW ${product['productRW']}',
                       style: Theme.of(context)
                           .textTheme
                           .headline6!

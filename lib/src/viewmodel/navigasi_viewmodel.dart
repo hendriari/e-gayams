@@ -4,6 +4,7 @@ import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/search/search_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/umkm/detail_product_screen.dart';
 
 class NavigasiViewModel {
@@ -99,12 +100,15 @@ class NavigasiViewModel {
   /// navigasi to detail product
   void navigasiDetailProduct({
     required BuildContext context,
-    required String productId,
+    required Map<String, dynamic> product,
+    // required String productId,
   }) {
     Navigator.push(
       context,
       CupertinoPageRoute(
-        builder: (context) => DetailProductScreen(id: productId),
+        builder: (context) => DetailProductScreen(
+          product: product,
+        ),
       ),
     );
   }
@@ -122,5 +126,15 @@ class NavigasiViewModel {
           ),
         ),
         (route) => false);
+  }
+
+  /// search screen
+  void navigasiSearchProductScreen(BuildContext context){
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => const SearchScreen(),
+      ),
+    );
   }
 }

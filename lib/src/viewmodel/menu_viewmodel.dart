@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/screen/menu/umkm/umkm_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/profile_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/home/home_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/wishlist/wishlist_screen.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
@@ -12,7 +11,7 @@ class MenuViewModel with ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   final List<Widget> _pages = [
-    const HomeScreen(),
+    // const HomeScreen(),
     const UmkmScreen(),
     const WishlistScreen(),
     const ProfileScreen(),

@@ -16,6 +16,7 @@ class ProductDummyData with ChangeNotifier {
     for (int i = 1; i <= dataLength; i++) {
       dataInstance.add(
         ProductModel(
+          uid: i.toString(),
           productId: i.toString(),
           productName: _faker.food.dish(),
           productImage: _faker.image.image(),
@@ -26,13 +27,8 @@ class ProductDummyData with ChangeNotifier {
           ],
           productDescrtiption: _faker.lorem.sentence(),
           productLocation: _faker.address.country() + _faker.address.city(),
-          productBenefit: [
-            _faker.lorem.sentence(),
-            _faker.lorem.sentence(),
-            _faker.lorem.sentence(),
-            _faker.lorem.sentence(),
-          ],
-          productPrice: Random().nextInt(100000),
+          productBenefit: _faker.lorem.sentence(),
+          productPrice: Random().nextInt(100000).toString(),
           productCategory: [
             _faker.food.cuisine(),
             _faker.food.cuisine(),
@@ -40,6 +36,8 @@ class ProductDummyData with ChangeNotifier {
           ],
           productRW: Random().nextInt(4).toString(),
           sellerName: _faker.person.name(),
+          productRT: Random().nextInt(4).toString(),
+          datePublished: DateTime.now(),
         ),
       );
     }

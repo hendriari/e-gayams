@@ -56,7 +56,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onPressed: () {
             NavigasiViewModel().navigasiToMenuWithIndex(
               context: context,
-              index: 3,
+              index: 2,
             );
           },
           icon: Icon(
