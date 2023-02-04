@@ -79,7 +79,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         context: context,
         height: AdaptSize.screenWidth / 1000 * 650,
         width: AdaptSize.screenWidth / 1000 * 800,
-        description: e.toString(),
+        description: e.message!,
         image: 'error',
       );
       _buttonRegisterLoading = false;
@@ -117,7 +117,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         context: context,
         height: AdaptSize.screenWidth / 1000 * 650,
         width: AdaptSize.screenWidth / 1000 * 800,
-        description: e.toString(),
+        description: e.message!,
         image: 'error',
       );
       _loginLoading = false;

@@ -29,33 +29,11 @@ class FirestoreServices {
         'rw': rw,
       });
     } on FirebaseException catch (e) {
-      return error = e.toString();
+      return error = e.message!;
     }
   }
 
-  /// ngelike postingan
-  Future<void> addWishList({
-    required String productId,
-    required String uid,
-    required List wishLists,
-  }) async {
-    try {
-      if (wishLists.contains(uid)) {
-        _firestore.collection('newUser').doc(productId).update({
-          'wishList': FieldValue.arrayRemove([uid])
-        });
-      } else {
-        _firestore.collection('newUser').doc(productId).update({
-          'wishList': FieldValue.arrayUnion([uid])
-        });
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-      // toastAllert(e.toString(), MyColor.errorColor, 1);
-    }
-  }
-
-  /// komentar post
+  /// add wishlist
   Future<void> addToWishList({
     required String productId,
     required String uid,
@@ -95,7 +73,7 @@ class FirestoreServices {
         "datePublished": DateTime.now(),
       });
     } on FirebaseException catch (e) {
-      debugPrint(e.code);
+      debugPrint(e.message!);
     }
   }
 }

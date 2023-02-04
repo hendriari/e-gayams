@@ -33,7 +33,7 @@ class NoConnectionScreen extends StatelessWidget {
                 height: AdaptSize.screenHeight * .016,
               ),
               Text(
-                'Internet connection not detected, but don\'t worry, we understand that! Please check your internet network, we will detect it automatically',
+                'Tidak ada koneksi internet, silahkan periksa jaringan internet Anda, kami akan muat otomatis setelah internet terdeteksi',
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!

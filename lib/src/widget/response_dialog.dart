@@ -51,6 +51,7 @@ class ResponseDialog {
                     style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontSize: AdaptSize.pixel16,
                         ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
