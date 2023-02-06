@@ -6,15 +6,20 @@ Widget onboardingWidget({
   required String image,
   required String title,
   required String description,
+  required Widget indicator,
 }) {
   return Column(
     children: [
       Image.asset(
         image,
-        height: AdaptSize.screenWidth / 1000 * 800,
+        height: AdaptSize.screenWidth / 1000 * 700,
       ),
       SizedBox(
-        height: AdaptSize.pixel40 + AdaptSize.pixel10,
+        height: AdaptSize.pixel16,
+      ),
+      indicator,
+      SizedBox(
+        height: AdaptSize.pixel16,
       ),
       Text(
         title,

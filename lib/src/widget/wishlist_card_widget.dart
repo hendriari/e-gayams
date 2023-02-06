@@ -71,7 +71,6 @@ Widget whistListCard({
                   imagesShimmer: 'cancel.png',
                 ),
               ),
-
               Positioned(
                 left: 10,
                 top: 8,
@@ -138,14 +137,16 @@ Widget whistListCard({
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      sellerName,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: AdaptSize.pixel14,
-                            color: MyColor.neutral300,
-                          ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Expanded(
+                      child: Text(
+                        sellerName,
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontSize: AdaptSize.pixel14,
+                              color: MyColor.neutral300,
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     InkWell(
                       onTap: bookmarkOntap,

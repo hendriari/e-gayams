@@ -23,6 +23,7 @@ class _UmkmScreenState extends State<UmkmScreen> {
   void initState() {
     super.initState();
     context.read<UserViewModel>().refreshUsers();
+    // context.read<ProductViewModel>().refreshProduct();
   }
 
   @override
@@ -61,7 +62,7 @@ class _UmkmScreenState extends State<UmkmScreen> {
                           .headline6!
                           .copyWith(fontSize: AdaptSize.pixel20),
                     );
-                  })
+                  }),
                 ],
               ),
               Text(
