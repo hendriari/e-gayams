@@ -54,24 +54,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       image: onboardingContent.image,
                       title: onboardingContent.title,
                       description: onboardingContent.subtitle,
+                      indicator: SmoothPageIndicator(
+                        controller: _pageController,
+                        count: value.onboarding.length,
+                        effect: ExpandingDotsEffect(
+                          activeDotColor: MyColor.warning600,
+                          dotColor: MyColor.neutral700,
+                          dotHeight: AdaptSize.pixel8,
+                          dotWidth: AdaptSize.pixel8,
+                        ),
+                      ),
                     );
                   });
-            }),
-
-            Consumer<OnBoardingViewModel>(builder: (context, value, child) {
-              return Align(
-                alignment: Alignment.center,
-                child: SmoothPageIndicator(
-                  controller: _pageController,
-                  count: value.onboarding.length,
-                  effect: ExpandingDotsEffect(
-                    activeDotColor: MyColor.warning600,
-                    dotColor: MyColor.neutral700,
-                    dotHeight: AdaptSize.pixel8,
-                    dotWidth: AdaptSize.pixel8,
-                  ),
-                ),
-              );
             }),
 
             /// button skip
@@ -83,9 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 sizeWidth: AdaptSize.pixel75,
                 backgroundColor: MyColor.neutral900,
                 foregroundColor: MyColor.neutral900,
-                side: BorderSide(
-                  color: MyColor.warning600
-                ),
+                side: BorderSide(color: MyColor.warning600),
                 onPressed: () {
                   NavigasiViewModel().navigateToRegister(context);
                 },
@@ -109,7 +101,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         sizeHeight: AdaptSize.pixel36,
                         sizeWidth: AdaptSize.pixel75 +
                             AdaptSize.pixel40 +
-                            AdaptSize.pixel10,
+                            AdaptSize.pixel24,
                         backgroundColor: MyColor.warning600,
                         foregroundColor: MyColor.neutral900,
                         onPressed: () {

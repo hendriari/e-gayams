@@ -22,4 +22,14 @@ class ProductViewModel with ChangeNotifier {
     productWishlist.removeAt(index);
     notifyListeners();
   }
+
+  // ProductModel? _productModel;
+  //
+  // ProductModel? get productModel => _productModel;
+  //
+  // Future refreshProduct() async {
+  //   ProductModel productModel = await FirestoreServices().getAllProduct();
+  //   _productModel = productModel;
+  //   notifyListeners();
+  // }
 }

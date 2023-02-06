@@ -76,4 +76,13 @@ class FirestoreServices {
       debugPrint(e.message!);
     }
   }
+
+  // /// get all product
+  // Future<ProductModel> getAllProduct() async {
+  //
+  //   DocumentSnapshot documentSnapshot =
+  //   await FirebaseFirestore.instance.collection('productMitra').doc('productId').get();
+  //
+  //   return ProductModel.fromSnap(documentSnapshot);
+  // }
 }
