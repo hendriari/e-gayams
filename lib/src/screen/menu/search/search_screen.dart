@@ -25,6 +25,12 @@ class _SearchScreenState extends State<SearchScreen> {
     _searchController.dispose();
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   context.read<SearchProductViewModel>().fetchOrders(productId)
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +70,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     color: MyColor.neutral400,
                   ),
                 ),
+                onChanged: (value) => FirebaseFirestore.instance
+                    .collection('productMitra')
+                    .where(
+                      'sellerName',
+                      isGreaterThanOrEqualTo: _searchController.text,
+                    )
+                    .get(),
                 hint: 'Cari Produk',
                 label: 'Cari Produk',
               ),

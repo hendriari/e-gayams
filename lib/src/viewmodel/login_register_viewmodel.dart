@@ -82,6 +82,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         description: e.message!,
         image: 'error',
       );
+      debugPrint(e.message!);
       _buttonRegisterLoading = false;
       notifyListeners();
     }
@@ -120,6 +121,7 @@ class LoginRegisterViewModel with ChangeNotifier {
         description: e.message!,
         image: 'error',
       );
+      debugPrint(e.message!);
       _loginLoading = false;
       notifyListeners();
     }
