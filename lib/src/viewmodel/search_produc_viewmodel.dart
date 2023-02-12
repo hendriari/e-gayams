@@ -1,49 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kkn_siwalan/src/model/product_model.dart';
 
 class SearchProductViewModel with ChangeNotifier {
-  // import 'package:model/order.dart';
-  //
-  // class OrderService extends ChangeNotifier {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  List<Map<String, dynamic>> _items = [];
+  List<Map<String, dynamic>> _filteredItems = [];
+  List<String> _filters = [];
 
-  Stream<List<FilterProductModel>> fetchOrders(String productId) {
-    return _db.collection('productMitra/$productId').snapshots().map(
-        (snapShot) => snapShot.docs
-            .map((document) =>
-                FilterProductModel.fromSnap(document.data(), document.id))
-            .toList());
+  List<Map<String, dynamic>> get items => _filteredItems;
+
+  List<String> get filters => _filters;
+
+  set filters(List<String> value) {
+    _filters = value;
+    _filteredItems = _items
+        .where((item) => _filters.any((filter) =>
+            item['sellerName'].toLowerCase().contains(filter.toLowerCase()) ||
+            item['productName'].toLowerCase().contains(filter.toLowerCase()) ||
+            item['productLocation']
+                .toLowerCase()
+                .contains(filter.toLowerCase())))
+        .toList();
+    notifyListeners();
+  }
+
+  set items(List<Map<String, dynamic>> value) {
+    _items = value;
+    _filteredItems = value;
+    notifyListeners();
+  }
+
+  Future<void> fetchData() async {
+    var snapShot = await _firestore.collection('productMitra').get();
+    _items = snapShot.docs.map((document) => document.data()).toList();
+    _filteredItems = _items;
+    notifyListeners();
   }
 }
-
-List<FilterProductModel> _filteringProduct = [];
-
-get filteringProduct => _filteringProduct;
-
-/// get all product
-Stream<List<FilterProductModel>> getAllProduct({
-  required String productId,
-}) {
-  // List<FilterProductModel> filter = [];
-  var streamProduct = FirebaseFirestore.instance
-      .collection('productMitra')
-      .snapshots()
-      .map((event) => event.docs
-          .map((e) => FilterProductModel.fromSnap(e.data(), e.id))
-          .toList());
-  return streamProduct;
-}
-
-// void searchProduk({
-//   required String keyword,
-// }) {
-//   FirebaseFirestore.instance
-//       .collection('productMitra')
-//       .where(
-//     'productId',
-//     isEqualTo: keyword,
-//   )
-//       .get();
-// }}

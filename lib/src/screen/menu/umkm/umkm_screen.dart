@@ -23,7 +23,6 @@ class _UmkmScreenState extends State<UmkmScreen> {
   void initState() {
     super.initState();
     context.read<UserViewModel>().refreshUsers();
-    // context.read<ProductViewModel>().refreshProduct();
   }
 
   @override

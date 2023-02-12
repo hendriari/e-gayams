@@ -138,22 +138,7 @@ class FilterProductModel {
     required this.datePublished,
   });
 
-
-  // factory Order.fromMap(Map snapshot,String id){
-  //   id = id ?? '',
-  //   price = snapshot['price'] ?? '',
-  //   name = snapshot['name'] ?? '',
-  // }
-  //
-  // toJson() {
-  //   return {
-  //     "price": price,
-  //     "name": name,
-  //   };
-  // }
-
   static FilterProductModel fromSnap(Map snapshot, String id) {
-    // var snapshot = snap.data() as Map<String, dynamic>;
 
     return FilterProductModel(
       uid: snapshot["uid"],

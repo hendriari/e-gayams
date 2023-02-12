@@ -116,7 +116,7 @@ class LoginRegisterViewModel with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       ResponseDialog.customResponseDialog(
         context: context,
-        height: AdaptSize.screenWidth / 1000 * 650,
+        height: AdaptSize.screenWidth / 1000 * 700,
         width: AdaptSize.screenWidth / 1000 * 800,
         description: e.message!,
         image: 'error',
