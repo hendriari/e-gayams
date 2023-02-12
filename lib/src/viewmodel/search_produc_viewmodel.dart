@@ -32,9 +32,16 @@ class SearchProductViewModel with ChangeNotifier {
   }
 
   Future<void> fetchData() async {
-    var snapShot = await _firestore.collection('productMitra').get();
-    _items = snapShot.docs.map((document) => document.data()).toList();
-    _filteredItems = _items;
-    notifyListeners();
+    try {
+      debugPrint('fetch data..');
+      var snapShot = await _firestore.collection('productMitra').get();
+      _items = snapShot.docs.map((document) => document.data()).toList();
+      _filteredItems = _items;
+      debugPrint('fetch data success !');
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('fetch data gagal !');
+    }
   }
 }
