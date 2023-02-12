@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
@@ -5,6 +6,7 @@ import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
+import 'package:kkn_siwalan/src/widget/detail_wishlist_widget.dart';
 import 'package:kkn_siwalan/src/widget/wishlist_card_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +30,38 @@ class WishlistScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return whistListCard(
                           context: context,
+                          cardOnTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (context) => DetailProductWislist(
+                                  productImage:
+                                      value.productWishlist[index].productImage,
+                                  productName:
+                                      value.productWishlist[index].productName,
+                                  productGridImage: value
+                                      .productWishlist[index].productGridImage,
+                                  productRW:
+                                      value.productWishlist[index].productRW,
+                                  sellerName:
+                                      value.productWishlist[index].sellerName,
+                                  productDescription: value
+                                      .productWishlist[index]
+                                      .productDescrtiption,
+                                  productBenefit: value
+                                      .productWishlist[index].productBenefit,
+                                  productLocation: value
+                                      .productWishlist[index].productLocation,
+                                  productPrice:
+                                      value.productWishlist[index].productPrice,
+                                  sellerContact:
+                                      value.productWishlist[index].sellerName,
+                                  productCategory: value
+                                      .productWishlist[index].productCategory,
+                                ),
+                              ),
+                            );
+                          },
                           bookmarkOntap: () {
                             showDialog(
                               context: context,
