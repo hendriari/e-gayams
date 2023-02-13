@@ -72,6 +72,9 @@ class ProductModel {
       };
 }
 
+/// ----------------------------------------------------------------------
+/// user wishlist
+
 class UserWishlistModel {
   String uid;
   String productId;
@@ -86,6 +89,7 @@ class UserWishlistModel {
   String productRW;
   String productRT;
   String sellerName;
+  dynamic datePublished;
 
   UserWishlistModel({
     required this.uid,
@@ -101,5 +105,44 @@ class UserWishlistModel {
     required this.productRW,
     required this.productRT,
     required this.sellerName,
+    required this.datePublished,
   });
+
+  factory UserWishlistModel.fromJson(Map<String, dynamic> json) {
+    return UserWishlistModel(
+      uid: json["uid"],
+      productId: json["productId"],
+      productName: json["productName"],
+      productImage: json["productImage"],
+      productGridImage: json["productGridImage"],
+      productDescrtiption: json["productDescription"],
+      productLocation: json["productLocation"],
+      productBenefit: json["productBenefit"],
+      productPrice: json["productPrice"],
+      productCategory: json["productCategory"],
+      productRW: json["productRW"],
+      productRT: json["productRT"],
+      sellerName: json["sellerName"],
+      datePublished: json["datePublished"],
+    );
+  }
+
+  Map<String, dynamic> toJsons() {
+    return {
+      "uid": uid,
+      "productId": productId,
+      "productName": productName,
+      "productImage": productImage,
+      "productGridImage": productGridImage,
+      "productDescription": productDescrtiption,
+      "productLocation": productLocation,
+      "productBenefit": productBenefit,
+      "productPrice": productPrice,
+      "productCategory": productCategory,
+      "productRW": productRW,
+      "productRT": productRT,
+      "sellerName": sellerName,
+      "datePublished": datePublished,
+    };
+  }
 }

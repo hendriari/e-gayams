@@ -1,13 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/search_produc_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/search_widget.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -23,6 +24,16 @@ class _SearchScreenState extends State<SearchScreen> {
   void dispose() {
     super.dispose();
     _searchController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final productProvider =
+        Provider.of<SearchProductViewModel>(context, listen: false);
+    if (productProvider.items.isEmpty) {
+      productProvider.fetchData();
+    }
   }
 
   @override
@@ -64,6 +75,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     color: MyColor.neutral400,
                   ),
                 ),
+                onChanged: (value) {
+                  Provider.of<SearchProductViewModel>(context, listen: false)
+                      .filters = value.split(' ');
+                },
                 hint: 'Cari Produk',
                 label: 'Cari Produk',
               ),
@@ -73,42 +88,60 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
 
               /// search Product
-              FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('productMitra')
-                    .where(
-                      'sellerName',
-                      isGreaterThanOrEqualTo: _searchController.text,
-                    )
-                    .get(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+              Consumer<SearchProductViewModel>(
+                builder: (context, itemProvider, child) {
                   return Expanded(
-                    child: ListView.builder(
-                      itemCount: (snapshot.data! as dynamic).docs.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          borderRadius: BorderRadius.circular(16),
-                          splashColor: MyColor.neutral900,
-                          onTap: () {
-                            NavigasiViewModel().navigasiDetailProduct(
-                              context: context,
-                              product: snapshot.data!.docs[index].data(),
-                            );
-                          },
-                          child: productCardWidget(
-                              context: context,
-                              product: snapshot.data!.docs[index].data()),
-                        );
-                      },
-                    ),
+                    child: itemProvider.items.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: itemProvider.items.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                borderRadius: BorderRadius.circular(16),
+                                splashColor: MyColor.neutral900,
+                                onTap: () {
+                                  NavigasiViewModel().navigasiDetailProduct(
+                                    context: context,
+                                    product: itemProvider.items[index],
+                                  );
+                                },
+                                child: productCardWidget(
+                                    context: context,
+                                    product: itemProvider.items[index]),
+                              );
+                            })
+                        : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/image/error.png',
+                              height: AdaptSize.screenWidth / 2,
+                              width: AdaptSize.screenWidth / 2,
+                            ),
+                            SizedBox(
+                              height: AdaptSize.screenHeight * .012,
+                            ),
+                            Text(
+                              'Produk apa yang Kamu cari ?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(fontSize: AdaptSize.pixel15),
+                            ),
+                            SizedBox(
+                              height: AdaptSize.screenHeight * .01,
+                            ),
+                            Text(
+                                'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .copyWith(fontSize: AdaptSize.pixel14))
+                          ],
+                        ),
                   );
                 },
-              )
+              ),
             ],
           ),
         ),

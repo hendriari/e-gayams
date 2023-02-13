@@ -23,13 +23,8 @@ class ProductViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // ProductModel? _productModel;
-  //
-  // ProductModel? get productModel => _productModel;
-  //
-  // Future refreshProduct() async {
-  //   ProductModel productModel = await FirestoreServices().getAllProduct();
-  //   _productModel = productModel;
-  //   notifyListeners();
-  // }
+  void remove(UserWishlistModel item) {
+    productWishlist.remove(item);
+    notifyListeners();
+  }
 }

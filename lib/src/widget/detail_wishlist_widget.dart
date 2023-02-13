@@ -2,34 +2,51 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
-import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
-import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
 import 'package:kkn_siwalan/src/widget/modal_bottom_sheed.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailProductScreen extends StatefulWidget {
-  final Map<String, dynamic> product;
+class DetailProductWislist extends StatefulWidget {
+  final String productImage;
+  final String productName;
+  final List productGridImage;
+  final String productRW;
+  final String sellerName;
+  final String productDescription;
+  final String productBenefit;
+  final String productLocation;
+  final String productPrice;
+  final String sellerContact;
+  final List productCategory;
 
-  const DetailProductScreen({
+  const DetailProductWislist({
     Key? key,
-    required this.product,
+    required this.productImage,
+    required this.productName,
+    required this.productGridImage,
+    required this.productRW,
+    required this.sellerName,
+    required this.productDescription,
+    required this.productBenefit,
+    required this.productLocation,
+    required this.productPrice,
+    required this.sellerContact,
+    required this.productCategory,
   }) : super(key: key);
 
   @override
-  State<DetailProductScreen> createState() => _DetailProductScreenState();
+  State<DetailProductWislist> createState() => _DetailProductWislistState();
 }
 
-class _DetailProductScreenState extends State<DetailProductScreen> {
+class _DetailProductWislistState extends State<DetailProductWislist> {
   @override
   void initState() {
     super.initState();
@@ -59,7 +76,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                   Stack(
                     children: [
                       CachedNetworkImage(
-                        imageUrl: widget.product['productImage'],
+                        imageUrl: widget.productImage,
                         imageBuilder: (context, imageProvider) => InkWell(
                           splashColor: MyColor.neutral900,
                           onTap: () {
@@ -119,60 +136,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           ),
                         ),
                       ),
-
-                      /// wish list button
-                      Positioned(
-                        right: AdaptSize.pixel8,
-                        top: AdaptSize.pixel2,
-                        child: Consumer<ProductViewModel>(
-                            builder: (context, value, child) {
-                          return IconButton(
-                            onPressed: () async {
-                              var addWishListProduct = UserWishlistModel(
-                                productId: widget.product['productId'],
-                                uid: userData!.uid,
-                                productName: widget.product['productName'],
-                                productImage: widget.product['productImage'],
-                                productGridImage:
-                                    widget.product['productGridImage'],
-                                productDescrtiption:
-                                    widget.product['productDescription'],
-                                productLocation:
-                                    widget.product['productLocation'],
-                                productBenefit:
-                                    widget.product['productBenefit'],
-                                productPrice: widget.product['productPrice'],
-                                productCategory:
-                                    widget.product['productCategory'],
-                                productRW: widget.product['productRW'],
-                                productRT: widget.product['productRT'],
-                                sellerName: widget.product['sellerName'],
-                                datePublished: widget.product['datePublished'],
-                              );
-
-                              value.addProductWishList(addWishListProduct);
-                              CustomDialogs().singleButtonDialog(
-                                  context: context,
-                                  image: 'oke',
-                                  title:
-                                      '${widget.product['productName']} berhasil ditambah ke Wishlist',
-                                  textButton1: 'Kembali',
-                                  textButton2: '',
-                                  singleButton: true,
-                                  singleOnpressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  bgSingleButton: MyColor.warning400);
-                              debugPrint('add wishlist success');
-                            },
-                            icon: Icon(
-                              Icons.bookmark,
-                              size: AdaptSize.pixel22,
-                              color: MyColor.warning500,
-                            ),
-                          );
-                        }),
-                      ),
                     ],
                   ),
 
@@ -185,14 +148,14 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         padding: EdgeInsets.only(
                           bottom: AdaptSize.pixel8,
                         ),
-                        itemCount: widget.product['productGridImage'].length,
+                        itemCount: widget.productGridImage.length,
                         scrollDirection: Axis.horizontal,
-                        physics: widget.product['productGridImage'].length < 2
+                        physics: widget.productGridImage.length < 2
                             ? const NeverScrollableScrollPhysics()
                             : const ScrollPhysics(),
                         itemBuilder: (context, index) {
                           return CachedNetworkImage(
-                            imageUrl: widget.product['productGridImage'][index],
+                            imageUrl: widget.productGridImage[index],
                             imageBuilder: (context, imageProvider) => InkWell(
                               splashColor: MyColor.neutral900,
                               onTap: () {
@@ -257,7 +220,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.product['productName'],
+                          widget.productName,
                           style: Theme.of(context)
                               .textTheme
                               .headline6!
@@ -268,7 +231,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Chip(
                         label: Text(
-                          'RW ${widget.product['productRW']}',
+                          'RW ${widget.productRW}',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -297,7 +260,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         width: AdaptSize.pixel8,
                       ),
                       Text(
-                        widget.product['sellerName'],
+                        widget.sellerName,
                         style: Theme.of(context)
                             .textTheme
                             .headline6!
@@ -342,7 +305,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productDescription'],
+                          widget.productDescription,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -385,7 +348,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productBenefit'],
+                          widget.productBenefit,
                           style:
                               Theme.of(context).textTheme.bodyText1!.copyWith(
                                     fontSize: AdaptSize.pixel14,
@@ -432,7 +395,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productLocation'],
+                          widget.productLocation,
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
@@ -469,7 +432,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         shrinkWrap: true,
                         padding: EdgeInsets.only(top: AdaptSize.pixel5),
                         scrollDirection: Axis.horizontal,
-                        itemCount: widget.product['productCategory'].length,
+                        itemCount: widget.productCategory.length,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.only(right: AdaptSize.pixel8),
@@ -479,7 +442,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                           .toInt())
                                   .withOpacity(1.0),
                               label: Text(
-                                widget.product['productCategory'][index],
+                                widget.productCategory[index],
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
@@ -540,7 +503,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
                           ///price
                           Text(
-                            widget.product['productPrice'],
+                            widget.productPrice,
                             style:
                                 Theme.of(context).textTheme.headline6!.copyWith(
                                       color: Colors.black,
@@ -595,7 +558,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                   onPressed: () {
                                     launchUrl(
                                         Uri.parse(
-                                          'https://wa.me/+62${widget.product['sellerContact']}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${widget.product['productName']}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
+                                          'https://wa.me/+62${widget.sellerContact}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${widget.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
                                         ),
                                         mode: LaunchMode.externalApplication);
                                   },

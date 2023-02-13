@@ -6,6 +6,7 @@ import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/search_produc_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/list_product_card.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
@@ -23,7 +24,12 @@ class _UmkmScreenState extends State<UmkmScreen> {
   void initState() {
     super.initState();
     context.read<UserViewModel>().refreshUsers();
-    // context.read<ProductViewModel>().refreshProduct();
+    context.read<SearchProductViewModel>().fetchData();
+    // final productProvider =
+    // Provider.of<SearchProductViewModel>(context, listen: false);
+    // if (productProvider.items.isEmpty) {
+    //   productProvider.fetchData();
+    // }
   }
 
   @override

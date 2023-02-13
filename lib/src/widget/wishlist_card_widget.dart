@@ -151,9 +151,9 @@ Widget whistListCard({
                     InkWell(
                       onTap: bookmarkOntap,
                       child: Icon(
-                        Icons.bookmark,
+                        Icons.delete,
                         size: AdaptSize.pixel22,
-                        color: MyColor.secondary300,
+                        color: MyColor.warning400,
                       ),
                     )
                   ],
