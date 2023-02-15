@@ -7,8 +7,8 @@ import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
+import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
@@ -33,13 +33,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
+    context.read<AccountViewModel>().refreshUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     final userData =
-        Provider.of<UserViewModel>(context, listen: false).usermodel;
+        Provider.of<AccountViewModel>(context, listen: false).usermodel;
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
@@ -108,14 +108,23 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       Positioned(
                         left: AdaptSize.pixel8,
                         top: AdaptSize.pixel2,
-                        child: IconButton(
-                          onPressed: () {
+                        child: InkWell(
+                          onTap: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: MyColor.neutral900,
-                            size: AdaptSize.pixel22,
+                          borderRadius: BorderRadius.circular(14),
+                          splashColor: MyColor.neutral900,
+                          child: Card(
+                            color: MyColor.neutral600,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            margin: EdgeInsets.all(AdaptSize.pixel10),
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: MyColor.primary300,
+                              size: AdaptSize.pixel26,
+                            ),
                           ),
                         ),
                       ),
@@ -167,7 +176,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             },
                             icon: Icon(
                               Icons.bookmark,
-                              size: AdaptSize.pixel22,
+                              size: AdaptSize.pixel26,
                               color: MyColor.warning500,
                             ),
                           );

@@ -9,7 +9,6 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
+    context.read<AccountViewModel>().refreshUsers();
   }
 
   @override
@@ -93,25 +92,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Consumer<UserViewModel>(
+                          Consumer<AccountViewModel>(
                               builder: (context, value, child) {
                             return Text(
                               value.usermodel?.username ?? 'Loading..',
-                              style:
-                                  Theme.of(context).textTheme.headline6!.copyWith(
-                                        fontSize: AdaptSize.pixel20,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                    fontSize: AdaptSize.pixel20,
+                                  ),
                             );
                           }),
-
-                          Consumer<UserViewModel>(
+                          Consumer<AccountViewModel>(
                               builder: (context, value, child) {
                             return Text(
                               value.usermodel?.email ?? 'Loading..',
-                              style:
-                                  Theme.of(context).textTheme.headline6!.copyWith(
-                                        fontSize: AdaptSize.pixel16,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                    fontSize: AdaptSize.pixel16,
+                                  ),
                             );
                           })
                         ],
