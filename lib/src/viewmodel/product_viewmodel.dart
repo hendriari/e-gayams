@@ -8,7 +8,7 @@ class ProductViewModel with ChangeNotifier {
   Future<void> fetchAllData() async {
     try {
       debugPrint('fetch data..');
-      var snapShot = await _firestore.collection('productMitra').get();
+      var snapShot = await _firestore.collection('productMitra').orderBy('datePublished', descending: true).get();
       _items = snapShot.docs.map((document) => document.data()).toList();
       _filteredItems = _items;
       _allListProduct = _items;
@@ -20,6 +20,18 @@ class ProductViewModel with ChangeNotifier {
       debugPrint(e.toString());
       debugPrint('fetch data gagal !');
     }
+  }
+
+  int _indexSlider = 0;
+
+  int get indexSlider => _indexSlider;
+
+  /// index carousel slider
+  void changeIndex({
+    required int index,
+  }) {
+    _indexSlider = index;
+    notifyListeners();
   }
 
   List<Map<String, dynamic>> _allListProduct = [];

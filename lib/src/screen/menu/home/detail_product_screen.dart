@@ -76,15 +76,18 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                               ),
                             );
                           },
-                          child: Container(
-                            height: AdaptSize.screenWidth / 1000 * 800,
-                            width: double.infinity,
-                            margin: EdgeInsets.only(bottom: AdaptSize.pixel8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: imageProvider,
+                          child: Hero(
+                            tag: widget.product['productImage'],
+                            child: Container(
+                              height: AdaptSize.screenWidth / 1000 * 800,
+                              width: double.infinity,
+                              margin: EdgeInsets.only(bottom: AdaptSize.pixel8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: imageProvider,
+                                ),
                               ),
                             ),
                           ),
