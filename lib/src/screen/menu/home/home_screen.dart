@@ -39,6 +39,23 @@ class _HomeScreenState extends State<HomeScreen>
       }
       debugPrint(product.allListProduct.toString());
     });
+    Future.delayed(Duration.zero, () {
+      if (product.kelurahanSiwalan.isEmpty ||
+          product.kelurahanGayamsari.isEmpty ||
+          product.kelurahanSambirejo.isEmpty ||
+          product.kelurahanPandeanLamper.isEmpty ||
+          product.kelurahanSawahBesar.isEmpty ||
+          product.kelurahanTambakRejo.isEmpty ||
+          product.kelurahanKaligawe.isEmpty) {
+        product.fetchProductKelurahanSiwalan();
+        product.fetchProductKelurahanGayamsari();
+        product.fetchProductKelurahanSambirejo();
+        product.fetchProductKelurahanPandeanLamper();
+        product.fetchProductKelurahanSawahBesar();
+        product.fetchProductKelurahanTambakrejo();
+        product.fetchProductKelurahanKaligawe();
+      }
+    });
     _tabBarController = TabController(length: 8, vsync: this);
   }
 
@@ -104,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen>
               ),
 
               Text(
-                'Cari Produk di Kelurahan Siwalan ?',
+                'Cari Produk di Kecamatan Gayamsari ?',
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
@@ -137,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen>
               Consumer<ProductViewModel>(builder: (context, value, child) {
                 return value.allListProduct.isNotEmpty
                     ? CarouselSlider.builder(
-                        itemCount: value.allListProduct.length >= 2
+                        itemCount: value.allListProduct.length >= 5
                             ? 5
                             : value.allListProduct.length,
                         itemBuilder:
@@ -209,17 +226,20 @@ class _HomeScreenState extends State<HomeScreen>
                                         Align(
                                           alignment: Alignment.bottomCenter,
                                           child: Container(
-                                            height:
-                                                AdaptSize.screenWidth / 1000 * 80,
+                                            height: AdaptSize.screenWidth /
+                                                1000 *
+                                                80,
                                             padding: EdgeInsets.only(
                                                 left: AdaptSize.pixel8),
                                             alignment: Alignment.centerLeft,
                                             decoration: BoxDecoration(
-                                              color: Colors.black.withOpacity(.3),
+                                              color:
+                                                  Colors.black.withOpacity(.3),
                                               borderRadius:
                                                   const BorderRadius.only(
                                                 bottomLeft: Radius.circular(16),
-                                                bottomRight: Radius.circular(16),
+                                                bottomRight:
+                                                    Radius.circular(16),
                                               ),
                                             ),
                                             child: Text(
@@ -289,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen>
                     ? Center(
                         child: AnimatedSmoothIndicator(
                           activeIndex: value.indexSlider,
-                          count: value.allListProduct.length >= 2
+                          count: value.allListProduct.length >= 5
                               ? 5
                               : value.allListProduct.length,
                           effect: ExpandingDotsEffect(
@@ -320,25 +340,38 @@ class _HomeScreenState extends State<HomeScreen>
 
               SizedBox(
                 height: AdaptSize.screenWidth / 1000 * 2000,
-                child: TabBarView(
-                  controller: _tabBarController,
-                  children: [
-                    allProductView(
-                      context: context,
-                    ),
-                    gridProduct(),
-                    gridProduct(),
-                    gridProduct(),
-                    gridProduct(),
-                    gridProduct(),
-                    allProductView(
-                      context: context,
-                    ),
-                    allProductView(
-                      context: context,
-                    )
-                  ],
-                ),
+                child: Consumer<ProductViewModel>(
+                    builder: (context, value, child) {
+                  return TabBarView(
+                    controller: _tabBarController,
+                    children: [
+                      allProductView(
+                        context: context,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanSiwalan,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanGayamsari,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanSambirejo,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanPandeanLamper,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanSawahBesar,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanTambakRejo,
+                      ),
+                      gridProduct(
+                        listKelurahan: value.kelurahanKaligawe,
+                      ),
+                    ],
+                  );
+                }),
               ),
             ],
           ),

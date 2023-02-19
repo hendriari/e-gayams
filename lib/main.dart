@@ -10,7 +10,6 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/enums.dart';
 import 'package:kkn_siwalan/src/utils/text_theme.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/home_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/menu_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/network_status.dart';
@@ -39,7 +38,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MenuViewModel()),
         ChangeNotifierProvider(create: (_) => ProductDummyData()),
         ChangeNotifierProvider(create: (_) => AccountViewModel()),
-        ChangeNotifierProvider(create: (_) => HomeViewModel()),
         ChangeNotifierProvider(create: (_) => ProductViewModel()),
         StreamProvider<NetworkStatus>(
           create: (_) => NetworkStatusServices().networkStatusController.stream,
