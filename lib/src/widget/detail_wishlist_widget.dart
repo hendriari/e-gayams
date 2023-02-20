@@ -6,7 +6,7 @@ import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/widget/modal_bottom_sheed.dart';
@@ -50,13 +50,13 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
+    context.read<AccountViewModel>().refreshUsers();
   }
 
   @override
   Widget build(BuildContext context) {
     final userData =
-        Provider.of<UserViewModel>(context, listen: false).usermodel;
+        Provider.of<AccountViewModel>(context, listen: false).usermodel;
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),

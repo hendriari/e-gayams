@@ -28,23 +28,23 @@ Widget readOnlyForm({
         hintStyle: Theme.of(context)
             .textTheme
             .bodyText1!
-            .copyWith(color: MyColor.neutral600, fontSize: AdaptSize.pixel14),
+            .copyWith(color: MyColor.neutral500, fontSize: AdaptSize.pixel14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide(
-            color: MyColor.neutral700.withOpacity(.6),
+            color: MyColor.neutral500.withOpacity(.6),
           ),
         ),
         errorBorder: OutlineInputBorder(

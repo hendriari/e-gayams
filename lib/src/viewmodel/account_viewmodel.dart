@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/model/user_model.dart';
 import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/services/firestore.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
@@ -8,6 +10,31 @@ import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 
 class AccountViewModel with ChangeNotifier {
+
+  final FirebaseAuthServices _firebaseAuthServices = FirebaseAuthServices();
+
+  UserModel? _userModel;
+
+  UserModel? get usermodel => _userModel;
+
+  Future refreshUsers() async {
+    UserModel userModels = await _firebaseAuthServices.getUserDetail();
+    _userModel = userModels;
+    notifyListeners();
+  }
+
+
+  /// get user data from firestore
+  final Stream<DocumentSnapshot<Map<String, dynamic>>> _userData =
+  FirebaseFirestore.instance
+      .collection('newUser')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
+
+  get userData => _userData;
+
+  /// -------------------------------------------------------------------------
+
   final List<String> _profileMenu = [
     'Edit Profile',
     'About',
@@ -88,14 +115,14 @@ class AccountViewModel with ChangeNotifier {
       _saveLoading = false;
       ResponseDialog.responseInfoDialog(
         context: context,
-        image: 'success',
+        image: 'success.png',
         description: 'Cek email sekarang !',
       );
       notifyListeners();
     } on FirebaseException catch (e) {
       ResponseDialog.responseInfoDialog(
         context: context,
-        image: 'error',
+        image: 'error.png',
         description: e.message!,
       );
       _saveLoading = false;

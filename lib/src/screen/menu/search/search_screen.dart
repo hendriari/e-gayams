@@ -4,7 +4,7 @@ import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/search_produc_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/search_widget.dart';
@@ -30,9 +30,9 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     final productProvider =
-        Provider.of<SearchProductViewModel>(context, listen: false);
+        Provider.of<ProductViewModel>(context, listen: false);
     if (productProvider.items.isEmpty) {
-      productProvider.fetchData();
+      productProvider.fetchAllData();
     }
   }
 
@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 onChanged: (value) {
-                  Provider.of<SearchProductViewModel>(context, listen: false)
+                  Provider.of<ProductViewModel>(context, listen: false)
                       .filters = value.split(' ');
                 },
                 hint: 'Cari Produk',
@@ -88,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
 
               /// search Product
-              Consumer<SearchProductViewModel>(
+              Consumer<ProductViewModel>(
                 builder: (context, itemProvider, child) {
                   return Expanded(
                     child: itemProvider.items.isNotEmpty
@@ -110,35 +110,35 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             })
                         : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/image/error.png',
-                              height: AdaptSize.screenWidth / 2,
-                              width: AdaptSize.screenWidth / 2,
-                            ),
-                            SizedBox(
-                              height: AdaptSize.screenHeight * .012,
-                            ),
-                            Text(
-                              'Produk apa yang Kamu cari ?',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(fontSize: AdaptSize.pixel15),
-                            ),
-                            SizedBox(
-                              height: AdaptSize.screenHeight * .01,
-                            ),
-                            Text(
-                                'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
-                                textAlign: TextAlign.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/image/error.png',
+                                height: AdaptSize.screenWidth / 2,
+                                width: AdaptSize.screenWidth / 2,
+                              ),
+                              SizedBox(
+                                height: AdaptSize.screenHeight * .012,
+                              ),
+                              Text(
+                                'Produk apa yang Kamu cari ?',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
-                                    .copyWith(fontSize: AdaptSize.pixel14))
-                          ],
-                        ),
+                                    .headline6!
+                                    .copyWith(fontSize: AdaptSize.pixel15),
+                              ),
+                              SizedBox(
+                                height: AdaptSize.screenHeight * .01,
+                              ),
+                              Text(
+                                  'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(fontSize: AdaptSize.pixel14))
+                            ],
+                          ),
                   );
                 },
               ),

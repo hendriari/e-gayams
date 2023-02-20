@@ -3,9 +3,10 @@ import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/notification_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/search/search_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/umkm/detail_product_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/detail_product_screen.dart';
 
 class NavigasiViewModel {
   /// navigate to onboarding
@@ -134,6 +135,16 @@ class NavigasiViewModel {
       context,
       CupertinoPageRoute(
         builder: (context) => const SearchScreen(),
+      ),
+    );
+  }
+
+  /// navigate to login
+  void navigateToNotification(BuildContext context) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => const NotificationScreen(),
       ),
     );
   }

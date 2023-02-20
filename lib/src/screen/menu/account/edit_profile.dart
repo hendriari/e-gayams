@@ -6,7 +6,6 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/utils/form_validators.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
@@ -31,7 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
+    context.read<AccountViewModel>().refreshUsers();
   }
 
   @override
@@ -45,7 +44,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<UserViewModel>(context, listen: false);
+    final profileProvider = Provider.of<AccountViewModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: defaultAppBar(
@@ -56,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onPressed: () {
             NavigasiViewModel().navigasiToMenuWithIndex(
               context: context,
-              index: 2,
+              index: 3,
             );
           },
           icon: Icon(

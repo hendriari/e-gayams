@@ -44,15 +44,15 @@ class _MenuScreenState extends State<MenuScreen> {
   Container _bottomNavBar(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        left: AdaptSize.pixel12,
-        right: AdaptSize.pixel12,
-        bottom: AdaptSize.pixel16,
+        left: AdaptSize.pixel6,
+        right: AdaptSize.pixel6,
+        bottom: AdaptSize.pixel6,
       ),
-      height: AdaptSize.screenWidth / 1000 * 180,
+      height: AdaptSize.screenWidth / 1000 * 160,
       width: double.infinity,
       decoration: BoxDecoration(
         color: MyColor.primary300,
-        borderRadius: BorderRadius.circular(40),
+        borderRadius: BorderRadius.circular(35),
       ),
       child: Consumer<MenuViewModel>(
         builder: (context, value, child) {
@@ -70,10 +70,10 @@ class _MenuScreenState extends State<MenuScreen> {
             },
             currentIndex: value.currentIndex,
             items: const <BottomNavigationBarItem>[
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.home_filled),
-              //   label: 'Home',
-              // ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled),
+                label: 'Home',
+              ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart_outlined),
                 label: 'UMKM',

@@ -77,12 +77,20 @@ class FirestoreServices {
     }
   }
 
-  // /// get all product
-  // Future<ProductModel> getAllProduct() async {
-  //
-  //   DocumentSnapshot documentSnapshot =
-  //   await FirebaseFirestore.instance.collection('productMitra').doc('productId').get();
-  //
-  //   return ProductModel.fromSnap(documentSnapshot);
-  // }
+  /// fetch all Product
+  Future<void> fetchAllProductData({
+  required List<Map<String, dynamic>> items,
+  required List<Map<String, dynamic>> filteredItems,
+}) async {
+    try {
+      debugPrint('fetch data..');
+      var snapShot = await _firestore.collection('productMitra').get();
+      items = snapShot.docs.map((document) => document.data()).toList();
+      filteredItems = items;
+      debugPrint('fetch data success !');
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('fetch data gagal !');
+    }
+  }
 }

@@ -87,4 +87,15 @@ class MyColor {
   static HexColor warning300 = HexColor("B1711B");
   static HexColor warning200 = HexColor("8F5511");
   static HexColor warning100 = HexColor("76400A");
+
+  /// dark purple
+  static HexColor purpel100 = HexColor("180A3B");
+  static HexColor purpel200 = HexColor("241147");
+  static HexColor purpel300 = HexColor("331C59");
+  static HexColor purpel400 = HexColor("45286A");
+  static HexColor purpel500 = HexColor("59387c");
+  static HexColor purpel600 = HexColor("8E67B0");
+  static HexColor purpel700 = HexColor("BA90D7");
+  static HexColor purpel800 = HexColor("DEBCF1");
+  static HexColor purpel900 = HexColor("EFDDF8");
 }

@@ -1,14 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
+import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/search_produc_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/user_viewmodel.dart';
-import 'package:kkn_siwalan/src/widget/list_product_card.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:provider/provider.dart';
 
@@ -23,19 +20,18 @@ class _UmkmScreenState extends State<UmkmScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserViewModel>().refreshUsers();
-    context.read<SearchProductViewModel>().fetchData();
-    // final productProvider =
-    // Provider.of<SearchProductViewModel>(context, listen: false);
-    // if (productProvider.items.isEmpty) {
-    //   productProvider.fetchData();
-    // }
+    context.read<AccountViewModel>().refreshUsers();
+    final productProvider =
+        Provider.of<ProductViewModel>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      if (productProvider.allListProduct.isEmpty) {
+        productProvider.fetchAllData();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final productProvider =
-        Provider.of<ProductViewModel>(context, listen: false);
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
@@ -60,7 +56,7 @@ class _UmkmScreenState extends State<UmkmScreen> {
                         .headline6!
                         .copyWith(fontSize: AdaptSize.pixel20),
                   ),
-                  Consumer<UserViewModel>(builder: (context, value, child) {
+                  Consumer<AccountViewModel>(builder: (context, value, child) {
                     return Text(
                       value.usermodel?.username ?? 'Loading..',
                       style: Theme.of(context)
@@ -100,56 +96,6 @@ class _UmkmScreenState extends State<UmkmScreen> {
               SizedBox(
                 height: AdaptSize.pixel16,
               ),
-
-              StreamBuilder(
-                  stream: productProvider.productStream,
-                  builder: (context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: MyColor.danger600,
-                        ),
-                      );
-                    }
-                    if (snapshot.hasData) {
-                      return SizedBox(
-                        width: double.infinity,
-                        child: MediaQuery.removePadding(
-                          removeTop: true,
-                          context: context,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.docs.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return listProductCard(
-                                  context: context,
-                                  onTap: () {
-                                    NavigasiViewModel().navigasiDetailProduct(
-                                      context: context,
-                                      product:
-                                          snapshot.data!.docs[index].data(),
-                                    );
-                                  },
-                                  product: snapshot.data!.docs[index].data(),
-                                );
-                              }),
-                        ),
-                      );
-                    }
-                    return Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        'loading..',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontSize: AdaptSize.pixel14),
-                      ),
-                    );
-                  }),
             ],
           ),
         ),
