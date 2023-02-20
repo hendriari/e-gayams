@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 
-Widget tabBarWidget({
+TabBar tabBarWidget({
   required BuildContext context,
   required TabController tabController,
 }) {
-  return SizedBox(
-    height: AdaptSize.screenWidth / 1000 * 110,
-    child: TabBar(
+  return TabBar(
       isScrollable: true,
       controller: tabController,
       indicatorSize: TabBarIndicatorSize.label,
@@ -122,6 +120,30 @@ Widget tabBarWidget({
           ),
         ),
       ],
-    ),
-  );
+    );
+}
+
+class SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  SliverAppBarDelegate(this.tabBar);
+
+  final TabBar tabBar;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: MyColor.neutral900,
+      child: tabBar,
+    );
+  }
+
+  @override
+  bool shouldRebuild(SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
 }

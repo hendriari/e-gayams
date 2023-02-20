@@ -48,7 +48,7 @@ class _MenuScreenState extends State<MenuScreen> {
         right: AdaptSize.pixel6,
         bottom: AdaptSize.pixel6,
       ),
-      height: AdaptSize.screenWidth / 1000 * 180,
+      height: AdaptSize.screenWidth / 1000 * 160,
       width: double.infinity,
       decoration: BoxDecoration(
         color: MyColor.primary300,

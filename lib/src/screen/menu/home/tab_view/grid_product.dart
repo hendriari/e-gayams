@@ -14,14 +14,15 @@ Widget gridProduct({
   return Consumer<ProductViewModel>(builder: (context, value, child) {
     return listKelurahan.isNotEmpty
         ? GridView.builder(
+      shrinkWrap: true,
             itemCount: listKelurahan.length,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.only(top: AdaptSize.pixel8),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: MediaQuery.of(context).size.width /
-                  (MediaQuery.of(context).size.height / 1.6),
+              mainAxisExtent: AdaptSize.screenWidth / 1000 * 620,
             ),
+
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
