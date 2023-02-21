@@ -4,7 +4,7 @@ import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/search_widget.dart';
@@ -30,7 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     final productProvider =
-        Provider.of<ProductViewModel>(context, listen: false);
+        Provider.of<ProductParsers>(context, listen: false);
     if (productProvider.items.isEmpty) {
       productProvider.fetchAllData();
     }
@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 onChanged: (value) {
-                  Provider.of<ProductViewModel>(context, listen: false)
+                  Provider.of<ProductParsers>(context, listen: false)
                       .filters = value.split(' ');
                 },
                 hint: 'Cari Produk',
@@ -88,7 +88,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
 
               /// search Product
-              Consumer<ProductViewModel>(
+              Consumer<ProductParsers>(
                 builder: (context, itemProvider, child) {
                   return Expanded(
                     child: itemProvider.items.isNotEmpty

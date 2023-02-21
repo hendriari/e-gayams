@@ -10,7 +10,7 @@ class ProductModel {
   String productLocation;
   String productBenefit;
   String productPrice;
-  List productCategory;
+  String productCategory;
   String productRW;
   String productRT;
   String sellerName;

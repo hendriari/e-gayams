@@ -4,6 +4,7 @@ import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/notification_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/product_category/list_category.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/search/search_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/detail_product_screen.dart';
@@ -130,7 +131,7 @@ class NavigasiViewModel {
   }
 
   /// search screen
-  void navigasiSearchProductScreen(BuildContext context){
+  void navigasiSearchProductScreen(BuildContext context) {
     Navigator.push(
       context,
       CupertinoPageRoute(
@@ -145,6 +146,23 @@ class NavigasiViewModel {
       context,
       CupertinoPageRoute(
         builder: (context) => const NotificationScreen(),
+      ),
+    );
+  }
+
+  /// navigasi to product by category
+  void navigasiToPorudctByCategory({
+    required BuildContext context,
+    required String headerName,
+    required List<Map<String, dynamic>> listOfProductCategory,
+  }) {
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => ListCategoryProductScreen(
+          headerName: headerName,
+          listOfProduct: listOfProductCategory,
+        ),
       ),
     );
   }

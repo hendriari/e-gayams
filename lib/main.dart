@@ -14,6 +14,7 @@ import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/menu_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/network_status.dart';
 import 'package:kkn_siwalan/src/viewmodel/onboarding_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductDummyData()),
         ChangeNotifierProvider(create: (_) => AccountViewModel()),
         ChangeNotifierProvider(create: (_) => ProductViewModel()),
+        ChangeNotifierProvider(create: (_) => ProductParsers()),
         StreamProvider<NetworkStatus>(
           create: (_) => NetworkStatusServices().networkStatusController.stream,
           initialData: NetworkStatus.online,

@@ -29,11 +29,7 @@ class ProductDummyData with ChangeNotifier {
           productLocation: _faker.address.country() + _faker.address.city(),
           productBenefit: _faker.lorem.sentence(),
           productPrice: Random().nextInt(100000).toString(),
-          productCategory: [
-            _faker.food.cuisine(),
-            _faker.food.cuisine(),
-            _faker.food.cuisine(),
-          ],
+          productCategory: _faker.food.cuisine(),
           productRW: Random().nextInt(4).toString(),
           sellerName: _faker.person.name(),
           productRT: Random().nextInt(4).toString(),

@@ -4,8 +4,9 @@ enum NetworkStatus {
 }
 
 enum StateOfConnnection {
-  doNothing,
+  isDoingNothing,
   isLoading,
-  success,
-  failed,
+  isStart,
+  isReady,
+  isFailed
 }
