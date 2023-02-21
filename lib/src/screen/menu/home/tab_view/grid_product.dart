@@ -65,7 +65,7 @@ Widget gridProduct({
                           placeholder: (context, url) => shimmerLoading(
                             child: cardShimmerWidget(
                               borderRadius: 12,
-                              imagesShimmer: 'logo_kkn.png',
+                              imagesShimmer: 'logo_user.png',
                               width: double.infinity,
                               height: AdaptSize.screenWidth / 1000 * 300,
                             ),

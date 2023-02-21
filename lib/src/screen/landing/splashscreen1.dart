@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: 'assets/image/logo_kkn.png',
+      splash: 'assets/image/logo_user.png',
       duration: 1000,
       //curve: Curves.ease,
       splashIconSize: 250,

@@ -70,7 +70,7 @@ dev_dependencies:
   flutter_launcher_icons: any
 
 flutter_icons:
-  image_path: "assets/image/logo_kkn.png"
+  image_path: "assets/image/logo_user.png"
   android: true
   ios: true
 

@@ -97,7 +97,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             height: AdaptSize.screenWidth / 1000 * 800,
                             width: double.infinity,
                             borderRadius: 16,
-                            imagesShimmer: 'logo_kkn_siwalan.png',
+                            imagesShimmer: 'logo_user.png',
                           ),
                         ),
                         errorWidget: (context, url, error) =>
@@ -240,7 +240,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             placeholder: (context, url) => shimmerLoading(
                               child: cardShimmerWidget(
                                 borderRadius: 16,
-                                imagesShimmer: 'logo_kkn_siwalan.png',
+                                imagesShimmer: 'logo_user.png',
                                 height: AdaptSize.screenWidth / 1000 * 300,
                                 width: AdaptSize.screenWidth / 1000 * 305,
                                 margin: EdgeInsets.only(
