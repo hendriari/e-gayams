@@ -5,7 +5,6 @@ import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
-import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:provider/provider.dart';
 
@@ -17,18 +16,18 @@ class UmkmScreen extends StatefulWidget {
 }
 
 class _UmkmScreenState extends State<UmkmScreen> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<AccountViewModel>().refreshUsers();
-    final productProvider =
-        Provider.of<ProductViewModel>(context, listen: false);
-    Future.delayed(Duration.zero, () {
-      if (productProvider.allListProduct.isEmpty) {
-        productProvider.fetchAllData();
-      }
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   context.read<AccountViewModel>().refreshUsers();
+  //   final productProvider =
+  //       Provider.of<ProductViewModel>(context, listen: false);
+  //   Future.delayed(Duration.zero, () {
+  //     if (productProvider.allListProduct.isEmpty) {
+  //       productProvider.fetchAllData();
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

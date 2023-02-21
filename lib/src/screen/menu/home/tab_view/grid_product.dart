@@ -14,15 +14,14 @@ Widget gridProduct({
   return Consumer<ProductViewModel>(builder: (context, value, child) {
     return listKelurahan.isNotEmpty
         ? GridView.builder(
-      shrinkWrap: true,
+            shrinkWrap: true,
             itemCount: listKelurahan.length,
             physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.only(top: AdaptSize.pixel8),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisExtent: AdaptSize.screenWidth / 1000 * 620,
+              mainAxisExtent: AdaptSize.screenWidth / 1000 * 800,
             ),
-
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
@@ -80,43 +79,91 @@ Widget gridProduct({
                           ),
                         ),
                       ),
-
                       SizedBox(
                         height: AdaptSize.pixel8,
                       ),
-
                       Text(
                         listKelurahan[index]['productName'],
                         style: Theme.of(context)
                             .textTheme
                             .headline6!
-                            .copyWith(fontSize: AdaptSize.pixel14),
+                            .copyWith(fontSize: AdaptSize.pixel15),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
+
+                      SizedBox(
+                        height: AdaptSize.pixel8,
+                      ),
+
+                      /// seller Name
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/image/shop.png',
+                            height: AdaptSize.pixel22,
+                            width: AdaptSize.pixel22,
+                          ),
+                          Expanded(
+                            child: Text(
+                              listKelurahan[index]['sellerName'],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(fontSize: AdaptSize.pixel12),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      /// store location
+                      Row(
+                        children: [
+                          Image.asset(
+                            'assets/image/location.png',
+                            height: AdaptSize.pixel22,
+                            width: AdaptSize.pixel22,
+                          ),
+                          Expanded(
+                            child: Text(
+                              listKelurahan[index]['productLocation'],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(fontSize: AdaptSize.pixel12),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const Spacer(),
+
+                      /// price
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            listKelurahan[index]['productPrice'],
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline6!
-                                .copyWith(fontSize: AdaptSize.pixel12),
+                          Expanded(
+                            child: Text(
+                              listKelurahan[index]['productPrice'],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(
+                                      fontSize: AdaptSize.pixel14,
+                                      color: MyColor.warning400),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Card(
-                            color: MyColor.neutral700,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: AdaptSize.pixel3,
-                                  right: AdaptSize.pixel3),
-                              child: Icon(
-                                Icons.arrow_forward,
-                                size: AdaptSize.pixel20,
-                              ),
-                            ),
-                          )
+                          Image.asset(
+                            'assets/image/gotoshop.png',
+                            height: AdaptSize.pixel28,
+                            width: AdaptSize.pixel28,
+                          ),
                         ],
                       ),
                     ],
@@ -130,7 +177,7 @@ Widget gridProduct({
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(fontSize: AdaptSize.pixel16),
+                  .copyWith(fontSize: AdaptSize.pixel14),
             ),
           );
   });
