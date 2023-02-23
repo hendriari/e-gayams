@@ -62,7 +62,7 @@ Widget productCardWidget({
               height: AdaptSize.screenWidth / 1000 * 500,
               width: double.infinity,
               borderRadius: 16,
-              imagesShimmer: 'logo_kkn.png',
+              imagesShimmer: 'logo_user.png',
             ),
           ),
           errorWidget: (context, url, error) => errorShimmerWidget(

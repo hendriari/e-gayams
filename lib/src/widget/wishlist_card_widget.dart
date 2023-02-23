@@ -60,7 +60,7 @@ Widget whistListCard({
                     height: AdaptSize.screenWidth / 1000 * 340,
                     margin: const EdgeInsets.all(6),
                     borderRadius: 16,
-                    imagesShimmer: 'logo_kkn.png',
+                    imagesShimmer: 'logo_user.png',
                   ),
                 ),
                 errorWidget: (context, url, error) => cardShimmerWidget(

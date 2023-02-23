@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               /// signature
               Image.asset(
-                'assets/image/logo_kkn.png',
+                'assets/image/logo_user.png',
                 height: AdaptSize.screenWidth / 1000 * 450,
                 width: AdaptSize.screenWidth / 1000 * 450,
                 color: Colors.white.withOpacity(.2),

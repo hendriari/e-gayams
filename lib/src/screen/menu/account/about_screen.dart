@@ -59,7 +59,7 @@ class AboutScreen extends StatelessWidget {
               ),
               Center(
                 child: Image.asset(
-                  'assets/image/logo_kkn.png',
+                  'assets/image/logo_user.png',
                   height: AdaptSize.pixel75,
                 ),
               ),

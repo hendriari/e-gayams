@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 StateOfConnnection.isLoading) {
                               return cardShimmerWidget(
                                 borderRadius: 16,
-                                imagesShimmer: 'logo_kkn_siwalan.png',
+                                imagesShimmer: 'logo_user.png',
                                 height: AdaptSize.screenWidth / 1000 * 450,
                                 width: double.infinity,
                               );
@@ -332,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             child: cardShimmerWidget(
                                               borderRadius: 16,
                                               imagesShimmer:
-                                                  'logo_kkn_siwalan.png',
+                                                  'logo_user.png',
                                               margin: EdgeInsets.all(
                                                 AdaptSize.pixel8,
                                               ),
@@ -370,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   children: [
                                     cardShimmerWidget(
                                       borderRadius: 16,
-                                      imagesShimmer: 'logo_kkn_siwalan.png',
+                                      imagesShimmer: 'logo_user.png',
                                       height:
                                           AdaptSize.screenWidth / 1000 * 450,
                                       width: double.infinity,

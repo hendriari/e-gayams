@@ -73,7 +73,7 @@ Widget allProductView({
                         width: AdaptSize.screenWidth / 1000 * 380,
                         margin: EdgeInsets.only(right: AdaptSize.pixel8),
                         borderRadius: 16,
-                        imagesShimmer: 'logo_kkn_siwalan.png',
+                        imagesShimmer: 'logo_user.png',
                       ),
                     ),
                     errorWidget: (context, url, error) => errorShimmerWidget(

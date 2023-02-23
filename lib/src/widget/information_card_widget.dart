@@ -89,7 +89,7 @@ Widget infoCardWidget({
           top: AdaptSize.pixel8,
         ),
         borderRadius: 16,
-        imagesShimmer: 'logo_kkn_siwalan.png',
+        imagesShimmer: 'logo_user.png',
       ),
     ),
     errorWidget: (context, url, error) => errorShimmerWidget(
