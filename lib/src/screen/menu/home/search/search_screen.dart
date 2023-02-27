@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/tab_view/grid_product.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
-import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
-import 'package:kkn_siwalan/src/widget/search_widget.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -24,16 +23,6 @@ class _SearchScreenState extends State<SearchScreen> {
   void dispose() {
     super.dispose();
     _searchController.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    final productProvider =
-        Provider.of<ProductParsers>(context, listen: false);
-    if (productProvider.items.isEmpty) {
-      productProvider.fetchAllData();
-    }
   }
 
   @override
@@ -69,15 +58,17 @@ class _SearchScreenState extends State<SearchScreen> {
                 context: context,
                 textEditingController: _searchController,
                 suffix: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    /// show modal bottom sheet here
+                  },
                   icon: Icon(
-                    Icons.search,
+                    Icons.analytics_outlined,
                     color: MyColor.neutral400,
                   ),
                 ),
                 onChanged: (value) {
-                  Provider.of<ProductParsers>(context, listen: false)
-                      .filters = value.split(' ');
+                  Provider.of<ProductParsers>(context, listen: false).filters =
+                      value.split(' ');
                 },
                 hint: 'Cari Produk',
                 label: 'Cari Produk',
@@ -92,23 +83,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context, itemProvider, child) {
                   return Expanded(
                     child: itemProvider.items.isNotEmpty
-                        ? ListView.builder(
-                            itemCount: itemProvider.items.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                borderRadius: BorderRadius.circular(16),
-                                splashColor: MyColor.neutral900,
-                                onTap: () {
-                                  NavigasiViewModel().navigasiDetailProduct(
-                                    context: context,
-                                    product: itemProvider.items[index],
-                                  );
-                                },
-                                child: productCardWidget(
-                                    context: context,
-                                    product: itemProvider.items[index]),
-                              );
-                            })
+                        ? gridProduct(
+                            context: context,
+                            scrollPhysics: const BouncingScrollPhysics(),
+                            listKelurahan: itemProvider.items,
+                          )
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

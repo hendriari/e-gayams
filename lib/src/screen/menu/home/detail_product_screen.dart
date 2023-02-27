@@ -118,9 +118,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           borderRadius: BorderRadius.circular(14),
                           splashColor: MyColor.neutral900,
                           child: Card(
-                            color: MyColor.neutral600,
+                            color: MyColor.neutral900,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(40),
                             ),
                             margin: EdgeInsets.all(AdaptSize.pixel10),
                             child: Icon(

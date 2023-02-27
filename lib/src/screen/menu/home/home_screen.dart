@@ -457,24 +457,31 @@ class _HomeScreenState extends State<HomeScreen>
                     listOfProduct: value.allListProduct,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSiwalan,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanGayamsari,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSambirejo,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanPandeanLamper,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSawahBesar,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanTambakRejo,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanKaligawe,
                   ),
                 ],

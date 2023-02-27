@@ -6,7 +6,7 @@ import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart'
 import 'package:kkn_siwalan/src/screen/menu/home/notification_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/product_category/list_category.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/search/search_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/search/search_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/detail_product_screen.dart';
 
 class NavigasiViewModel {

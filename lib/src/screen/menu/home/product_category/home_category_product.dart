@@ -16,6 +16,7 @@ Widget categoryProductWidget({
     width: double.infinity,
     child: MediaQuery.removePadding(
       removeTop: true,
+      removeBottom: true,
       context: context,
       child: GridView.builder(
           shrinkWrap: true,
