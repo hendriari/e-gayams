@@ -40,7 +40,7 @@ class AboutScreen extends StatelessWidget {
                 'Aplikasi Pasar Siwalan merupakan Inovasi hasil mahasiswa KKN Universitas PGRI Semarang di Kelurahan Siwalan. Aplikasi ini digunakan untuk mengenalkan produk yang tersedia di Kelurahan Siwalan, Kecamatan Gayamsari, Kota Semarang. Aplikasi ini dibuat dengan tujuan membantu pelaku UMKM di kelurahan siwalan untuk menjangkau pasar yang lebih luas. Dengan adanya aplikasi ini semoga dapat membantu pelaku UMKM di Kelurahan Siwalan, Kecamatan Gayamsari, Kota Semarang.',
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(fontSize: AdaptSize.pixel14),
                 textAlign: TextAlign.justify,
               ),
@@ -51,7 +51,7 @@ class AboutScreen extends StatelessWidget {
                 'Last revised on Februari 3, 2023',
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(fontSize: AdaptSize.pixel14),
               ),
               SizedBox(

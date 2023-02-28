@@ -106,7 +106,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             'Selanjutnya',
                             style: Theme.of(context)
                                 .textTheme
-                                .button!
+                                .labelLarge!
                                 .copyWith(fontSize: AdaptSize.pixel16),
                           ),
                   );

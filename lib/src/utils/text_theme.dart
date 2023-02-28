@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final myTextTheme = TextTheme(
-  headline1:
+  displayLarge:
       GoogleFonts.rubik(fontWeight: FontWeight.w300, letterSpacing: -1.5),
-  headline2:
+  displayMedium:
       GoogleFonts.rubik(fontWeight: FontWeight.w300, letterSpacing: -0.5),
-  headline3: GoogleFonts.rubik(
+  displaySmall: GoogleFonts.rubik(
     fontWeight: FontWeight.w800,
   ),
-  headline4:
+  headlineMedium:
       GoogleFonts.rubik(fontWeight: FontWeight.w600, letterSpacing: 0.25),
-  headline5: GoogleFonts.rubik(fontWeight: FontWeight.w500),
-  headline6:
+  headlineSmall: GoogleFonts.rubik(fontWeight: FontWeight.w500),
+  titleLarge:
       GoogleFonts.rubik(fontWeight: FontWeight.w600, letterSpacing: 0.15),
-  subtitle1: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.1),
-  subtitle2: GoogleFonts.rubik(fontWeight: FontWeight.w500, letterSpacing: 0.1),
-  bodyText1: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.5),
-  bodyText2:
+  titleMedium: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.1),
+  titleSmall: GoogleFonts.rubik(fontWeight: FontWeight.w500, letterSpacing: 0.1),
+  bodyLarge: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.5),
+  bodyMedium:
       GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.25),
-  button: GoogleFonts.rubik(fontWeight: FontWeight.w500, letterSpacing: 1.25),
-  caption: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.4),
-  overline: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.4),
+  labelLarge: GoogleFonts.rubik(fontWeight: FontWeight.w500, letterSpacing: 1.25),
+  bodySmall: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.4),
+  labelSmall: GoogleFonts.rubik(fontWeight: FontWeight.w400, letterSpacing: 0.4),
 );

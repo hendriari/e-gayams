@@ -12,7 +12,7 @@ Widget categoryProductWidget({
 }) {
   final categoryProvider = Provider.of<ProductParsers>(context, listen: false);
   return SizedBox(
-    height: AdaptSize.screenWidth / 1000 * 690,
+    height: AdaptSize.screenWidth / 1000 * 720,
     width: double.infinity,
     child: MediaQuery.removePadding(
       removeTop: true,
@@ -23,7 +23,7 @@ Widget categoryProductWidget({
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
-            mainAxisExtent: AdaptSize.screenWidth / 1000 * 330,
+            mainAxisExtent: AdaptSize.screenWidth / 1000 * 360,
           ),
           itemCount: gridContent.length,
           itemBuilder: (context, index) {
@@ -84,7 +84,7 @@ Widget categoryProductWidget({
                     gridContent[index][1],
                     style: Theme.of(context)
                         .textTheme
-                        .headline6!
+                        .titleLarge!
                         .copyWith(fontSize: AdaptSize.pixel12),
                     textAlign: TextAlign.center,
                     maxLines: 2,

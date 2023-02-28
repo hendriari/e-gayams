@@ -12,7 +12,7 @@ TabBar tabBarWidget({
       indicatorSize: TabBarIndicatorSize.label,
       labelStyle: Theme.of(context)
           .textTheme
-          .headline6!
+          .titleLarge!
           .copyWith(fontSize: AdaptSize.pixel14),
       unselectedLabelColor: MyColor.neutral600,
       labelColor: MyColor.primary300,

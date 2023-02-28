@@ -34,7 +34,7 @@ Widget productCardWidget({
           product['productName'],
           style: Theme.of(context)
               .textTheme
-              .headline6!
+              .titleLarge!
               .copyWith(fontSize: AdaptSize.pixel16),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
@@ -81,7 +81,7 @@ Widget productCardWidget({
           product['sellerName'],
           style: Theme.of(context)
               .textTheme
-              .headline6!
+              .titleLarge!
               .copyWith(fontSize: AdaptSize.pixel16),
         ),
 
@@ -102,7 +102,7 @@ Widget productCardWidget({
               product['productLocation'],
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1!
+                  .bodyLarge!
                   .copyWith(fontSize: AdaptSize.pixel14),
             ),
           ],
@@ -116,7 +116,7 @@ Widget productCardWidget({
           product['productPrice'],
           style: Theme.of(context)
               .textTheme
-              .headline6!
+              .titleLarge!
               .copyWith(fontSize: AdaptSize.pixel14),
         ),
 
@@ -125,7 +125,7 @@ Widget productCardWidget({
         /// date published
         Text(
           'update at : ${DateFormat.yMMMd().format(product['datePublished'].toDate())}',
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 fontSize: AdaptSize.pixel10,
                 color: MyColor.neutral400,
               ),

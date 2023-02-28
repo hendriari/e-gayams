@@ -67,7 +67,7 @@ Widget infoCardWidget({
                     ),
                     child: Text(
                       textInformation,
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: AdaptSize.pixel16,
                             color: MyColor.neutral900,
                           ),

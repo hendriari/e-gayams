@@ -103,7 +103,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 'Produk apa yang Kamu cari ?',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .copyWith(fontSize: AdaptSize.pixel15),
                               ),
                               SizedBox(
@@ -114,7 +114,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(fontSize: AdaptSize.pixel14))
                             ],
                           ),

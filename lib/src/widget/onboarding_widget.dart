@@ -25,14 +25,14 @@ Widget onboardingWidget({
         title,
         style: Theme.of(context)
             .textTheme
-            .headline6!
+            .titleLarge!
             .copyWith(fontSize: AdaptSize.pixel16),
       ),
       Text(
         description,
         style: Theme.of(context)
             .textTheme
-            .bodyText1!
+            .bodyLarge!
             .copyWith(fontSize: AdaptSize.pixel14),
         textAlign: TextAlign.center,
       ),

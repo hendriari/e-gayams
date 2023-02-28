@@ -103,7 +103,7 @@ class WishlistScreen extends StatelessWidget {
                             'Wishlist kosong',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(fontSize: AdaptSize.pixel16),
                           ),
                           SizedBox(

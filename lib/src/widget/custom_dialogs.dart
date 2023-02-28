@@ -55,7 +55,7 @@ class CustomDialogs {
 
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel16,
                         ),
                   ),
@@ -75,7 +75,7 @@ class CustomDialogs {
                         onPressed: onPress1,
                         child: Text(
                           textButton1,
-                          style: Theme.of(context).textTheme.button!.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                 fontSize: AdaptSize.pixel14,
                                 color: MyColor.neutral900,
                               ),
@@ -91,7 +91,7 @@ class CustomDialogs {
                         onPressed: onPress2,
                         child: Text(
                           textButton2,
-                          style: Theme.of(context).textTheme.button!.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                 fontSize: AdaptSize.pixel14,
                               ),
                         ),
@@ -133,7 +133,7 @@ class CustomDialogs {
                   "Apa Anda yakin akan menghapus item dari Wishlist ?",
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(fontSize: AdaptSize.pixel14),
                 ),
               ),
@@ -152,7 +152,7 @@ class CustomDialogs {
                       backgroundColor: MyColor.danger400,
                       child: Text(
                         'Cancel',
-                        style: Theme.of(context).textTheme.button!.copyWith(
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               fontSize: AdaptSize.pixel12,
                               color: MyColor.neutral900,
                             ),
@@ -171,7 +171,7 @@ class CustomDialogs {
                       ),
                       child: Text(
                         'Delete',
-                        style: Theme.of(context).textTheme.button!.copyWith(
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               fontSize: AdaptSize.pixel12,
                               color: MyColor.neutral400,
                             ),
@@ -238,7 +238,7 @@ class CustomDialogs {
                   ),
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: AdaptSize.pixel16,
                     ),
                     textAlign: TextAlign.center,
@@ -255,7 +255,7 @@ class CustomDialogs {
                     onPressed: singleOnpressed,
                     child: Text(
                       textButton1,
-                      style: Theme.of(context).textTheme.button!.copyWith(
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
                         fontSize: AdaptSize.pixel14,
                         color: MyColor.neutral900,
                       ),
@@ -278,7 +278,7 @@ class CustomDialogs {
                           textButton1,
                           style: Theme.of(context)
                               .textTheme
-                              .button!
+                              .labelLarge!
                               .copyWith(
                             fontSize: AdaptSize.pixel14,
                             color: MyColor.neutral900,
@@ -297,7 +297,7 @@ class CustomDialogs {
                           textButton2,
                           style: Theme.of(context)
                               .textTheme
-                              .button!
+                              .labelLarge!
                               .copyWith(
                             fontSize: AdaptSize.pixel14,
                           ),

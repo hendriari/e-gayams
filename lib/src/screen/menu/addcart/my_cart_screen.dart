@@ -54,7 +54,7 @@ class _MyCardScreenState extends State<MyCardScreen> {
                           'Anda tidak memiliki pesanan',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel16),
                         ),
 

@@ -16,10 +16,13 @@ Widget gridProduct({
           shrinkWrap: true,
           itemCount: listKelurahan.length,
           physics: scrollPhysics ?? const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(top: AdaptSize.pixel8),
+          padding: EdgeInsets.only(
+            top: AdaptSize.pixel8,
+            bottom: AdaptSize.screenWidth / 1000 * 180,
+          ),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            mainAxisExtent: AdaptSize.screenWidth / 1000 * 800,
+            mainAxisExtent: AdaptSize.screenWidth / 1000 * 850,
           ),
           itemBuilder: (context, index) {
             return InkWell(
@@ -84,7 +87,7 @@ Widget gridProduct({
                       listKelurahan[index]['productName'],
                       style: Theme.of(context)
                           .textTheme
-                          .headline6!
+                          .titleLarge!
                           .copyWith(fontSize: AdaptSize.pixel15),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -107,7 +110,7 @@ Widget gridProduct({
                             listKelurahan[index]['sellerName'],
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6!
+                                .titleLarge!
                                 .copyWith(fontSize: AdaptSize.pixel12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -129,7 +132,7 @@ Widget gridProduct({
                             listKelurahan[index]['productLocation'],
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText1!
+                                .bodyLarge!
                                 .copyWith(fontSize: AdaptSize.pixel12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -149,7 +152,7 @@ Widget gridProduct({
                             listKelurahan[index]['productPrice'],
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6!
+                                .titleLarge!
                                 .copyWith(
                                     fontSize: AdaptSize.pixel14,
                                     color: MyColor.warning400),
@@ -174,7 +177,7 @@ Widget gridProduct({
             'Belum Ada Product',
             style: Theme.of(context)
                 .textTheme
-                .bodyText1!
+                .bodyLarge!
                 .copyWith(fontSize: AdaptSize.pixel14),
           ),
         );

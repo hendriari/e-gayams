@@ -48,14 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Text(
                 'Login',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: AdaptSize.pixel24,
                       color: MyColor.neutral500,
                     ),
               ),
               Text(
                 'Login untuk memulai aplikasi',
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: AdaptSize.pixel12,
                       color: MyColor.neutral500,
                     ),
@@ -120,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: richTextWidget(
                     text1: 'Lupa Kata Sandi? ',
                     text2: 'Reset Passwords',
-                    textStyle1: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    textStyle1: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel10, color: MyColor.neutral600),
-                    textStyle2: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    textStyle2: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel10, color: MyColor.warning600),
                     recognizer2: TapGestureRecognizer()
                       ..onTap = () async {
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                       : Text(
                           'Login',
-                          style: Theme.of(context).textTheme.button!.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                 fontSize: AdaptSize.pixel16,
                               ),
                         ),
@@ -172,11 +172,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: richTextWidget(
                     text1: 'Belum punya akun? ',
                     text2: 'Daftar',
-                    textStyle1: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    textStyle1: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel12,
                           color: MyColor.neutral600,
                         ),
-                    textStyle2: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    textStyle2: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel12,
                           color: MyColor.warning600,
                         ),
