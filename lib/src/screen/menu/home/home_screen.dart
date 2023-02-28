@@ -34,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    context.read<AccountViewModel>().refreshUsers();
+    Future.delayed(
+      Duration.zero,
+      () => context.read<AccountViewModel>().refreshUsers(),
+    );
     final productParsers = Provider.of<ProductParsers>(context, listen: false);
     Future.delayed(Duration.zero, () {
       if (productParsers.allListProduct.isEmpty) {
@@ -59,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen>
         productParsers.fetchProductKelurahanKaligawe();
       }
     });
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       productParsers.fetchProductByCategory();
     });
     _tabBarController = TabController(length: 8, vsync: this);
@@ -99,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 'Hello ',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .copyWith(fontSize: AdaptSize.pixel20),
                               ),
                               Expanded(
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     value.usermodel?.username ?? 'Loading..',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline6!
+                                        .titleLarge!
                                         .copyWith(fontSize: AdaptSize.pixel20),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -136,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen>
                             'Cari Produk di Kecamatan Gayamsari ?',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6!
+                                .titleLarge!
                                 .copyWith(fontSize: AdaptSize.pixel14),
                           ),
 
@@ -258,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .headline6!
+                                                                  .titleLarge!
                                                                   .copyWith(
                                                                       fontSize:
                                                                           AdaptSize
@@ -306,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .bodyText1!
+                                                                .bodyLarge!
                                                                 .copyWith(
                                                                   fontSize:
                                                                       AdaptSize
@@ -331,8 +334,7 @@ class _HomeScreenState extends State<HomeScreen>
                                               shimmerLoading(
                                             child: cardShimmerWidget(
                                               borderRadius: 16,
-                                              imagesShimmer:
-                                                  'logo_user.png',
+                                              imagesShimmer: 'logo_user.png',
                                               margin: EdgeInsets.all(
                                                 AdaptSize.pixel8,
                                               ),
@@ -379,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       'Something Wrong',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .copyWith(
                                               fontSize: AdaptSize.pixel14),
                                     )

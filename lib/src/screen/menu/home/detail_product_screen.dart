@@ -272,7 +272,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           widget.product['productName'],
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .titleLarge!
                               .copyWith(fontSize: AdaptSize.pixel22),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -283,7 +283,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           'RW ${widget.product['productRW']}',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel12),
                         ),
                         backgroundColor: MyColor.neutral900,
@@ -312,7 +312,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         widget.product['sellerName'],
                         style: Theme.of(context)
                             .textTheme
-                            .headline6!
+                            .titleLarge!
                             .copyWith(fontSize: AdaptSize.pixel12),
                       ),
                     ],
@@ -357,7 +357,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           widget.product['productDescription'],
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel14),
                           textAlign: TextAlign.justify,
                           maxLines: null,
@@ -399,7 +399,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         child: Text(
                           widget.product['productBenefit'],
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel14,
                                   ),
                           maxLines: 2,
@@ -447,7 +447,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           widget.product['productLocation'],
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel15),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -494,7 +494,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                 widget.product['productCategory'][index],
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(
                                       fontSize: AdaptSize.pixel14,
                                       color: MyColor.neutral900,
@@ -544,7 +544,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           Text(
                             'Harga',
                             style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: Colors.black,
                                       fontSize: AdaptSize.pixel8,
                                     ),
@@ -554,7 +554,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           Text(
                             widget.product['productPrice'],
                             style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
+                                Theme.of(context).textTheme.titleLarge!.copyWith(
                                       color: Colors.black,
                                       fontSize: AdaptSize.pixel15,
                                     ),
@@ -593,7 +593,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                   'Chat akan diteruskan menggunakan aplikasi Whatsapp',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline6!
+                                      .titleLarge!
                                       .copyWith(fontSize: AdaptSize.pixel16),
                                   textAlign: TextAlign.center,
                                 ),
@@ -622,13 +622,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                         'Buka WhatsApp',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .button!
+                                            .labelLarge!
                                             .copyWith(
                                               fontSize: AdaptSize.pixel15,
                                             ),
                                       ),
                                       Icon(
-                                        Icons.whatsapp,
+                                        Icons.call,
                                         size: AdaptSize.pixel20,
                                         color: Colors.black,
                                       ),
@@ -659,7 +659,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         child: Text(
                           'CHAT PENJUAL',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: MyColor.neutral900,
                                     fontSize: AdaptSize.pixel15,
                                   ),
@@ -683,7 +683,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   }) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline6!.copyWith(
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
             fontSize: AdaptSize.pixel16,
           ),
     );
