@@ -1,3 +1,4 @@
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/model/product_model.dart';
@@ -80,9 +81,8 @@ class ProductParsers extends ProductViewModel {
                 .contains(keyword.toLowerCase()))
         .toList();
 
-    result.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    result.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _foundProduct = result;
     notifyListeners();
@@ -104,9 +104,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Siwalan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanSiwalan = results;
     debugPrint(
@@ -127,9 +126,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Gayamsari'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanGayamsari = results;
     debugPrint(
@@ -150,9 +148,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Sambirejo'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanSambirejo = results;
     debugPrint(
@@ -173,9 +170,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Pandean Lamper'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanPandeanLamper = results;
     debugPrint(
@@ -196,9 +192,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Sawah Besar'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanSawahBesar = results;
     debugPrint(
@@ -219,9 +214,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Tambakrejo'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanTambakRejo = results;
     debugPrint(
@@ -242,9 +236,8 @@ class ProductParsers extends ProductViewModel {
             .contains('Kel. Kaligawe'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _kelurahanKaligawe = results;
     debugPrint(
@@ -253,17 +246,13 @@ class ProductParsers extends ProductViewModel {
   }
 
   void filterProductByLocation() {
-    if (_listOfAllProduct.isNotEmpty) {
-      filterProductByKelurahanSiwalan();
-      filterProductByKelurahanGayamsari();
-      filterProductByKelurahanSambirejo();
-      filterProductByKelurahanPandeanLamper();
-      filterProductByKelurahanSawahBesar();
-      filterProductByKelurahanTambakrejo();
-      filterProductByKelurahanKaligawe();
-    } else {
-      fetchAllProductData();
-    }
+    filterProductByKelurahanSiwalan();
+    filterProductByKelurahanGayamsari();
+    filterProductByKelurahanSambirejo();
+    filterProductByKelurahanPandeanLamper();
+    filterProductByKelurahanSawahBesar();
+    filterProductByKelurahanTambakrejo();
+    filterProductByKelurahanKaligawe();
   }
 
   /// -------------------------------------------------------------------------
@@ -273,8 +262,7 @@ class ProductParsers extends ProductViewModel {
 
   List<ProductModel> _listOfProductCategory = [];
 
-  List<ProductModel> get listOfProductCategory =>
-      _listOfProductCategory;
+  List<ProductModel> get listOfProductCategory => _listOfProductCategory;
 
   List<ProductModel> _listMakananRingan = [];
 
@@ -285,13 +273,12 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Makanan Ringan'.toLowerCase())))
+            .toLowerCase()
+            .contains('Makanan Ringan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listMakananRingan = results;
     debugPrint(
@@ -308,20 +295,17 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Makanan'.toLowerCase())))
+            .toLowerCase()
+            .contains('Makanan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listMakanan = results;
-    debugPrint(
-        'total produk Makanan : ${_listMakanan.length.toString()}');
+    debugPrint('total produk Makanan : ${_listMakanan.length.toString()}');
     notifyListeners();
   }
-
 
   List<ProductModel> _listMinuman = [];
 
@@ -332,17 +316,15 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Minuman'.toLowerCase())))
+            .toLowerCase()
+            .contains('Minuman'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listMinuman = results;
-    debugPrint(
-        'total produk Minuman : ${_listMinuman.length.toString()}');
+    debugPrint('total produk Minuman : ${_listMinuman.length.toString()}');
     notifyListeners();
   }
 
@@ -355,17 +337,15 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Kesehatan'.toLowerCase())))
+            .toLowerCase()
+            .contains('Kesehatan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listKesehatan = results;
-    debugPrint(
-        'total produk kesehatan : ${_listKesehatan.length.toString()}');
+    debugPrint('total produk kesehatan : ${_listKesehatan.length.toString()}');
     notifyListeners();
   }
 
@@ -378,13 +358,12 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Kecantikan'.toLowerCase())))
+            .toLowerCase()
+            .contains('Kecantikan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listKecantikan = results;
     debugPrint(
@@ -401,17 +380,15 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Fashion'.toLowerCase())))
+            .toLowerCase()
+            .contains('Fashion'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listFashion = results;
-    debugPrint(
-        'total produk fashion : ${_listFashion.length.toString()}');
+    debugPrint('total produk fashion : ${_listFashion.length.toString()}');
     notifyListeners();
   }
 
@@ -424,13 +401,12 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Kerajinan Tangan'.toLowerCase())))
+            .toLowerCase()
+            .contains('Kerajinan Tangan'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listKerajinanTangan = results;
     debugPrint(
@@ -447,13 +423,12 @@ class ProductParsers extends ProductViewModel {
     List<ProductModel> results = [];
     results = _listOfAllProduct
         .where((place) => (place.productCategory
-        .toLowerCase()
-        .contains('Kategori Lainnya'.toLowerCase())))
+            .toLowerCase()
+            .contains('Kategori Lainnya'.toLowerCase())))
         .toList();
 
-    results.sort((a, b) =>
-        DateTime.parse(b.datePublished.toDate().toString())
-            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+    results.sort((a, b) => DateTime.parse(b.datePublished.toDate().toString())
+        .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
     _listKategoriLainnya = results;
     debugPrint(
@@ -470,18 +445,50 @@ class ProductParsers extends ProductViewModel {
   }
 
   void filterProductByCategory() {
-    if (_listOfAllProduct.isNotEmpty) {
-      filterProductByMakananRingan();
-      filterProductByMakanan();
-      filterProductByMinuman();
-      filterProductByKesehatan();
-      filterProductByKecantikan();
-      filterProductByFashion();
-      filterProductByKerajinanTangan();
-      filterProductByKategoriLainnya();
-    } else {
-      fetchAllProductData();
-    }
+    filterProductByMakananRingan();
+    filterProductByMakanan();
+    filterProductByMinuman();
+    filterProductByKesehatan();
+    filterProductByKecantikan();
+    filterProductByFashion();
+    filterProductByKerajinanTangan();
+    filterProductByKategoriLainnya();
   }
 
+  /// ------------------------------------------------------------------------
+  /// handle refresh function
+  handleRefresh({
+    required BuildContext context,
+  }) async {
+    stateOfConnnection = StateOfConnnection.isStart;
+    context.loaderOverlay.show();
+    notifyListeners();
+    try {
+      stateOfConnnection = StateOfConnnection.isLoading;
+      notifyListeners();
+      debugPrint('Refresh All Product..');
+      var snapShot = await _firestore
+          .collection('productMitra')
+          .orderBy('datePublished', descending: true)
+          .get();
+      _listOfAllProduct =
+          snapShot.docs.map((e) => ProductModel.fromJson(e.data())).toList();
+      debugPrint('Refresh All Product Success !');
+      filterProductByLocation();
+      filterProductByCategory();
+      stateOfConnnection = StateOfConnnection.isReady;
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        context.loaderOverlay.hide();
+      });
+      notifyListeners();
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('Refresh All Product Failed !');
+      stateOfConnnection = StateOfConnnection.isFailed;
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        context.loaderOverlay.hide();
+      });
+      notifyListeners();
+    }
+  }
 }

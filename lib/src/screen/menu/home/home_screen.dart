@@ -15,6 +15,7 @@ import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/product_category/home_category_product.dart';
+import 'package:kkn_siwalan/src/widget/loading_overlay_widget.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
     final productParsers = Provider.of<ProductParsers>(context, listen: false);
     Future.delayed(Duration.zero, () {
-      if(productParsers.listOfAllProduct.isEmpty){
+      if (productParsers.listOfAllProduct.isEmpty) {
         productParsers.fetchAllProductData();
       }
     });
@@ -60,417 +61,432 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
-        onlineChild: Padding(
-          padding: EdgeInsets.only(
-            left: AdaptSize.pixel8,
-            right: AdaptSize.pixel8,
-            top: AdaptSize.paddingTop + 2,
-          ),
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Hello ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .copyWith(fontSize: AdaptSize.pixel20),
-                              ),
-                              Expanded(
-                                child: Consumer<AccountViewModel>(
-                                    builder: (context, value, child) {
-                                  return Text(
-                                    value.usermodel?.username ?? 'Loading..',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge!
-                                        .copyWith(fontSize: AdaptSize.pixel20),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  );
-                                }),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  NavigasiViewModel()
-                                      .navigateToNotification(context);
-                                },
-                                splashColor: MyColor.neutral900,
-                                borderRadius: BorderRadius.circular(25),
-                                child: Image.asset(
-                                  'assets/grid_category/bell_notif.png',
-                                  height: AdaptSize.pixel20,
-                                  width: AdaptSize.pixel20,
+        onlineChild: loadingOverlayWidget(
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: AdaptSize.pixel8,
+              right: AdaptSize.pixel8,
+              top: AdaptSize.paddingTop + 2,
+            ),
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Hello ',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(fontSize: AdaptSize.pixel20),
                                 ),
-                              ),
-                            ],
-                          ),
-
-                          Text(
-                            'Cari Produk di Kecamatan Gayamsari ?',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(fontSize: AdaptSize.pixel14),
-                          ),
-
-                          SizedBox(
-                            height: AdaptSize.pixel8,
-                          ),
-
-                          /// form field
-                          readOnlyForm(
-                            context: context,
-                            hint: 'Cari Produk',
-                            readOnly: true,
-                            onTap: () {
-                              NavigasiViewModel()
-                                  .navigasiSearchProductScreen(context);
-                            },
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: MyColor.neutral600,
+                                Expanded(
+                                  child: Consumer<AccountViewModel>(
+                                      builder: (context, value, child) {
+                                    return Text(
+                                      value.usermodel?.username ?? 'Loading..',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                              fontSize: AdaptSize.pixel20),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    );
+                                  }),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    NavigasiViewModel()
+                                        .navigateToNotification(context);
+                                  },
+                                  splashColor: MyColor.neutral900,
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.asset(
+                                    'assets/grid_category/bell_notif.png',
+                                    height: AdaptSize.pixel20,
+                                    width: AdaptSize.pixel20,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
 
-                          SizedBox(
-                            height: AdaptSize.pixel8,
-                          ),
+                            Text(
+                              'Cari Produk di Kecamatan Gayamsari ?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontSize: AdaptSize.pixel14),
+                            ),
 
-                          /// carousel image
-                          Consumer<ProductParsers>(
-                              builder: (context, value, child) {
-                            if (value.stateOfConnnection ==
-                                StateOfConnnection.isLoading) {
-                              return cardShimmerWidget(
-                                borderRadius: 16,
-                                imagesShimmer: 'logo_user.png',
-                                height: AdaptSize.screenWidth / 1000 * 450,
-                                width: double.infinity,
-                              );
-                            }
-                            if (value.stateOfConnnection ==
-                                StateOfConnnection.isReady) {
-                              return value.listOfAllProduct.isNotEmpty
-                                  ? CarouselSlider.builder(
-                                      itemCount:
-                                          value.listOfAllProduct.length >= 5
-                                              ? 5
-                                              : value.listOfAllProduct.length,
-                                      itemBuilder: (BuildContext context,
-                                          int index, int realIndex) {
-                                        return CachedNetworkImage(
-                                          imageUrl: value
-                                              .listOfAllProduct[index]
-                                              .productImage,
-                                          imageBuilder:
-                                              (context, imageProvider) => Hero(
-                                            tag: value.listOfAllProduct[index]
+                            SizedBox(
+                              height: AdaptSize.pixel8,
+                            ),
+
+                            /// form field
+                            readOnlyForm(
+                              context: context,
+                              hint: 'Cari Produk',
+                              readOnly: true,
+                              onTap: () {
+                                NavigasiViewModel()
+                                    .navigasiSearchProductScreen(context);
+                              },
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: MyColor.neutral600,
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: AdaptSize.pixel8,
+                            ),
+
+                            /// carousel image
+                            Consumer<ProductParsers>(
+                                builder: (context, value, child) {
+                              if (value.stateOfConnnection ==
+                                  StateOfConnnection.isLoading) {
+                                return cardShimmerWidget(
+                                  borderRadius: 16,
+                                  imagesShimmer: 'logo_user.png',
+                                  height: AdaptSize.screenWidth / 1000 * 450,
+                                  width: double.infinity,
+                                );
+                              }
+                              if (value.stateOfConnnection ==
+                                  StateOfConnnection.isReady) {
+                                return value.listOfAllProduct.isNotEmpty
+                                    ? CarouselSlider.builder(
+                                        itemCount:
+                                            value.listOfAllProduct.length >= 5
+                                                ? 5
+                                                : value.listOfAllProduct.length,
+                                        itemBuilder: (BuildContext context,
+                                            int index, int realIndex) {
+                                          return CachedNetworkImage(
+                                            imageUrl: value
+                                                .listOfAllProduct[index]
                                                 .productImage,
-                                            child: Material(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  NavigasiViewModel()
-                                                      .navigasiDetailProduct(
-                                                    context: context,
-                                                    productId: value
-                                                        .listOfAllProduct[index]
-                                                        .productId,
-                                                  );
-                                                },
-                                                borderRadius:
-                                                    BorderRadius.circular(16),
-                                                splashColor: MyColor.neutral900,
-                                                child: Container(
-                                                  margin: EdgeInsets.all(
-                                                      AdaptSize.pixel8),
-                                                  decoration: BoxDecoration(
-                                                    color: MyColor.danger400,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        offset:
-                                                            const Offset(2, 3),
-                                                        color:
-                                                            MyColor.neutral600,
-                                                        blurRadius: 3,
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Hero(
+                                              tag: value.listOfAllProduct[index]
+                                                  .productImage,
+                                              child: Material(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    NavigasiViewModel()
+                                                        .navigasiDetailProduct(
+                                                      context: context,
+                                                      productId: value
+                                                          .listOfAllProduct[
+                                                              index]
+                                                          .productId,
+                                                    );
+                                                  },
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  splashColor:
+                                                      MyColor.neutral900,
+                                                  child: Container(
+                                                    margin: EdgeInsets.all(
+                                                        AdaptSize.pixel8),
+                                                    decoration: BoxDecoration(
+                                                      color: MyColor.danger400,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          offset: const Offset(
+                                                              2, 3),
+                                                          color: MyColor
+                                                              .neutral600,
+                                                          blurRadius: 3,
+                                                        ),
+                                                      ],
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: imageProvider,
                                                       ),
-                                                    ],
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: imageProvider,
                                                     ),
-                                                  ),
-                                                  child: Stack(
-                                                    children: [
-                                                      Positioned(
-                                                        left: AdaptSize.pixel3,
-                                                        top: AdaptSize.pixel3,
-                                                        child: Card(
-                                                          color: Colors.red,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
+                                                    child: Stack(
+                                                      children: [
+                                                        Positioned(
+                                                          left:
+                                                              AdaptSize.pixel3,
+                                                          top: AdaptSize.pixel3,
+                                                          child: Card(
+                                                            color: Colors.red,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .only(
+                                                                left: AdaptSize
+                                                                    .pixel10,
+                                                                right: AdaptSize
+                                                                    .pixel10,
+                                                                top: AdaptSize
+                                                                    .pixel5,
+                                                                bottom:
+                                                                    AdaptSize
+                                                                        .pixel5,
+                                                              ),
+                                                              child: Text(
+                                                                'NEW',
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .titleLarge!
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            AdaptSize
+                                                                                .pixel12,
+                                                                        color: MyColor
+                                                                            .neutral900),
+                                                              ),
+                                                            ),
                                                           ),
-                                                          child: Padding(
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: Container(
+                                                            height: AdaptSize
+                                                                    .screenWidth /
+                                                                1000 *
+                                                                80,
                                                             padding:
                                                                 EdgeInsets.only(
-                                                              left: AdaptSize
-                                                                  .pixel10,
-                                                              right: AdaptSize
-                                                                  .pixel10,
-                                                              top: AdaptSize
-                                                                  .pixel5,
-                                                              bottom: AdaptSize
-                                                                  .pixel5,
+                                                                    left: AdaptSize
+                                                                        .pixel8),
+                                                            alignment: Alignment
+                                                                .centerLeft,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      .3),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        16),
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            16),
+                                                              ),
                                                             ),
                                                             child: Text(
-                                                              'NEW',
+                                                              value
+                                                                  .listOfAllProduct[
+                                                                      index]
+                                                                  .productName,
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .titleLarge!
+                                                                  .bodyLarge!
                                                                   .copyWith(
-                                                                      fontSize:
-                                                                          AdaptSize
-                                                                              .pixel12,
-                                                                      color: MyColor
-                                                                          .neutral900),
+                                                                    fontSize:
+                                                                        AdaptSize
+                                                                            .pixel16,
+                                                                    color: MyColor
+                                                                        .neutral900,
+                                                                  ),
+                                                              maxLines: 1,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                             ),
                                                           ),
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        child: Container(
-                                                          height: AdaptSize
-                                                                  .screenWidth /
-                                                              1000 *
-                                                              80,
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: AdaptSize
-                                                                      .pixel8),
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    .3),
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              bottomLeft: Radius
-                                                                  .circular(16),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                          ),
-                                                          child: Text(
-                                                            value
-                                                                .listOfAllProduct[
-                                                                    index]
-                                                                .productName,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyLarge!
-                                                                .copyWith(
-                                                                  fontSize:
-                                                                      AdaptSize
-                                                                          .pixel16,
-                                                                  color: MyColor
-                                                                      .neutral900,
-                                                                ),
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          placeholder: (context, url) =>
-                                              shimmerLoading(
-                                            child: cardShimmerWidget(
-                                              borderRadius: 16,
-                                              imagesShimmer: 'logo_user.png',
-                                              margin: EdgeInsets.all(
-                                                AdaptSize.pixel8,
+                                            placeholder: (context, url) =>
+                                                shimmerLoading(
+                                              child: cardShimmerWidget(
+                                                borderRadius: 16,
+                                                imagesShimmer: 'logo_user.png',
+                                                margin: EdgeInsets.all(
+                                                  AdaptSize.pixel8,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              errorShimmerWidget(
-                                            borderRadius: 16,
-                                            imagesShimmer: 'close.png',
-                                          ),
-                                        );
-                                      },
-                                      options: CarouselOptions(
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    errorShimmerWidget(
+                                              borderRadius: 16,
+                                              imagesShimmer: 'close.png',
+                                            ),
+                                          );
+                                        },
+                                        options: CarouselOptions(
+                                          height: AdaptSize.screenWidth /
+                                              1000 *
+                                              450,
+                                          viewportFraction: .9,
+                                          autoPlay: true,
+                                          autoPlayCurve: Curves.fastOutSlowIn,
+                                          autoPlayInterval:
+                                              const Duration(seconds: 3),
+                                          onPageChanged: (index, reason) =>
+                                              value.changeIndex(index: index),
+                                        ),
+                                      )
+                                    : Center(
+                                        child: CircularProgressIndicator(
+                                          color: MyColor.warning600,
+                                        ),
+                                      );
+                              }
+                              if (value.stateOfConnnection ==
+                                  StateOfConnnection.isFailed) {
+                                return shimmerLoading(
+                                  child: Column(
+                                    children: [
+                                      cardShimmerWidget(
+                                        borderRadius: 16,
+                                        imagesShimmer: 'logo_user.png',
                                         height:
                                             AdaptSize.screenWidth / 1000 * 450,
-                                        viewportFraction: .9,
-                                        autoPlay: true,
-                                        autoPlayCurve: Curves.fastOutSlowIn,
-                                        autoPlayInterval:
-                                            const Duration(seconds: 3),
-                                        onPageChanged: (index, reason) =>
-                                            value.changeIndex(index: index),
+                                        width: double.infinity,
+                                      ),
+                                      Text(
+                                        'Something Wrong',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontSize: AdaptSize.pixel14),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            }),
+
+                            SizedBox(
+                              height: AdaptSize.pixel8,
+                            ),
+
+                            /// dot
+                            Consumer<ProductParsers>(
+                                builder: (context, value, child) {
+                              return value.listOfAllProduct.isNotEmpty
+                                  ? Center(
+                                      child: AnimatedSmoothIndicator(
+                                        activeIndex: value.indexSlider,
+                                        count:
+                                            value.listOfAllProduct.length >= 5
+                                                ? 5
+                                                : value.listOfAllProduct.length,
+                                        effect: ExpandingDotsEffect(
+                                          dotWidth: AdaptSize.pixel8,
+                                          dotHeight: AdaptSize.pixel8,
+                                          dotColor: MyColor.neutral700,
+                                          activeDotColor: MyColor.warning500,
+                                        ),
                                       ),
                                     )
                                   : Center(
-                                      child: CircularProgressIndicator(
-                                        color: MyColor.warning600,
+                                      child: SizedBox(
+                                        width:
+                                            AdaptSize.screenWidth / 1000 * 300,
+                                        child: LinearProgressIndicator(
+                                          color: MyColor.warning600,
+                                          backgroundColor: MyColor.neutral700,
+                                        ),
                                       ),
                                     );
-                            }
-                            if (value.stateOfConnnection ==
-                                StateOfConnnection.isFailed) {
-                              return shimmerLoading(
-                                child: Column(
-                                  children: [
-                                    cardShimmerWidget(
-                                      borderRadius: 16,
-                                      imagesShimmer: 'logo_user.png',
-                                      height:
-                                          AdaptSize.screenWidth / 1000 * 450,
-                                      width: double.infinity,
-                                    ),
-                                    Text(
-                                      'Something Wrong',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              fontSize: AdaptSize.pixel14),
-                                    )
-                                  ],
-                                ),
-                              );
-                            }
-                            return const SizedBox.shrink();
-                          }),
+                            }),
 
-                          SizedBox(
-                            height: AdaptSize.pixel8,
-                          ),
+                            SizedBox(
+                              height: AdaptSize.pixel8,
+                            ),
 
-                          /// dot
-                          Consumer<ProductParsers>(
-                              builder: (context, value, child) {
-                            return value.listOfAllProduct.isNotEmpty
-                                ? Center(
-                                    child: AnimatedSmoothIndicator(
-                                      activeIndex: value.indexSlider,
-                                      count: value.listOfAllProduct.length >= 5
-                                          ? 5
-                                          : value.listOfAllProduct.length,
-                                      effect: ExpandingDotsEffect(
-                                        dotWidth: AdaptSize.pixel8,
-                                        dotHeight: AdaptSize.pixel8,
-                                        dotColor: MyColor.neutral700,
-                                        activeDotColor: MyColor.warning500,
-                                      ),
-                                    ),
-                                  )
-                                : Center(
-                                    child: SizedBox(
-                                      width: AdaptSize.screenWidth / 1000 * 300,
-                                      child: LinearProgressIndicator(
-                                        color: MyColor.warning600,
-                                        backgroundColor: MyColor.neutral700,
-                                      ),
-                                    ),
-                                  );
-                          }),
+                            /// category product
+                            categoryProductWidget(
+                              context: context,
+                              gridContent: productProvider.listGridCategory,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
 
-                          SizedBox(
-                            height: AdaptSize.pixel8,
-                          ),
-
-                          /// category product
-                          categoryProductWidget(
-                            context: context,
-                            gridContent: productProvider.listGridCategory,
-                          ),
-                        ],
-                      ),
-                    ],
+                  /// tab bar controller
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverAppBarDelegate(
+                      tabBarWidget(
+                          context: context, tabController: _tabBarController),
+                    ),
                   ),
-                ),
-
-                /// tab bar controller
-                SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverAppBarDelegate(
-                    tabBarWidget(
-                        context: context, tabController: _tabBarController),
-                  ),
-                ),
-              ];
-            },
-            body: Consumer<ProductParsers>(builder: (context, value, child) {
-              return TabBarView(
-                controller: _tabBarController,
-                children: [
-                  allProductView(
-                    context: context,
-                    listOfProduct: value.listOfAllProduct,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanSiwalan,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanGayamsari,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanSambirejo,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanPandeanLamper,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanSawahBesar,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanTambakRejo,
-                  ),
-                  gridProduct(
-                    context: context,
-                    listKelurahan: value.kelurahanKaligawe,
-                  ),
-                ],
-              );
-            }),
+                ];
+              },
+              body: Consumer<ProductParsers>(builder: (context, value, child) {
+                return TabBarView(
+                  controller: _tabBarController,
+                  children: [
+                    allProductView(
+                      context: context,
+                      listOfProduct: value.listOfAllProduct,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanSiwalan,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanGayamsari,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanSambirejo,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanPandeanLamper,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanSawahBesar,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanTambakRejo,
+                    ),
+                    gridProduct(
+                      context: context,
+                      listKelurahan: value.kelurahanKaligawe,
+                    ),
+                  ],
+                );
+              }),
+            ),
           ),
         ),
       ),
