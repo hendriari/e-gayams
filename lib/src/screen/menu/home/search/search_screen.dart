@@ -7,6 +7,7 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
+import 'package:kkn_siwalan/src/widget/loading_overlay_widget.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -36,99 +37,101 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: defaultAppBar(
-        context: context,
-        title: 'Search Product',
-        centerTitle: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: AdaptSize.pixel20,
-            color: Colors.black,
+    return loadingOverlayWidget(
+      child: Scaffold(
+        appBar: defaultAppBar(
+          context: context,
+          title: 'Search Product',
+          centerTitle: false,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: AdaptSize.pixel20,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      body: NetworkAware(
-        offlineChild: const NoConnectionScreen(),
-        onlineChild: Padding(
-          padding: EdgeInsets.only(
-            top: AdaptSize.pixel14,
-            left: AdaptSize.pixel8,
-            right: AdaptSize.pixel8,
-          ),
-          child: Consumer<ProductParsers>(builder: (context, value, child) {
-            return Column(
-              children: [
-                /// search
-                formFieldWidget(
-                  context: context,
-                  textEditingController: _searchController,
-                  suffix: IconButton(
-                    onPressed: () {
-                      /// show modal bottom sheet here
-                    },
-                    icon: Icon(
-                      Icons.analytics_outlined,
-                      color: MyColor.neutral400,
+        body: NetworkAware(
+          offlineChild: const NoConnectionScreen(),
+          onlineChild: Padding(
+            padding: EdgeInsets.only(
+              top: AdaptSize.pixel14,
+              left: AdaptSize.pixel8,
+              right: AdaptSize.pixel8,
+            ),
+            child: Consumer<ProductParsers>(builder: (context, value, child) {
+              return Column(
+                children: [
+                  /// search
+                  formFieldWidget(
+                    context: context,
+                    textEditingController: _searchController,
+                    suffix: IconButton(
+                      onPressed: () {
+                        /// show modal bottom sheet here
+                      },
+                      icon: Icon(
+                        Icons.analytics_outlined,
+                        color: MyColor.neutral400,
+                      ),
                     ),
+                    onChanged: (values) =>
+                        value.filterProductByKeyword(keyword: values),
+                    hint: 'Cari Produk',
+                    label: 'Cari Produk',
                   ),
-                  onChanged: (values) =>
-                      value.filterProductByKeyword(keyword: values),
-                  hint: 'Cari Produk',
-                  label: 'Cari Produk',
-                ),
 
-                SizedBox(
-                  height: AdaptSize.pixel10,
-                ),
+                  SizedBox(
+                    height: AdaptSize.pixel10,
+                  ),
 
-                /// content
-                Expanded(
-                  child: value.foundProduct.isNotEmpty
-                      ? gridProduct(
+                  /// content
+                  Expanded(
+                    child: value.foundProduct.isNotEmpty
+                        ? gridProduct(
                           context: context,
                           scrollPhysics: const BouncingScrollPhysics(),
                           listKelurahan: value.foundProduct,
                           listPaddingBottom: false,
                         )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/image/error.png',
-                              height: AdaptSize.screenWidth / 2,
-                              width: AdaptSize.screenWidth / 2,
-                            ),
-                            SizedBox(
-                              height: AdaptSize.screenHeight * .012,
-                            ),
-                            Text(
-                              'Produk apa yang Kamu cari ?',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(fontSize: AdaptSize.pixel15),
-                            ),
-                            SizedBox(
-                              height: AdaptSize.screenHeight * .01,
-                            ),
-                            Text(
-                                'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
-                                textAlign: TextAlign.center,
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/image/error.png',
+                                height: AdaptSize.screenWidth / 2,
+                                width: AdaptSize.screenWidth / 2,
+                              ),
+                              SizedBox(
+                                height: AdaptSize.screenHeight * .012,
+                              ),
+                              Text(
+                                'Produk apa yang Kamu cari ?',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontSize: AdaptSize.pixel14))
-                          ],
-                        ),
-                )
-              ],
-            );
-          }),
+                                    .titleLarge!
+                                    .copyWith(fontSize: AdaptSize.pixel15),
+                              ),
+                              SizedBox(
+                                height: AdaptSize.screenHeight * .01,
+                              ),
+                              Text(
+                                  'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: AdaptSize.pixel14))
+                            ],
+                          ),
+                  )
+                ],
+              );
+            }),
+          ),
         ),
       ),
     );
