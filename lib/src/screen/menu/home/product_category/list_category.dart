@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kkn_siwalan/src/screen/menu/home/tab_view/all%20_product.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/tab_view/all_product.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
@@ -7,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class ListCategoryProductScreen extends StatefulWidget {
   final String headerName;
-  final List<Map<String, dynamic>> listOfProduct;
+  final List<ProductModel> listOfProduct;
 
   const ListCategoryProductScreen({
     Key? key,
@@ -56,18 +57,18 @@ class _ListCategoryProductScreenState extends State<ListCategoryProductScreen> {
         builder: (context, value, child) {
           return value.listOfProductCategory.isNotEmpty
               ? allProductView(
-            context: context,
-            listOfProduct: value.listOfProductCategory,
-          )
+                  context: context,
+                  listOfProduct: value.listOfProductCategory,
+                )
               : Center(
-            child: Text(
-              'Belum Ada Produk',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText1!
-                  .copyWith(fontSize: AdaptSize.pixel16),
-            ),
-          );
+                  child: Text(
+                    'Belum Ada Produk',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontSize: AdaptSize.pixel16),
+                  ),
+                );
         },
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
@@ -6,7 +7,7 @@ import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart'
 import 'package:kkn_siwalan/src/screen/menu/home/notification_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/product_category/list_category.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/search/search_screen.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/search/search_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/detail_product_screen.dart';
 
 class NavigasiViewModel {
@@ -102,14 +103,13 @@ class NavigasiViewModel {
   /// navigasi to detail product
   void navigasiDetailProduct({
     required BuildContext context,
-    required Map<String, dynamic> product,
-    // required String productId,
+    required String productId,
   }) {
     Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (context) => DetailProductScreen(
-          product: product,
+          productID: productId,
         ),
       ),
     );
@@ -154,7 +154,7 @@ class NavigasiViewModel {
   void navigasiToPorudctByCategory({
     required BuildContext context,
     required String headerName,
-    required List<Map<String, dynamic>> listOfProductCategory,
+    required List<ProductModel> listOfProductCategory,
   }) {
     Navigator.push(
       context,

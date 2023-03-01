@@ -66,7 +66,7 @@ class LoginRegisterViewModel with ChangeNotifier {
       notifyListeners();
       ResponseDialog.customResponseDialog(
         context: context,
-        height: AdaptSize.screenWidth / 1000 * 500,
+        height: AdaptSize.screenWidth / 1000 * 650,
         width: AdaptSize.screenWidth / 1000 * 500,
         description: 'Register berhasil !',
         image: 'success',

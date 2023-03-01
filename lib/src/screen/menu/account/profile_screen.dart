@@ -98,7 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               value.usermodel?.username ?? 'Loading..',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                     fontSize: AdaptSize.pixel20,
                                   ),
@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               value.usermodel?.email ?? 'Loading..',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                     fontSize: AdaptSize.pixel16,
                                   ),
@@ -195,7 +195,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   accountProvider.profileMenu[index],
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText1!
+                                      .bodyLarge!
                                       .copyWith(
                                         fontSize: AdaptSize.pixel14,
                                       ),

@@ -76,7 +76,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart_outlined),
-                label: 'UMKM',
+                label: 'MyCart',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.bookmarks_outlined),

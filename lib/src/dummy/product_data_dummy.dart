@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/model/product_model.dart';
@@ -33,7 +34,9 @@ class ProductDummyData with ChangeNotifier {
           productRW: Random().nextInt(4).toString(),
           sellerName: _faker.person.name(),
           productRT: Random().nextInt(4).toString(),
-          datePublished: DateTime.now(),
+          datePublished: Timestamp.now(),
+          sellerContact: 'null',
+          locationKelurahan: 'null',
         ),
       );
     }

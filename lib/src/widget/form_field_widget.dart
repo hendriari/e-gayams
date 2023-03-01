@@ -42,12 +42,12 @@ Widget formFieldWidget({
         hintText: hint,
         hintStyle: Theme.of(context)
             .textTheme
-            .bodyText1!
+            .bodyLarge!
             .copyWith(color: MyColor.neutral500, fontSize: AdaptSize.pixel14),
         label: Text(label),
         labelStyle: Theme.of(context)
             .textTheme
-            .bodyText1!
+            .bodyLarge!
             .copyWith(color: MyColor.neutral500, fontSize: AdaptSize.pixel14),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

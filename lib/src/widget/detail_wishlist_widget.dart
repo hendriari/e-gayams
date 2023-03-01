@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class DetailProductWislist extends StatefulWidget {
   final String productLocation;
   final String productPrice;
   final String sellerContact;
-  final List productCategory;
+  final String productCategory;
 
   const DetailProductWislist({
     Key? key,
@@ -223,7 +222,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           widget.productName,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .titleLarge!
                               .copyWith(fontSize: AdaptSize.pixel22),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -234,7 +233,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           'RW ${widget.productRW}',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel12),
                         ),
                         backgroundColor: MyColor.neutral900,
@@ -263,7 +262,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                         widget.sellerName,
                         style: Theme.of(context)
                             .textTheme
-                            .headline6!
+                            .titleLarge!
                             .copyWith(fontSize: AdaptSize.pixel12),
                       ),
                     ],
@@ -308,7 +307,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           widget.productDescription,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel14),
                           textAlign: TextAlign.justify,
                           maxLines: null,
@@ -350,7 +349,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                         child: Text(
                           widget.productBenefit,
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel14,
                                   ),
                           maxLines: 2,
@@ -398,7 +397,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           widget.productLocation,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel15),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -417,43 +416,6 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
 
                   SizedBox(
                     height: AdaptSize.pixel8,
-                  ),
-
-                  /// text kategori
-                  textTitle(
-                    context: context,
-                    text: 'Kategori',
-                  ),
-
-                  /// list kategori
-                  SizedBox(
-                    height: AdaptSize.screenWidth / 1000 * 110,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(top: AdaptSize.pixel5),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: widget.productCategory.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: AdaptSize.pixel8),
-                            child: Chip(
-                              backgroundColor: Color(
-                                      (math.Random().nextDouble() * 0xFFFFFF)
-                                          .toInt())
-                                  .withOpacity(1.0),
-                              label: Text(
-                                widget.productCategory[index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(
-                                      fontSize: AdaptSize.pixel14,
-                                      color: MyColor.neutral900,
-                                    ),
-                              ),
-                            ),
-                          );
-                        }),
                   ),
 
                   SizedBox(
@@ -495,7 +457,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           Text(
                             'Harga',
                             style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: Colors.black,
                                       fontSize: AdaptSize.pixel8,
                                     ),
@@ -504,11 +466,13 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                           ///price
                           Text(
                             widget.productPrice,
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: Colors.black,
-                                      fontSize: AdaptSize.pixel15,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Colors.black,
+                                  fontSize: AdaptSize.pixel15,
+                                ),
                           ),
                         ],
                       ),
@@ -544,7 +508,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                                   'Chat akan diteruskan menggunakan aplikasi Whatsapp',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline6!
+                                      .titleLarge!
                                       .copyWith(fontSize: AdaptSize.pixel16),
                                   textAlign: TextAlign.center,
                                 ),
@@ -573,13 +537,13 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                                         'Buka WhatsApp',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .button!
+                                            .labelLarge!
                                             .copyWith(
                                               fontSize: AdaptSize.pixel15,
                                             ),
                                       ),
                                       Icon(
-                                        Icons.whatsapp,
+                                        Icons.call,
                                         size: AdaptSize.pixel20,
                                         color: Colors.black,
                                       ),
@@ -610,7 +574,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
                         child: Text(
                           'CHAT PENJUAL',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: MyColor.neutral900,
                                     fontSize: AdaptSize.pixel15,
                                   ),
@@ -634,7 +598,7 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
   }) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline6!.copyWith(
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
             fontSize: AdaptSize.pixel16,
           ),
     );

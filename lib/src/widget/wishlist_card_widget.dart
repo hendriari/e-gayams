@@ -95,7 +95,7 @@ Widget whistListCard({
                             'RW',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: MyColor.neutral900,
                                     fontSize: AdaptSize.pixel14),
@@ -106,7 +106,7 @@ Widget whistListCard({
                             productRw,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(
                                     color: MyColor.neutral900,
                                     fontSize: AdaptSize.pixel14),
@@ -140,7 +140,7 @@ Widget whistListCard({
                     Expanded(
                       child: Text(
                         sellerName,
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontSize: AdaptSize.pixel14,
                               color: MyColor.neutral300,
                             ),
@@ -163,7 +163,7 @@ Widget whistListCard({
                   productName,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6!
+                      .titleLarge!
                       .copyWith(fontSize: AdaptSize.pixel16),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -191,7 +191,7 @@ Widget whistListCard({
                         productLocation,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(fontSize: AdaptSize.pixel14),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
-import 'package:kkn_siwalan/src/screen/menu/home/tab_view/all%20_product.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/tab_view/all_product.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/tab_view/grid_product.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/tab_view/tab_bar.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
@@ -34,33 +34,15 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    context.read<AccountViewModel>().refreshUsers();
+    Future.delayed(
+      Duration.zero,
+      () => context.read<AccountViewModel>().refreshUsers(),
+    );
     final productParsers = Provider.of<ProductParsers>(context, listen: false);
     Future.delayed(Duration.zero, () {
-      if (productParsers.allListProduct.isEmpty) {
-        return productParsers.fetchAllData();
+      if(productParsers.listOfAllProduct.isEmpty){
+        productParsers.fetchAllProductData();
       }
-      debugPrint(productParsers.allListProduct.toString());
-    });
-    Future.delayed(Duration.zero, () {
-      if (productParsers.kelurahanSiwalan.isEmpty ||
-          productParsers.kelurahanGayamsari.isEmpty ||
-          productParsers.kelurahanSambirejo.isEmpty ||
-          productParsers.kelurahanPandeanLamper.isEmpty ||
-          productParsers.kelurahanSawahBesar.isEmpty ||
-          productParsers.kelurahanTambakRejo.isEmpty ||
-          productParsers.kelurahanKaligawe.isEmpty) {
-        productParsers.fetchProductKelurahanSiwalan();
-        productParsers.fetchProductKelurahanGayamsari();
-        productParsers.fetchProductKelurahanSambirejo();
-        productParsers.fetchProductKelurahanPandeanLamper();
-        productParsers.fetchProductKelurahanSawahBesar();
-        productParsers.fetchProductKelurahanTambakrejo();
-        productParsers.fetchProductKelurahanKaligawe();
-      }
-    });
-    Future.delayed(Duration.zero,(){
-      productParsers.fetchProductByCategory();
     });
     _tabBarController = TabController(length: 8, vsync: this);
   }
@@ -99,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 'Hello ',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .copyWith(fontSize: AdaptSize.pixel20),
                               ),
                               Expanded(
@@ -109,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     value.usermodel?.username ?? 'Loading..',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .headline6!
+                                        .titleLarge!
                                         .copyWith(fontSize: AdaptSize.pixel20),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -136,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen>
                             'Cari Produk di Kecamatan Gayamsari ?',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline6!
+                                .titleLarge!
                                 .copyWith(fontSize: AdaptSize.pixel14),
                           ),
 
@@ -177,29 +159,31 @@ class _HomeScreenState extends State<HomeScreen>
                             }
                             if (value.stateOfConnnection ==
                                 StateOfConnnection.isReady) {
-                              return value.allListProduct.isNotEmpty
+                              return value.listOfAllProduct.isNotEmpty
                                   ? CarouselSlider.builder(
                                       itemCount:
-                                          value.allListProduct.length >= 5
+                                          value.listOfAllProduct.length >= 5
                                               ? 5
-                                              : value.allListProduct.length,
+                                              : value.listOfAllProduct.length,
                                       itemBuilder: (BuildContext context,
                                           int index, int realIndex) {
                                         return CachedNetworkImage(
-                                          imageUrl: value.allListProduct[index]
-                                              ['productImage'],
+                                          imageUrl: value
+                                              .listOfAllProduct[index]
+                                              .productImage,
                                           imageBuilder:
                                               (context, imageProvider) => Hero(
-                                            tag: value.allListProduct[index]
-                                                ['productImage'],
+                                            tag: value.listOfAllProduct[index]
+                                                .productImage,
                                             child: Material(
                                               child: InkWell(
                                                 onTap: () {
                                                   NavigasiViewModel()
                                                       .navigasiDetailProduct(
                                                     context: context,
-                                                    product: value
-                                                        .allListProduct[index],
+                                                    productId: value
+                                                        .listOfAllProduct[index]
+                                                        .productId,
                                                   );
                                                 },
                                                 borderRadius:
@@ -258,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .headline6!
+                                                                  .titleLarge!
                                                                   .copyWith(
                                                                       fontSize:
                                                                           AdaptSize
@@ -300,13 +284,14 @@ class _HomeScreenState extends State<HomeScreen>
                                                             ),
                                                           ),
                                                           child: Text(
-                                                            value.allListProduct[
+                                                            value
+                                                                .listOfAllProduct[
                                                                     index]
-                                                                ['productName'],
+                                                                .productName,
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
-                                                                .bodyText1!
+                                                                .bodyLarge!
                                                                 .copyWith(
                                                                   fontSize:
                                                                       AdaptSize
@@ -331,8 +316,7 @@ class _HomeScreenState extends State<HomeScreen>
                                               shimmerLoading(
                                             child: cardShimmerWidget(
                                               borderRadius: 16,
-                                              imagesShimmer:
-                                                  'logo_user.png',
+                                              imagesShimmer: 'logo_user.png',
                                               margin: EdgeInsets.all(
                                                 AdaptSize.pixel8,
                                               ),
@@ -379,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       'Something Wrong',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .copyWith(
                                               fontSize: AdaptSize.pixel14),
                                     )
@@ -397,13 +381,13 @@ class _HomeScreenState extends State<HomeScreen>
                           /// dot
                           Consumer<ProductParsers>(
                               builder: (context, value, child) {
-                            return value.allListProduct.isNotEmpty
+                            return value.listOfAllProduct.isNotEmpty
                                 ? Center(
                                     child: AnimatedSmoothIndicator(
                                       activeIndex: value.indexSlider,
-                                      count: value.allListProduct.length >= 5
+                                      count: value.listOfAllProduct.length >= 5
                                           ? 5
-                                          : value.allListProduct.length,
+                                          : value.listOfAllProduct.length,
                                       effect: ExpandingDotsEffect(
                                         dotWidth: AdaptSize.pixel8,
                                         dotHeight: AdaptSize.pixel8,
@@ -454,27 +438,34 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   allProductView(
                     context: context,
-                    listOfProduct: value.allListProduct,
+                    listOfProduct: value.listOfAllProduct,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSiwalan,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanGayamsari,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSambirejo,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanPandeanLamper,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanSawahBesar,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanTambakRejo,
                   ),
                   gridProduct(
+                    context: context,
                     listKelurahan: value.kelurahanKaligawe,
                   ),
                 ],

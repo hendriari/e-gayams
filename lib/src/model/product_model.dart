@@ -5,7 +5,7 @@ class ProductModel {
   String productId;
   String productName;
   String productImage;
-  List<String> productGridImage;
+  List productGridImage;
   String productDescrtiption;
   String productLocation;
   String productBenefit;
@@ -14,7 +14,9 @@ class ProductModel {
   String productRW;
   String productRT;
   String sellerName;
-  DateTime datePublished;
+  String sellerContact;
+  String locationKelurahan;
+  Timestamp datePublished;
 
   ProductModel({
     required this.uid,
@@ -31,26 +33,28 @@ class ProductModel {
     required this.productRT,
     required this.sellerName,
     required this.datePublished,
+    required this.sellerContact,
+    required this.locationKelurahan,
   });
 
-  static ProductModel fromSnap(DocumentSnapshot snap) {
-    var snapshot = snap.data() as Map<String, dynamic>;
-
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      uid: snapshot["uid"],
-      productId: snapshot["productId"],
-      productName: snapshot["productName"],
-      productImage: snapshot["productImage"],
-      productGridImage: snapshot["productGridImage"],
-      productDescrtiption: snapshot["productDescription"],
-      productLocation: snapshot["productLocation"],
-      productBenefit: snapshot["productBenefit"],
-      productPrice: snapshot["productPrice"],
-      productCategory: snapshot["productCategory"],
-      productRW: snapshot["productRW"],
-      productRT: snapshot["productRT"],
-      sellerName: snapshot["sellerName"],
-      datePublished: snapshot["datePublished"],
+      uid: json["uid"],
+      productId: json["productId"],
+      productName: json["productName"],
+      productImage: json["productImage"],
+      productGridImage: json["productGridImage"],
+      productDescrtiption: json["productDescription"],
+      productLocation: json["productLocation"],
+      productBenefit: json["productBenefit"],
+      productPrice: json["productPrice"],
+      productCategory: json["productCategory"],
+      productRW: json["productRW"],
+      productRT: json["productRT"],
+      sellerName: json["sellerName"],
+      datePublished: json["datePublished"],
+      sellerContact: json["sellerContact"],
+      locationKelurahan: json["locationKelurahan"],
     );
   }
 
@@ -69,6 +73,8 @@ class ProductModel {
         "productRT": productRT,
         "sellerName": sellerName,
         "datePublished": datePublished,
+        "locationKelurahan": locationKelurahan,
+        "sellerContact": sellerContact,
       };
 }
 
@@ -85,10 +91,11 @@ class UserWishlistModel {
   String productLocation;
   String productBenefit;
   String productPrice;
-  List productCategory;
+  String productCategory;
   String productRW;
   String productRT;
   String sellerName;
+
   dynamic datePublished;
 
   UserWishlistModel({

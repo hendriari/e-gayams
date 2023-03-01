@@ -48,7 +48,7 @@ class ResponseDialog {
                   ),
                   Text(
                     description,
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           fontSize: AdaptSize.pixel16,
                         ),
                     textAlign: TextAlign.center,
@@ -100,7 +100,7 @@ class ResponseDialog {
                   ),
                   Text(
                     description,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel14,
                         ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
@@ -8,14 +9,17 @@ import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 
 Widget allProductView({
   required BuildContext context,
-  required List<Map<String, dynamic>> listOfProduct,
+  required List<ProductModel> listOfProduct,
 }) {
   return MediaQuery.removePadding(
     removeTop: true,
     context: context,
     child: ListView.builder(
         shrinkWrap: true,
-        padding: EdgeInsets.only(top: AdaptSize.pixel8),
+        padding: EdgeInsets.only(
+          top: AdaptSize.pixel8,
+          bottom: AdaptSize.screenWidth / 1000 * 180,
+        ),
         itemCount: listOfProduct.length,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
@@ -25,7 +29,7 @@ Widget allProductView({
             onTap: () {
               NavigasiViewModel().navigasiDetailProduct(
                 context: context,
-                product: listOfProduct[index],
+                productId: listOfProduct[index].productId,
               );
             },
             child: Container(
@@ -34,7 +38,7 @@ Widget allProductView({
                 left: AdaptSize.pixel4,
                 right: AdaptSize.pixel4,
               ),
-              height: AdaptSize.screenWidth / 1000 * 340,
+              height: AdaptSize.screenWidth / 1000 * 380,
               width: AdaptSize.screenWidth / 1000 * 700,
               padding: EdgeInsets.all(AdaptSize.pixel5),
               decoration: BoxDecoration(
@@ -50,7 +54,7 @@ Widget allProductView({
               child: Row(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: listOfProduct[index]['productImage'],
+                    imageUrl: listOfProduct[index].productImage,
                     imageBuilder: (context, imageProvider) => Container(
                       width: AdaptSize.screenWidth / 1000 * 380,
                       margin: EdgeInsets.only(right: AdaptSize.pixel8),
@@ -90,10 +94,10 @@ Widget allProductView({
                       children: [
                         ///  product name
                         Text(
-                          listOfProduct[index]['productName'],
+                          listOfProduct[index].productName,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .titleLarge!
                               .copyWith(fontSize: AdaptSize.pixel16),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -113,10 +117,10 @@ Widget allProductView({
                             ),
                             Expanded(
                               child: Text(
-                                listOfProduct[index]['sellerName'],
+                                listOfProduct[index].sellerName,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .copyWith(fontSize: AdaptSize.pixel12),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -135,10 +139,10 @@ Widget allProductView({
                             ),
                             Expanded(
                               child: Text(
-                                listOfProduct[index]['productLocation'],
+                                listOfProduct[index].productLocation,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1!
+                                    .bodyLarge!
                                     .copyWith(fontSize: AdaptSize.pixel12),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -154,10 +158,10 @@ Widget allProductView({
                             /// product price
                             Expanded(
                               child: Text(
-                                listOfProduct[index]['productPrice'],
+                                listOfProduct[index].productPrice,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headline6!
+                                    .titleLarge!
                                     .copyWith(
                                         fontSize: AdaptSize.pixel14,
                                         color: MyColor.warning400),
@@ -168,10 +172,10 @@ Widget allProductView({
 
                             /// product location rw
                             Text(
-                              'RW ${listOfProduct[index]['productRW']}',
+                              'RW ${listOfProduct[index].productRW}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline6!
+                                  .titleLarge!
                                   .copyWith(
                                       fontSize: AdaptSize.pixel14,
                                       color: MyColor.neutral600),

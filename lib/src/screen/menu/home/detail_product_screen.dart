@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
+import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
@@ -18,11 +18,11 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailProductScreen extends StatefulWidget {
-  final Map<String, dynamic> product;
+  final String productID;
 
   const DetailProductScreen({
     Key? key,
-    required this.product,
+    required this.productID,
   }) : super(key: key);
 
   @override
@@ -40,6 +40,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   Widget build(BuildContext context) {
     final userData =
         Provider.of<AccountViewModel>(context, listen: false).usermodel;
+
+    final productProvider = Provider.of<ProductParsers>(context, listen: false);
+
+    final productByID = productProvider.productModelFilterByProductId(
+      listOfProductModel: productProvider.listOfAllProduct,
+      requestedProductId: widget.productID,
+    );
     return Scaffold(
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
@@ -59,7 +66,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                   Stack(
                     children: [
                       CachedNetworkImage(
-                        imageUrl: widget.product['productImage'],
+                        imageUrl: productByID!.productImage,
                         imageBuilder: (context, imageProvider) => InkWell(
                           splashColor: MyColor.neutral900,
                           onTap: () {
@@ -77,7 +84,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             );
                           },
                           child: Hero(
-                            tag: widget.product['productImage'],
+                            tag: productByID.productImage,
                             child: Container(
                               height: AdaptSize.screenWidth / 1000 * 800,
                               width: double.infinity,
@@ -118,9 +125,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           borderRadius: BorderRadius.circular(14),
                           splashColor: MyColor.neutral900,
                           child: Card(
-                            color: MyColor.neutral600,
+                            color: MyColor.neutral900,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(40),
                             ),
                             margin: EdgeInsets.all(AdaptSize.pixel10),
                             child: Icon(
@@ -141,25 +148,21 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           return IconButton(
                             onPressed: () async {
                               var addWishListProduct = UserWishlistModel(
-                                productId: widget.product['productId'],
+                                productId: productByID.productId,
                                 uid: userData!.uid,
-                                productName: widget.product['productName'],
-                                productImage: widget.product['productImage'],
-                                productGridImage:
-                                    widget.product['productGridImage'],
+                                productName: productByID.productName,
+                                productImage: productByID.productImage,
+                                productGridImage: productByID.productGridImage,
                                 productDescrtiption:
-                                    widget.product['productDescription'],
-                                productLocation:
-                                    widget.product['productLocation'],
-                                productBenefit:
-                                    widget.product['productBenefit'],
-                                productPrice: widget.product['productPrice'],
-                                productCategory:
-                                    widget.product['productCategory'],
-                                productRW: widget.product['productRW'],
-                                productRT: widget.product['productRT'],
-                                sellerName: widget.product['sellerName'],
-                                datePublished: widget.product['datePublished'],
+                                    productByID.productDescrtiption,
+                                productLocation: productByID.productLocation,
+                                productBenefit: productByID.productBenefit,
+                                productPrice: productByID.productPrice,
+                                productCategory: productByID.productCategory,
+                                productRW: productByID.productRW,
+                                productRT: productByID.productRT,
+                                sellerName: productByID.sellerName,
+                                datePublished: productByID.datePublished,
                               );
 
                               value.addProductWishList(addWishListProduct);
@@ -167,7 +170,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                   context: context,
                                   image: 'oke',
                                   title:
-                                      '${widget.product['productName']} berhasil ditambah ke Wishlist',
+                                      '${productByID.productName} berhasil ditambah ke Wishlist',
                                   textButton1: 'Kembali',
                                   textButton2: '',
                                   singleButton: true,
@@ -197,14 +200,14 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         padding: EdgeInsets.only(
                           bottom: AdaptSize.pixel8,
                         ),
-                        itemCount: widget.product['productGridImage'].length,
+                        itemCount: productByID.productGridImage.length,
                         scrollDirection: Axis.horizontal,
-                        physics: widget.product['productGridImage'].length < 2
+                        physics: productByID.productGridImage.length < 2
                             ? const NeverScrollableScrollPhysics()
                             : const ScrollPhysics(),
                         itemBuilder: (context, index) {
                           return CachedNetworkImage(
-                            imageUrl: widget.product['productGridImage'][index],
+                            imageUrl: productByID.productGridImage[index],
                             imageBuilder: (context, imageProvider) => InkWell(
                               splashColor: MyColor.neutral900,
                               onTap: () {
@@ -269,10 +272,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     children: [
                       Expanded(
                         child: Text(
-                          widget.product['productName'],
+                          productByID.productName,
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .titleLarge!
                               .copyWith(fontSize: AdaptSize.pixel22),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -280,10 +283,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Chip(
                         label: Text(
-                          'RW ${widget.product['productRW']}',
+                          'RW ${productByID.productRW}',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel12),
                         ),
                         backgroundColor: MyColor.neutral900,
@@ -309,10 +312,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         width: AdaptSize.pixel8,
                       ),
                       Text(
-                        widget.product['sellerName'],
+                        productByID.sellerName,
                         style: Theme.of(context)
                             .textTheme
-                            .headline6!
+                            .titleLarge!
                             .copyWith(fontSize: AdaptSize.pixel12),
                       ),
                     ],
@@ -354,10 +357,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productDescription'],
+                          productByID.productDescrtiption,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel14),
                           textAlign: TextAlign.justify,
                           maxLines: null,
@@ -397,9 +400,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productBenefit'],
+                          productByID.productBenefit,
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel14,
                                   ),
                           maxLines: 2,
@@ -444,10 +447,10 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          widget.product['productLocation'],
+                          productByID.productLocation,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText1!
+                              .bodyLarge!
                               .copyWith(fontSize: AdaptSize.pixel15),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -462,47 +465,6 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
                   Divider(
                     color: MyColor.neutral600,
-                  ),
-
-                  SizedBox(
-                    height: AdaptSize.pixel8,
-                  ),
-
-                  /// text kategori
-                  textTitle(
-                    context: context,
-                    text: 'Kategori',
-                  ),
-
-                  /// list kategori
-                  SizedBox(
-                    height: AdaptSize.screenWidth / 1000 * 110,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(top: AdaptSize.pixel5),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: widget.product['productCategory'].length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: AdaptSize.pixel8),
-                            child: Chip(
-                              backgroundColor: Color(
-                                      (math.Random().nextDouble() * 0xFFFFFF)
-                                          .toInt())
-                                  .withOpacity(1.0),
-                              label: Text(
-                                widget.product['productCategory'][index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .copyWith(
-                                      fontSize: AdaptSize.pixel14,
-                                      color: MyColor.neutral900,
-                                    ),
-                              ),
-                            ),
-                          );
-                        }),
                   ),
 
                   SizedBox(
@@ -544,7 +506,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           Text(
                             'Harga',
                             style:
-                                Theme.of(context).textTheme.bodyText1!.copyWith(
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
                                       color: Colors.black,
                                       fontSize: AdaptSize.pixel8,
                                     ),
@@ -552,12 +514,14 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
 
                           ///price
                           Text(
-                            widget.product['productPrice'],
-                            style:
-                                Theme.of(context).textTheme.headline6!.copyWith(
-                                      color: Colors.black,
-                                      fontSize: AdaptSize.pixel15,
-                                    ),
+                            productByID.productPrice,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Colors.black,
+                                  fontSize: AdaptSize.pixel15,
+                                ),
                           ),
                         ],
                       ),
@@ -593,7 +557,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                   'Chat akan diteruskan menggunakan aplikasi Whatsapp',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headline6!
+                                      .titleLarge!
                                       .copyWith(fontSize: AdaptSize.pixel16),
                                   textAlign: TextAlign.center,
                                 ),
@@ -607,7 +571,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                   onPressed: () {
                                     launchUrl(
                                         Uri.parse(
-                                          'https://wa.me/+62${widget.product['sellerContact']}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${widget.product['productName']}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
+                                          'https://wa.me/+62${productByID.sellerContact}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${productByID.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
                                         ),
                                         mode: LaunchMode.externalApplication);
                                   },
@@ -622,13 +586,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                                         'Buka WhatsApp',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .button!
+                                            .labelLarge!
                                             .copyWith(
                                               fontSize: AdaptSize.pixel15,
                                             ),
                                       ),
                                       Icon(
-                                        Icons.whatsapp,
+                                        Icons.call,
                                         size: AdaptSize.pixel20,
                                         color: Colors.black,
                                       ),
@@ -659,7 +623,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         child: Text(
                           'CHAT PENJUAL',
                           style:
-                              Theme.of(context).textTheme.headline6!.copyWith(
+                              Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: MyColor.neutral900,
                                     fontSize: AdaptSize.pixel15,
                                   ),
@@ -683,7 +647,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
   }) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.headline6!.copyWith(
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
             fontSize: AdaptSize.pixel16,
           ),
     );

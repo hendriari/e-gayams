@@ -68,6 +68,7 @@ class AccountViewModel with ChangeNotifier {
     required String alamat,
     required String rt,
     required String rw,
+    required Future responseDialog,
   }) async {
     _saveLoading = !_saveLoading;
     notifyListeners();
@@ -81,11 +82,7 @@ class AccountViewModel with ChangeNotifier {
         rw: rw,
       );
       _saveLoading = false;
-      ResponseDialog.responseInfoDialog(
-        context: context,
-        image: 'oke.png',
-        description: 'Update Berhasil',
-      );
+      responseDialog;
       Future.delayed(const Duration(milliseconds: 1500), () {
         NavigasiViewModel().navigasiToMenuWithIndex(
           context: context,

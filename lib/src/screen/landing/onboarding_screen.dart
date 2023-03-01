@@ -83,7 +83,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 },
                 child: Text(
                   'Skip',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel16,
                         color: MyColor.warning600,
                       ),
@@ -110,7 +110,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         child: Text(
                           'Get Started',
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel16,
                                     color: MyColor.neutral900,
                                   ),
@@ -133,7 +133,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         child: Text(
                           'Next',
                           style:
-                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel16,
                                     color: MyColor.neutral900,
                                   ),

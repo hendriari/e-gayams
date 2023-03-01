@@ -9,6 +9,7 @@ import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
+import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 import 'package:kkn_siwalan/src/widget/string_radio_button.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final profileProvider = Provider.of<AccountViewModel>(context, listen: false);
+    final profileProvider =
+        Provider.of<AccountViewModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: defaultAppBar(
@@ -67,12 +69,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: NetworkAware(
         offlineChild: const NoConnectionScreen(),
-        onlineChild: Padding(
+        onlineChild: SingleChildScrollView(
           padding: EdgeInsets.only(
             left: AdaptSize.pixel8,
             right: AdaptSize.pixel8,
             top: AdaptSize.pixel16,
           ),
+          physics: const ScrollPhysics(),
           child: Form(
             key: _formKey,
             child: Column(
@@ -85,8 +88,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   label: 'Username',
                   hint: profileProvider.usermodel!.username,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  formFieldValidator: (value) => FormValidators.usernameValidate(
-                      value: _usernameController.text),
+                  formFieldValidator: (value) =>
+                      FormValidators.usernameValidate(
+                          value: _usernameController.text),
                 ),
 
                 SizedBox(
@@ -97,7 +101,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   'Jenis Kelamin',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .copyWith(fontSize: AdaptSize.pixel14),
                 ),
 
@@ -121,7 +125,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       'Perempuan',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .copyWith(fontSize: AdaptSize.pixel14),
                     ),
                     SizedBox(
@@ -141,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       'Laki - Laki',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .copyWith(fontSize: AdaptSize.pixel14),
                     ),
                   ],
@@ -180,8 +184,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       label: 'RT',
                       hint: profileProvider.usermodel!.rt,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      formFieldValidator: (value) => FormValidators.rtrwValidate(
-                          rukun: _rtController.text, value: 'RT', values: 'RT'),
+                      formFieldValidator: (value) =>
+                          FormValidators.rtrwValidate(
+                              rukun: _rtController.text,
+                              value: 'RT',
+                              values: 'RT'),
                     ),
                     formFieldWidget(
                       width: AdaptSize.screenWidth / 2.15,
@@ -191,8 +198,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       label: 'RW',
                       hint: profileProvider.usermodel!.rw,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      formFieldValidator: (value) => FormValidators.rtrwValidate(
-                          rukun: _rwController.text, value: 'RW', values: 'RW'),
+                      formFieldValidator: (value) =>
+                          FormValidators.rtrwValidate(
+                              rukun: _rwController.text,
+                              value: 'RW',
+                              values: 'RW'),
                     ),
                   ],
                 ),
@@ -200,8 +210,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(
                   height: AdaptSize.pixel28,
                 ),
-
-                const Spacer(),
 
                 /// button edit profile
                 Consumer<AccountViewModel>(builder: (context, value, child) {
@@ -219,6 +227,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           alamat: _alamatController.text,
                           rt: _rtController.text,
                           rw: _rwController.text,
+                          responseDialog: ResponseDialog.responseInfoDialog(
+                            context: context,
+                            image: 'oke.png',
+                            description: 'Update Berhasil',
+                          ),
                         );
                       }
                     },
@@ -228,7 +241,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                         : Text(
                             'Simpan',
-                            style: Theme.of(context).textTheme.button!.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
                                   fontSize: AdaptSize.pixel16,
                                 ),
                           ),
