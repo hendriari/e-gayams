@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class DetailProductWislist extends StatefulWidget {
   final String productLocation;
   final String productPrice;
   final String sellerContact;
-  final List productCategory;
+  final String productCategory;
 
   const DetailProductWislist({
     Key? key,
@@ -417,43 +416,6 @@ class _DetailProductWislistState extends State<DetailProductWislist> {
 
                   SizedBox(
                     height: AdaptSize.pixel8,
-                  ),
-
-                  /// text kategori
-                  textTitle(
-                    context: context,
-                    text: 'Kategori',
-                  ),
-
-                  /// list kategori
-                  SizedBox(
-                    height: AdaptSize.screenWidth / 1000 * 110,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(top: AdaptSize.pixel5),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: widget.productCategory.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(right: AdaptSize.pixel8),
-                            child: Chip(
-                              backgroundColor: Color(
-                                      (math.Random().nextDouble() * 0xFFFFFF)
-                                          .toInt())
-                                  .withOpacity(1.0),
-                              label: Text(
-                                widget.productCategory[index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(
-                                      fontSize: AdaptSize.pixel14,
-                                      color: MyColor.neutral900,
-                                    ),
-                              ),
-                            ),
-                          );
-                        }),
                   ),
 
                   SizedBox(

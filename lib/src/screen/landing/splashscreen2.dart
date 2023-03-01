@@ -4,26 +4,9 @@ import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/menu_screen.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
-import 'package:kkn_siwalan/src/viewmodel/notif_viewmodel.dart';
-import 'package:provider/provider.dart';
 
-class SplashScreenTwo extends StatefulWidget {
+class SplashScreenTwo extends StatelessWidget {
   const SplashScreenTwo({Key? key}) : super(key: key);
-
-  @override
-  State<SplashScreenTwo> createState() => _SplashScreenTwoState();
-}
-
-class _SplashScreenTwoState extends State<SplashScreenTwo> {
-
-  @override
-  void initState() {
-    super.initState();
-    final notifProvider = Provider.of<NotificationViewModel>(context, listen: false);
-    Future.delayed(Duration.zero,(){
-      notifProvider.saveTokenFCMinMultipleDevice(context: context);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

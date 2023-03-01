@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/utils/enums.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 
@@ -8,633 +9,479 @@ class ProductParsers extends ProductViewModel {
 
   StateOfConnnection stateOfConnnection = StateOfConnnection.isDoingNothing;
 
-  Future<void> fetchAllData() async {
+  List<ProductModel> _listOfAllProduct = [];
+
+  List<ProductModel> get listOfAllProduct => _listOfAllProduct;
+
+  Future<void> fetchAllProductData() async {
     stateOfConnnection = StateOfConnnection.isStart;
     notifyListeners();
     try {
       stateOfConnnection = StateOfConnnection.isLoading;
       notifyListeners();
-      debugPrint('fetch all data product..');
+      debugPrint('fetch all data product data baru..');
       var snapShot = await _firestore
           .collection('productMitra')
           .orderBy('datePublished', descending: true)
           .get();
-      _items = snapShot.docs.map((document) => document.data()).toList();
-      _filteredItems = _items;
-      _allListProduct = _items;
-      debugPrint(
-          'total produk di kecamatan gayamsari ${_allListProduct.length}');
-      debugPrint('total produk untuk filter ${_filteredItems.length}');
-      debugPrint('fetch all data product success !');
+      _listOfAllProduct =
+          snapShot.docs.map((e) => ProductModel.fromJson(e.data())).toList();
+      debugPrint('fetch all data data baru success !');
+      filterProductByLocation();
+      filterProductByCategory();
       stateOfConnnection = StateOfConnnection.isReady;
       notifyListeners();
     } catch (e) {
       debugPrint(e.toString());
-      debugPrint('fetch data gagal !');
+      debugPrint('fetch data baru gagal !');
       stateOfConnnection = StateOfConnnection.isFailed;
       notifyListeners();
     }
   }
-
-  /// all product list
-  List<Map<String, dynamic>> _allListProduct = [];
-
-  List<Map<String, dynamic>> get allListProduct => _allListProduct;
 
   /// -------------------------------------------------------------------------
-  /// filter search product list
-  List<Map<String, dynamic>> _items = [];
 
-  List<Map<String, dynamic>> _filteredItems = [];
+  /// filter product by product id
+  ProductModel? productModelFilterByProductId({
+    required List<ProductModel> listOfProductModel,
+    required String requestedProductId,
+  }) {
+    ProductModel? tempModels;
+    for (var element in listOfAllProduct) {
+      if (element.productId == requestedProductId) {
+        debugPrint("parse berhasil");
 
-  List<String> _filters = [];
+        tempModels = element;
+      }
+    }
+    return tempModels;
+  }
 
-  List<Map<String, dynamic>> get items => _filteredItems;
+  /// -------------------------------------------------------------------------
+  /// filter product by keywoard
+  List<ProductModel> _foundProduct = [];
 
-  List<String> get filters => _filters;
+  List<ProductModel> get foundProduct => _foundProduct;
 
-  set filters(List<String> value) {
-    _filters = value;
-    _filteredItems = _items
-        .where((item) => _filters.any((filter) =>
-            item['sellerName'].toLowerCase().contains(filter.toLowerCase()) ||
-            item['productName'].toLowerCase().contains(filter.toLowerCase()) ||
-            item['productLocation']
+  /// filter product to list for search product
+  void filterProductByKeyword({
+    required String keyword,
+  }) {
+    List<ProductModel> result = [];
+    result = _listOfAllProduct
+        .where((product) =>
+            product.sellerName.toLowerCase().contains(keyword.toLowerCase()) ||
+            product.productName.toLowerCase().contains(keyword.toLowerCase()) ||
+            product.productCategory
                 .toLowerCase()
-                .contains(filter.toLowerCase())))
+                .contains(keyword.toLowerCase()) ||
+            product.productLocation
+                .toLowerCase()
+                .contains(keyword.toLowerCase()))
         .toList();
+
+    result.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _foundProduct = result;
     notifyListeners();
   }
 
-  set items(List<Map<String, dynamic>> value) {
-    _items = value;
-    _filteredItems = value;
+  ///--------------------------------------------------------------------------
+  /// filter product by kelurahan
+
+  List<ProductModel> _kelurahanSiwalan = [];
+
+  List<ProductModel> get kelurahanSiwalan => _kelurahanSiwalan;
+
+  /// kelurahan siwalan
+  void filterProductByKelurahanSiwalan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Siwalan'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanSiwalan = results;
+    debugPrint(
+        'total produk kelurahan siwalan : ${_kelurahanSiwalan.length.toString()}');
     notifyListeners();
   }
 
-  /// -----------------------------------------------------------------------
-  /// product by location kelurahan
-  List<Map<String, dynamic>> _productByLocation = [];
+  List<ProductModel> _kelurahanGayamsari = [];
 
-  List<Map<String, dynamic>> _kelurahanSiwalan = [];
+  List<ProductModel> get kelurahanGayamsari => _kelurahanGayamsari;
 
-  List<Map<String, dynamic>> get kelurahanSiwalan => _kelurahanSiwalan;
+  /// kelurahan gayamsari
+  void filterProductByKelurahanGayamsari() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Gayamsari'.toLowerCase())))
+        .toList();
 
-  List<Map<String, dynamic>> _kelurahanGayamsari = [];
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
-  List<Map<String, dynamic>> get kelurahanGayamsari => _kelurahanGayamsari;
-
-  List<Map<String, dynamic>> _kelurahanSambirejo = [];
-
-  List<Map<String, dynamic>> get kelurahanSambirejo => _kelurahanSambirejo;
-
-  List<Map<String, dynamic>> _kelurahanPandeanLamper = [];
-
-  List<Map<String, dynamic>> get kelurahanPandeanLamper =>
-      _kelurahanPandeanLamper;
-
-  List<Map<String, dynamic>> _kelurahanSawahBesar = [];
-
-  List<Map<String, dynamic>> get kelurahanSawahBesar => _kelurahanSawahBesar;
-
-  List<Map<String, dynamic>> _kelurahanTambakRejo = [];
-
-  List<Map<String, dynamic>> get kelurahanTambakRejo => _kelurahanTambakRejo;
-
-  List<Map<String, dynamic>> _kelurahanKaligawe = [];
-
-  List<Map<String, dynamic>> get kelurahanKaligawe => _kelurahanKaligawe;
-
-  /// fetch product kelurahan siwalan
-  Future<void> fetchProductKelurahanSiwalan() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+    _kelurahanGayamsari = results;
+    debugPrint(
+        'total produk kelurahan gayamsari : ${_kelurahanGayamsari.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Siwalan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Siwalan')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanSiwalan = _productByLocation;
-      debugPrint('total produk kelurahan siwalan ${_kelurahanSiwalan.length}');
-      debugPrint('fetch data product Kelurahan Siwalan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Siwalan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
+  }
+
+  List<ProductModel> _kelurahanSambirejo = [];
+
+  List<ProductModel> get kelurahanSambirejo => _kelurahanSambirejo;
+
+  /// kelurahan sambirejo
+  void filterProductByKelurahanSambirejo() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Sambirejo'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanSambirejo = results;
+    debugPrint(
+        'total produk kelurahan sambirejo : ${_kelurahanSambirejo.length.toString()}');
+    notifyListeners();
+  }
+
+  List<ProductModel> _kelurahanPandeanLamper = [];
+
+  List<ProductModel> get kelurahanPandeanLamper => _kelurahanPandeanLamper;
+
+  /// kelurahan pandean lamper
+  void filterProductByKelurahanPandeanLamper() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Pandean Lamper'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanPandeanLamper = results;
+    debugPrint(
+        'total produk kelurahan pandean lamper : ${_kelurahanPandeanLamper.length.toString()}');
+    notifyListeners();
+  }
+
+  List<ProductModel> _kelurahanSawahBesar = [];
+
+  List<ProductModel> get kelurahanSawahBesar => _kelurahanSawahBesar;
+
+  /// kelurahan sawah besar
+  void filterProductByKelurahanSawahBesar() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Sawah Besar'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanSawahBesar = results;
+    debugPrint(
+        'total produk kelurahan sawah besar: ${_kelurahanSawahBesar.length.toString()}');
+    notifyListeners();
+  }
+
+  List<ProductModel> _kelurahanTambakRejo = [];
+
+  List<ProductModel> get kelurahanTambakRejo => _kelurahanTambakRejo;
+
+  /// kelurahan tambak rejo
+  void filterProductByKelurahanTambakrejo() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Tambakrejo'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanTambakRejo = results;
+    debugPrint(
+        'total produk kelurahan tambak rejo : ${_kelurahanTambakRejo.length.toString()}');
+    notifyListeners();
+  }
+
+  List<ProductModel> _kelurahanKaligawe = [];
+
+  List<ProductModel> get kelurahanKaligawe => _kelurahanKaligawe;
+
+  /// kelurahan tambak rejo
+  void filterProductByKelurahanKaligawe() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.locationKelurahan
+            .toLowerCase()
+            .contains('Kel. Kaligawe'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _kelurahanKaligawe = results;
+    debugPrint(
+        'total produk kelurahan kaligawe : ${_kelurahanKaligawe.length.toString()}');
+    notifyListeners();
+  }
+
+  void filterProductByLocation() {
+    if (_listOfAllProduct.isNotEmpty) {
+      filterProductByKelurahanSiwalan();
+      filterProductByKelurahanGayamsari();
+      filterProductByKelurahanSambirejo();
+      filterProductByKelurahanPandeanLamper();
+      filterProductByKelurahanSawahBesar();
+      filterProductByKelurahanTambakrejo();
+      filterProductByKelurahanKaligawe();
+    } else {
+      fetchAllProductData();
     }
   }
-
-  /// fetch product kelurahan siwalan
-  Future<void> fetchProductKelurahanGayamsari() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Gayamsari..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Gayamsari')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanGayamsari = _productByLocation;
-      debugPrint(
-          'total produk kelurahan gayamsari ${_kelurahanGayamsari.length}');
-      debugPrint('fetch data product Kelurahan Gayamsari success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Gayamsari gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  /// fetch product kelurahan Sambirejo
-  Future<void> fetchProductKelurahanSambirejo() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Sambirejo..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Sambirejo')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanSambirejo = _productByLocation;
-      debugPrint(
-          'total produk kelurahan sambirejo ${_kelurahanSambirejo.length}');
-      debugPrint('fetch data product Kelurahan Sambirejo success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Sambirejo gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  /// fetch product kelurahan Sambirejo
-  Future<void> fetchProductKelurahanPandeanLamper() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Pandean Lamper..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Pandean Lamper')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanPandeanLamper = _productByLocation;
-      debugPrint(
-          'total produk kelurahan pandean lamper ${_kelurahanPandeanLamper.length}');
-      debugPrint('fetch data product Kelurahan Pandean Lamper success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Pandean Lamper gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  /// fetch product kelurahan Sawah Besar
-  Future<void> fetchProductKelurahanSawahBesar() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Sawah Besar..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Sawah Besar')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanSawahBesar = _productByLocation;
-      debugPrint(
-          'total produk kelurahan sawah besar ${_kelurahanSawahBesar.length}');
-      debugPrint('fetch data product Kelurahan Sawah Besar success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Sawah Besar gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  /// fetch product kelurahan Tambakrejo
-  Future<void> fetchProductKelurahanTambakrejo() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Tambakrejo..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Tambakrejo')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanTambakRejo = _productByLocation;
-      debugPrint(
-          'total produk kelurahan tambakrejo ${_kelurahanTambakRejo.length}');
-      debugPrint('fetch data product Kelurahan Tambakrejo success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Tambakrejo gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  /// fetch product kelurahan Kaligawe
-  Future<void> fetchProductKelurahanKaligawe() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kelurahan Kaligawe..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('locationKelurahan', isEqualTo: 'Kel. Kaligawe')
-          .get();
-      _productByLocation =
-          snapShot.docs.map((document) => document.data()).toList();
-      _kelurahanKaligawe = _productByLocation;
-      debugPrint(
-          'total produk kelurahan kaligawe ${_kelurahanKaligawe.length}');
-      debugPrint('fetch data product Kelurahan Kaligawe success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kelurahan Kaligawe gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
-  }
-
-  // Future<void> fetchAllProductByKelurahan() async {
-  //   stateOfConnnection = StateOfConnnection.isStart;
-  //   notifyListeners();
-  //   try {
-  //     stateOfConnnection = StateOfConnnection.isLoading;
-  //     notifyListeners();
-  //     if (_kelurahanSiwalan.isEmpty ||
-  //         _kelurahanGayamsari.isEmpty ||
-  //         _kelurahanSambirejo.isEmpty ||
-  //         _kelurahanPandeanLamper.isEmpty ||
-  //         _kelurahanSawahBesar.isEmpty ||
-  //         _kelurahanTambakRejo.isEmpty ||
-  //         _kelurahanKaligawe.isEmpty) {
-  //       fetchProductKelurahanSiwalan();
-  //       fetchProductKelurahanGayamsari();
-  //       fetchProductKelurahanSambirejo();
-  //       fetchProductKelurahanPandeanLamper();
-  //       fetchProductKelurahanSawahBesar();
-  //       fetchProductKelurahanTambakrejo();
-  //       fetchProductKelurahanKaligawe();
-  //       fetchProductByCategory();
-  //     }
-  //     stateOfConnnection = StateOfConnnection.isReady;
-  //     notifyListeners();
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     stateOfConnnection = StateOfConnnection.isFailed;
-  //     notifyListeners();
-  //   }
-  // }
 
   /// -------------------------------------------------------------------------
   /// product by category
-  ///
 
   late String category;
 
-  List<Map<String, dynamic>> _listOfProductCategory = [];
+  List<ProductModel> _listOfProductCategory = [];
 
-  List<Map<String, dynamic>> get listOfProductCategory =>
+  List<ProductModel> get listOfProductCategory =>
       _listOfProductCategory;
 
-  List<Map<String, dynamic>> _listMakananRingan = [];
+  List<ProductModel> _listMakananRingan = [];
 
-  List<Map<String, dynamic>> get listMakananRingan => _listMakananRingan;
+  List<ProductModel> get listMakananRingan => _listMakananRingan;
 
-  List<Map<String, dynamic>> _listMakanan = [];
+  /// makanan ringan
+  void filterProductByMakananRingan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Makanan Ringan'.toLowerCase())))
+        .toList();
 
-  List<Map<String, dynamic>> get listMakanan => _listMakanan;
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
 
-  List<Map<String, dynamic>> _listMinuman = [];
-
-  List<Map<String, dynamic>> get listMinuman => _listMinuman;
-
-  List<Map<String, dynamic>> _listKesehatan = [];
-
-  List<Map<String, dynamic>> get listKesehatan => _listKesehatan;
-
-  List<Map<String, dynamic>> _listKecantikan = [];
-
-  List<Map<String, dynamic>> get listKecantikan => _listKecantikan;
-
-  List<Map<String, dynamic>> _listFashion = [];
-
-  List<Map<String, dynamic>> get listFashion => _listFashion;
-
-  List<Map<String, dynamic>> _listKerajinanTangan = [];
-
-  List<Map<String, dynamic>> get listKerajinanTangan => _listKerajinanTangan;
-
-  List<Map<String, dynamic>> _listKategoriLainnya = [];
-
-  List<Map<String, dynamic>> get listKategoriLainnya => _listKategoriLainnya;
-
-  /// fetch product kategori makanan ringan
-  Future<void> fetchProductMakananRingan() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+    _listMakananRingan = results;
+    debugPrint(
+        'total produk Makanan Ringan : ${_listMakananRingan.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Makanan Ringan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Makanan Ringan')
-          .get();
-      _listMakananRingan =
-          snapShot.docs.map((document) => document.data()).toList();
-      debugPrint(
-          'total produk kelurahan makanan ringan ${_listMakananRingan.length}');
-      debugPrint('fetch data product Makanan ringan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product makanan ringan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori makanan
-  Future<void> fetchProductMakanan() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+  List<ProductModel> _listMakanan = [];
+
+  List<ProductModel> get listMakanan => _listMakanan;
+
+  /// filter makanan
+  void filterProductByMakanan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Makanan'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listMakanan = results;
+    debugPrint(
+        'total produk Makanan : ${_listMakanan.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Makanan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Makanan')
-          .get();
-      _listMakanan = snapShot.docs.map((document) => document.data()).toList();
-      debugPrint('total produk makanan ${_listMakanan.length}');
-      debugPrint('fetch data product makanan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Makanan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori makanan
-  Future<void> fetchProductMinuman() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+
+  List<ProductModel> _listMinuman = [];
+
+  List<ProductModel> get listMinuman => _listMinuman;
+
+  /// filter minuman
+  void filterProductByMinuman() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Minuman'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listMinuman = results;
+    debugPrint(
+        'total produk Minuman : ${_listMinuman.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Minuman..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Minuman')
-          .get();
-      _listMinuman = snapShot.docs.map((document) => document.data()).toList();
-      debugPrint('total produk Minuman ${_listMinuman.length}');
-      debugPrint('fetch data product Minuman success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Minuman gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori kesehatan
-  Future<void> fetchProductKesehatan() async {
-    stateOfConnnection = StateOfConnnection.isReady;
+  List<ProductModel> _listKesehatan = [];
+
+  List<ProductModel> get listKesehatan => _listKesehatan;
+
+  /// filter kesehatan
+  void filterProductByKesehatan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Kesehatan'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listKesehatan = results;
+    debugPrint(
+        'total produk kesehatan : ${_listKesehatan.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kesehatan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Kesehatan')
-          .get();
-      _listKesehatan =
-          snapShot.docs.map((document) => document.data()).toList();
-      debugPrint('total produk Kesehatan ${_listKesehatan.length}');
-      debugPrint('fetch data product Kesehatan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kesehatan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori kecantikan
-  Future<void> fetchProductKecantikan() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+  List<ProductModel> _listKecantikan = [];
+
+  List<ProductModel> get listKecantikan => _listKecantikan;
+
+  /// filter kecantikan
+  void filterProductByKecantikan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Kecantikan'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listKecantikan = results;
+    debugPrint(
+        'total produk kecantikan : ${_listKecantikan.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kecantikan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Kecantikan')
-          .get();
-      _listKecantikan =
-          snapShot.docs.map((document) => document.data()).toList();
-      debugPrint('total produk Kecantikan ${_listKecantikan.length}');
-      debugPrint('fetch data product Kecantikan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kecantikan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori fashion
-  Future<void> fetchProductFashion() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+  List<ProductModel> _listFashion = [];
+
+  List<ProductModel> get listFashion => _listFashion;
+
+  /// filter fashion
+  void filterProductByFashion() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Fashion'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listFashion = results;
+    debugPrint(
+        'total produk fashion : ${_listFashion.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Fashion..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Fashion')
-          .get();
-      _listFashion = snapShot.docs.map((document) => document.data()).toList();
-      debugPrint('total produk Fashion ${_listFashion.length}');
-      debugPrint('fetch data product Fashion success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kecantikan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori kerajinan tangan
-  Future<void> fetchProductKerajinanTangan() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+  List<ProductModel> _listKerajinanTangan = [];
+
+  List<ProductModel> get listKerajinanTangan => _listKerajinanTangan;
+
+  /// filter kerajinan tangan
+  void filterProductByKerajinanTangan() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Kerajinan Tangan'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listKerajinanTangan = results;
+    debugPrint(
+        'total produk kerajinan tangan : ${_listKerajinanTangan.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kerajinan Tangan..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Kerajinan Tangan')
-          .get();
-      _listKerajinanTangan =
-          snapShot.docs.map((document) => document.data()).toList();
-      debugPrint(
-          'total produk Kerajinan Tangan ${_listKerajinanTangan.length}');
-      debugPrint('fetch data product Kerajinan Tangan success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kerajinan Tangan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// fetch product kategori kategori lainnya
-  Future<void> fetchProductKategoriLainnya() async {
-    stateOfConnnection = StateOfConnnection.isStart;
+  List<ProductModel> _listKategoriLainnya = [];
+
+  List<ProductModel> get listKategoriLainnya => _listKategoriLainnya;
+
+  /// filter kategori lainnya
+  void filterProductByKategoriLainnya() {
+    List<ProductModel> results = [];
+    results = _listOfAllProduct
+        .where((place) => (place.productCategory
+        .toLowerCase()
+        .contains('Kategori Lainnya'.toLowerCase())))
+        .toList();
+
+    results.sort((a, b) =>
+        DateTime.parse(b.datePublished.toDate().toString())
+            .compareTo(DateTime.parse(a.datePublished.toDate().toString())));
+
+    _listKategoriLainnya = results;
+    debugPrint(
+        'total produk kategori lainnya : ${_listKategoriLainnya.length.toString()}');
     notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      debugPrint('fetch data product Kategori Lainnya..');
-      var snapShot = await _firestore
-          .collection('productMitra')
-          .orderBy('datePublished', descending: true)
-          .where('productCategory', isEqualTo: 'Kategori Lainnya')
-          .get();
-      _listKategoriLainnya =
-          snapShot.docs.map((document) => document.data()).toList();
-      debugPrint(
-          'total produk Kategori Lainnya ${_listKategoriLainnya.length}');
-      debugPrint('fetch data product Kategori Lainnya success!');
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('fetch data product Kerajinan Tangan gagal !');
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
-    }
   }
 
-  /// refressh product category
+  /// refresh product category
   Future<void> refreshProductCategory({
-    required List<Map<String, dynamic>> listOfCategory,
+    required List<ProductModel> listOfCategory,
   }) async {
     _listOfProductCategory = listOfCategory;
     notifyListeners();
   }
 
-  /// fetch all product by category
-  Future<void> fetchProductByCategory() async {
-    stateOfConnnection = StateOfConnnection.isStart;
-    notifyListeners();
-    try {
-      stateOfConnnection = StateOfConnnection.isLoading;
-      notifyListeners();
-      if (_listMakananRingan.isEmpty ||
-          _listMakanan.isEmpty ||
-          _listMinuman.isEmpty ||
-          _listKesehatan.isEmpty ||
-          _listKecantikan.isEmpty ||
-          _listFashion.isEmpty ||
-          _listKerajinanTangan.isEmpty ||
-          _listKategoriLainnya.isEmpty) {
-        fetchProductMakananRingan();
-        fetchProductMakanan();
-        fetchProductMinuman();
-        fetchProductKesehatan();
-        fetchProductKecantikan();
-        fetchProductFashion();
-        fetchProductKerajinanTangan();
-        fetchProductKategoriLainnya();
-      }
-      stateOfConnnection = StateOfConnnection.isReady;
-      notifyListeners();
-    } catch (e) {
-      debugPrint(e.toString());
-      stateOfConnnection = StateOfConnnection.isFailed;
-      notifyListeners();
+  void filterProductByCategory() {
+    if (_listOfAllProduct.isNotEmpty) {
+      filterProductByMakananRingan();
+      filterProductByMakanan();
+      filterProductByMinuman();
+      filterProductByKesehatan();
+      filterProductByKecantikan();
+      filterProductByFashion();
+      filterProductByKerajinanTangan();
+      filterProductByKategoriLainnya();
+    } else {
+      fetchAllProductData();
     }
   }
+
 }

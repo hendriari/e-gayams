@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
-import 'package:provider/provider.dart';
 
 class NotificationViewModel with ChangeNotifier {
   /// get device FCM token
@@ -42,33 +39,33 @@ class NotificationViewModel with ChangeNotifier {
     debugPrint('User granted permission: ${settings.authorizationStatus}');
   }
 
-  String? fcmTokens;
-
-  ///handle 1 account in 2 device to sace FCM token
-  Future<void> saveTokenFCMinMultipleDevice({
-    required BuildContext context,
-  }) async {
-    final accountProvider =
-        Provider.of<AccountViewModel>(context, listen: false);
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    debugPrint('try save token started...');
-    notificationListen();
-    try {
-      String? tokenFCM = await messaging.getToken();
-      fcmTokens = tokenFCM;
-      notificationListen();
-      if (tokenFCM != null) {
-        FirebaseFirestore.instance
-            .collection('newUser')
-            .doc(accountProvider.usermodel!.uid)
-            .set({'token': tokenFCM});
-        debugPrint('token tersave');
-      }
-      debugPrint('success save token !');
-      notificationListen();
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('save token failed :(');
-    }
-  }
+  // String? fcmTokens;
+  //
+  // ///handle 1 account in 2 device to sace FCM token
+  // Future<void> saveTokenFCMinMultipleDevice({
+  //   required BuildContext context,
+  // }) async {
+  //   final accountProvider =
+  //       Provider.of<AccountViewModel>(context, listen: false);
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   debugPrint('try save token started...');
+  //   notificationListen();
+  //   try {
+  //     String? tokenFCM = await messaging.getToken();
+  //     fcmTokens = tokenFCM;
+  //     notificationListen();
+  //     if (tokenFCM != null) {
+  //       FirebaseFirestore.instance
+  //           .collection('newUser')
+  //           .doc(accountProvider.usermodel!.uid)
+  //           .set({'token': tokenFCM});
+  //       debugPrint('token tersave');
+  //     }
+  //     debugPrint('success save token !');
+  //     notificationListen();
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //     debugPrint('save token failed :(');
+  //   }
+  // }
 }

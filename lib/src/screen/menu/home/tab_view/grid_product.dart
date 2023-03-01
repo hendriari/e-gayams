@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
@@ -8,8 +9,9 @@ import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 
 Widget gridProduct({
   required BuildContext context,
-  required List<Map<String, dynamic>> listKelurahan,
+  required List<ProductModel> listKelurahan,
   ScrollPhysics? scrollPhysics,
+  bool? listPaddingBottom,
 }) {
   return listKelurahan.isNotEmpty
       ? GridView.builder(
@@ -18,7 +20,9 @@ Widget gridProduct({
           physics: scrollPhysics ?? const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(
             top: AdaptSize.pixel8,
-            bottom: AdaptSize.screenWidth / 1000 * 180,
+            bottom: listPaddingBottom == true
+                ? AdaptSize.screenWidth / 1000 * 180
+                : AdaptSize.pixel14,
           ),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -29,7 +33,7 @@ Widget gridProduct({
               onTap: () {
                 NavigasiViewModel().navigasiDetailProduct(
                   context: context,
-                  product: listKelurahan[index],
+                  productId: listKelurahan[index].productId,
                 );
               },
               borderRadius: BorderRadius.circular(12),
@@ -56,7 +60,7 @@ Widget gridProduct({
                       width: double.infinity,
                       height: AdaptSize.screenWidth / 1000 * 400,
                       child: CachedNetworkImage(
-                        imageUrl: listKelurahan[index]['productImage'],
+                        imageUrl: listKelurahan[index].productImage,
                         imageBuilder: (context, imageProvider) => ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image(
@@ -84,7 +88,7 @@ Widget gridProduct({
                       height: AdaptSize.pixel8,
                     ),
                     Text(
-                      listKelurahan[index]['productName'],
+                      listKelurahan[index].productName,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge!
@@ -107,7 +111,7 @@ Widget gridProduct({
                         ),
                         Expanded(
                           child: Text(
-                            listKelurahan[index]['sellerName'],
+                            listKelurahan[index].sellerName,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -129,7 +133,7 @@ Widget gridProduct({
                         ),
                         Expanded(
                           child: Text(
-                            listKelurahan[index]['productLocation'],
+                            listKelurahan[index].productLocation,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge!
@@ -149,7 +153,7 @@ Widget gridProduct({
                       children: [
                         Expanded(
                           child: Text(
-                            listKelurahan[index]['productPrice'],
+                            listKelurahan[index].productPrice,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!

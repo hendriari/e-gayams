@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:kkn_siwalan/src/model/product_model.dart';
 import 'package:kkn_siwalan/src/screen/auth/login_screen.dart';
 import 'package:kkn_siwalan/src/screen/auth/register_screen.dart';
 import 'package:kkn_siwalan/src/screen/landing/onboarding_screen.dart';
@@ -102,14 +103,13 @@ class NavigasiViewModel {
   /// navigasi to detail product
   void navigasiDetailProduct({
     required BuildContext context,
-    required Map<String, dynamic> product,
-    // required String productId,
+    required String productId,
   }) {
     Navigator.push(
       context,
       CupertinoPageRoute(
         builder: (context) => DetailProductScreen(
-          product: product,
+          productID: productId,
         ),
       ),
     );
@@ -154,7 +154,7 @@ class NavigasiViewModel {
   void navigasiToPorudctByCategory({
     required BuildContext context,
     required String headerName,
-    required List<Map<String, dynamic>> listOfProductCategory,
+    required List<ProductModel> listOfProductCategory,
   }) {
     Navigator.push(
       context,

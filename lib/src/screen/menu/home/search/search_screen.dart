@@ -20,6 +20,15 @@ class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final searchProduct = Provider.of<ProductParsers>(context, listen: false);
+    Future.delayed(Duration.zero, () {
+      searchProduct.filterProductByKeyword(keyword: _searchController.text);
+    });
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _searchController.dispose();
@@ -51,78 +60,75 @@ class _SearchScreenState extends State<SearchScreen> {
             left: AdaptSize.pixel8,
             right: AdaptSize.pixel8,
           ),
-          child: Column(
-            children: [
-              /// search
-              formFieldWidget(
-                context: context,
-                textEditingController: _searchController,
-                suffix: IconButton(
-                  onPressed: () {
-                    /// show modal bottom sheet here
-                  },
-                  icon: Icon(
-                    Icons.analytics_outlined,
-                    color: MyColor.neutral400,
+          child: Consumer<ProductParsers>(builder: (context, value, child) {
+            return Column(
+              children: [
+                /// search
+                formFieldWidget(
+                  context: context,
+                  textEditingController: _searchController,
+                  suffix: IconButton(
+                    onPressed: () {
+                      /// show modal bottom sheet here
+                    },
+                    icon: Icon(
+                      Icons.analytics_outlined,
+                      color: MyColor.neutral400,
+                    ),
                   ),
+                  onChanged: (values) =>
+                      value.filterProductByKeyword(keyword: values),
+                  hint: 'Cari Produk',
+                  label: 'Cari Produk',
                 ),
-                onChanged: (value) {
-                  Provider.of<ProductParsers>(context, listen: false).filters =
-                      value.split(' ');
-                },
-                hint: 'Cari Produk',
-                label: 'Cari Produk',
-              ),
 
-              SizedBox(
-                height: AdaptSize.pixel10,
-              ),
+                SizedBox(
+                  height: AdaptSize.pixel10,
+                ),
 
-              /// search Product
-              Consumer<ProductParsers>(
-                builder: (context, itemProvider, child) {
-                  return Expanded(
-                    child: itemProvider.items.isNotEmpty
-                        ? gridProduct(
-                            context: context,
-                            scrollPhysics: const BouncingScrollPhysics(),
-                            listKelurahan: itemProvider.items,
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/image/error.png',
-                                height: AdaptSize.screenWidth / 2,
-                                width: AdaptSize.screenWidth / 2,
-                              ),
-                              SizedBox(
-                                height: AdaptSize.screenHeight * .012,
-                              ),
-                              Text(
-                                'Produk apa yang Kamu cari ?',
+                /// content
+                Expanded(
+                  child: value.foundProduct.isNotEmpty
+                      ? gridProduct(
+                          context: context,
+                          scrollPhysics: const BouncingScrollPhysics(),
+                          listKelurahan: value.foundProduct,
+                          listPaddingBottom: false,
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/image/error.png',
+                              height: AdaptSize.screenWidth / 2,
+                              width: AdaptSize.screenWidth / 2,
+                            ),
+                            SizedBox(
+                              height: AdaptSize.screenHeight * .012,
+                            ),
+                            Text(
+                              'Produk apa yang Kamu cari ?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontSize: AdaptSize.pixel15),
+                            ),
+                            SizedBox(
+                              height: AdaptSize.screenHeight * .01,
+                            ),
+                            Text(
+                                'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
+                                textAlign: TextAlign.center,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleLarge!
-                                    .copyWith(fontSize: AdaptSize.pixel15),
-                              ),
-                              SizedBox(
-                                height: AdaptSize.screenHeight * .01,
-                              ),
-                              Text(
-                                  'Kamu bisa mencari produk dengan memasukan kata kunci Nama Produk, Lokasi Produk, atau Nama Toko',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(fontSize: AdaptSize.pixel14))
-                            ],
-                          ),
-                  );
-                },
-              ),
-            ],
-          ),
+                                    .bodyLarge!
+                                    .copyWith(fontSize: AdaptSize.pixel14))
+                          ],
+                        ),
+                )
+              ],
+            );
+          }),
         ),
       ),
     );

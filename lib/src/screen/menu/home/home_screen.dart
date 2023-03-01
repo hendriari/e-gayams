@@ -40,30 +40,9 @@ class _HomeScreenState extends State<HomeScreen>
     );
     final productParsers = Provider.of<ProductParsers>(context, listen: false);
     Future.delayed(Duration.zero, () {
-      if (productParsers.allListProduct.isEmpty) {
-        return productParsers.fetchAllData();
+      if(productParsers.listOfAllProduct.isEmpty){
+        productParsers.fetchAllProductData();
       }
-      debugPrint(productParsers.allListProduct.toString());
-    });
-    Future.delayed(Duration.zero, () {
-      if (productParsers.kelurahanSiwalan.isEmpty ||
-          productParsers.kelurahanGayamsari.isEmpty ||
-          productParsers.kelurahanSambirejo.isEmpty ||
-          productParsers.kelurahanPandeanLamper.isEmpty ||
-          productParsers.kelurahanSawahBesar.isEmpty ||
-          productParsers.kelurahanTambakRejo.isEmpty ||
-          productParsers.kelurahanKaligawe.isEmpty) {
-        productParsers.fetchProductKelurahanSiwalan();
-        productParsers.fetchProductKelurahanGayamsari();
-        productParsers.fetchProductKelurahanSambirejo();
-        productParsers.fetchProductKelurahanPandeanLamper();
-        productParsers.fetchProductKelurahanSawahBesar();
-        productParsers.fetchProductKelurahanTambakrejo();
-        productParsers.fetchProductKelurahanKaligawe();
-      }
-    });
-    Future.delayed(Duration.zero, () {
-      productParsers.fetchProductByCategory();
     });
     _tabBarController = TabController(length: 8, vsync: this);
   }
@@ -180,29 +159,31 @@ class _HomeScreenState extends State<HomeScreen>
                             }
                             if (value.stateOfConnnection ==
                                 StateOfConnnection.isReady) {
-                              return value.allListProduct.isNotEmpty
+                              return value.listOfAllProduct.isNotEmpty
                                   ? CarouselSlider.builder(
                                       itemCount:
-                                          value.allListProduct.length >= 5
+                                          value.listOfAllProduct.length >= 5
                                               ? 5
-                                              : value.allListProduct.length,
+                                              : value.listOfAllProduct.length,
                                       itemBuilder: (BuildContext context,
                                           int index, int realIndex) {
                                         return CachedNetworkImage(
-                                          imageUrl: value.allListProduct[index]
-                                              ['productImage'],
+                                          imageUrl: value
+                                              .listOfAllProduct[index]
+                                              .productImage,
                                           imageBuilder:
                                               (context, imageProvider) => Hero(
-                                            tag: value.allListProduct[index]
-                                                ['productImage'],
+                                            tag: value.listOfAllProduct[index]
+                                                .productImage,
                                             child: Material(
                                               child: InkWell(
                                                 onTap: () {
                                                   NavigasiViewModel()
                                                       .navigasiDetailProduct(
                                                     context: context,
-                                                    product: value
-                                                        .allListProduct[index],
+                                                    productId: value
+                                                        .listOfAllProduct[index]
+                                                        .productId,
                                                   );
                                                 },
                                                 borderRadius:
@@ -303,9 +284,10 @@ class _HomeScreenState extends State<HomeScreen>
                                                             ),
                                                           ),
                                                           child: Text(
-                                                            value.allListProduct[
+                                                            value
+                                                                .listOfAllProduct[
                                                                     index]
-                                                                ['productName'],
+                                                                .productName,
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
@@ -399,13 +381,13 @@ class _HomeScreenState extends State<HomeScreen>
                           /// dot
                           Consumer<ProductParsers>(
                               builder: (context, value, child) {
-                            return value.allListProduct.isNotEmpty
+                            return value.listOfAllProduct.isNotEmpty
                                 ? Center(
                                     child: AnimatedSmoothIndicator(
                                       activeIndex: value.indexSlider,
-                                      count: value.allListProduct.length >= 5
+                                      count: value.listOfAllProduct.length >= 5
                                           ? 5
-                                          : value.allListProduct.length,
+                                          : value.listOfAllProduct.length,
                                       effect: ExpandingDotsEffect(
                                         dotWidth: AdaptSize.pixel8,
                                         dotHeight: AdaptSize.pixel8,
@@ -456,7 +438,7 @@ class _HomeScreenState extends State<HomeScreen>
                 children: [
                   allProductView(
                     context: context,
-                    listOfProduct: value.allListProduct,
+                    listOfProduct: value.listOfAllProduct,
                   ),
                   gridProduct(
                     context: context,
