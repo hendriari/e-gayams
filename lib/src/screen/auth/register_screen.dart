@@ -10,6 +10,7 @@ import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/rich_text_widget.dart';
 import 'package:kkn_siwalan/src/widget/string_radio_button.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Register',
+                AppLocalizations.of(context)?.register ?? 'Register',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: AdaptSize.pixel24,
                       color: MyColor.neutral500,
@@ -67,7 +68,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               Text(
-                'Daftar untuk menggunakan aplikasi',
+                AppLocalizations.of(context)?.registerDesc ??
+                    'Daftar untuk menggunakan aplikasi',
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: AdaptSize.pixel12,
                       color: MyColor.neutral500,
@@ -110,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
               Text(
-                'Jenis Kelamin',
+                AppLocalizations.of(context)?.gender ?? 'Jenis Kelamin',
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge!
@@ -134,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: AdaptSize.pixel8,
                   ),
                   Text(
-                    'Perempuan',
+                    AppLocalizations.of(context)?.female ?? 'Perempuan',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -154,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     width: AdaptSize.pixel8,
                   ),
                   Text(
-                    'Laki - Laki',
+                    AppLocalizations.of(context)?.male ?? 'Laki - Laki',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
@@ -173,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 obscureText: false,
                 textEditingController: _alamat,
                 textInputType: TextInputType.streetAddress,
-                label: 'Alamat',
+                label: AppLocalizations.of(context)?.address ?? 'Alamat',
                 hint: 'Jl. Jalan',
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 formFieldValidator: (value) => FormValidators.commonValidate(
@@ -193,7 +195,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     context: context,
                     textEditingController: _rt,
                     textInputType: TextInputType.number,
-                    label: 'RT',
+                    label: AppLocalizations.of(context)?.rt ?? 'RT',
                     hint: 'RT 01',
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     formFieldValidator: (value) => FormValidators.rtrwValidate(
@@ -204,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     context: context,
                     textEditingController: _rw,
                     textInputType: TextInputType.number,
-                    label: 'RW',
+                    label: AppLocalizations.of(context)?.rw ?? 'RW',
                     hint: 'RW 01',
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     formFieldValidator: (value) => FormValidators.rtrwValidate(
@@ -225,7 +227,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: value.visiblePasswordRegister,
                   textInputType: TextInputType.visiblePassword,
                   textEditingController: _password,
-                  label: 'Password',
+                  label: AppLocalizations.of(context)?.password ?? 'Password',
                   hint: '*********',
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   formFieldValidator: (value) =>
@@ -262,7 +264,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: value.visibleConfirmPassword,
                   textInputType: TextInputType.visiblePassword,
                   textEditingController: _confirmPassword,
-                  label: 'Confirm Password',
+                  label: AppLocalizations.of(context)?.confirmPassword ??
+                      'Confirm Password',
                   hint: '********',
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   formFieldValidator: (value) =>
@@ -319,9 +322,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         )
                       : Text(
                           'Daftar',
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                fontSize: AdaptSize.pixel16,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    fontSize: AdaptSize.pixel16,
+                                  ),
                         ),
                 );
               }),
@@ -333,10 +337,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               /// login button
               Center(
                 child: richTextWidget(
-                    text1: 'Sudah punya akun?',
+                    text1:
+                        '${AppLocalizations.of(context)?.allReadyHaveAccount}?',
                     textStyle1: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel12, color: MyColor.neutral600),
-                    text2: ' Login',
+                    text2: ' ${AppLocalizations.of(context)?.login}',
                     textStyle2: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel12,
                           color: MyColor.warning600,

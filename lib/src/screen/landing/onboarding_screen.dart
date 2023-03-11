@@ -8,6 +8,7 @@ import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/onboarding_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({
@@ -42,21 +43,42 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             Consumer<OnBoardingViewModel>(builder: (context, value, child) {
               return PageView.builder(
                   controller: _pageController,
-                  itemCount: value.onboarding.length,
+                  itemCount: 3,
                   onPageChanged: (index) {
                     value.getStarted(index == 2);
                   },
                   itemBuilder: (context, index) {
-                    final OnBoardingModel onboardingContent =
-                        value.onboarding[index];
+                    final List<OnBoardingModel> onboardingContent = [
+                      OnBoardingModel(
+                        image: 'assets/image/onboard1.png',
+                        title: AppLocalizations.of(context)?.onBorad1 ??
+                            'Digitalisasi UMKM Kelurahan Siwalan',
+                        subtitle: AppLocalizations.of(context)?.onBoard1Desc ??
+                            'Ragam UMKM di Siwalan dalam 1 Aplikasi',
+                      ),
+                      OnBoardingModel(
+                        image: 'assets/image/onboard2.png',
+                        title: AppLocalizations.of(context)?.onBoard2 ??
+                            'Temukan Produk Lebih Mudah',
+                        subtitle: AppLocalizations.of(context)?.onBoard2Desc ??
+                            'Beragam Produk UMKM di Kelurahan Siwalan',
+                      ),
+                      OnBoardingModel(
+                        image: 'assets/image/onboard3.png',
+                        title: AppLocalizations.of(context)?.onBoard3 ??
+                            'Penjual Terpercaya',
+                        subtitle: AppLocalizations.of(context)?.onBoard3Desc ??
+                            'Order Produk Langsung Kepada Penjual',
+                      ),
+                    ];
                     return onboardingWidget(
                       context: context,
-                      image: onboardingContent.image,
-                      title: onboardingContent.title,
-                      description: onboardingContent.subtitle,
+                      image: onboardingContent[index].image,
+                      title: onboardingContent[index].title,
+                      description: onboardingContent[index].subtitle,
                       indicator: SmoothPageIndicator(
                         controller: _pageController,
-                        count: value.onboarding.length,
+                        count: 3,
                         effect: ExpandingDotsEffect(
                           activeDotColor: MyColor.warning600,
                           dotColor: MyColor.neutral700,
@@ -74,7 +96,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               bottom: AdaptSize.pixel20,
               child: buttonWidget(
                 sizeHeight: AdaptSize.pixel36,
-                sizeWidth: AdaptSize.pixel75,
+                sizeWidth: AdaptSize.pixel75 + AdaptSize.pixel16,
                 backgroundColor: MyColor.neutral900,
                 foregroundColor: MyColor.neutral900,
                 side: BorderSide(color: MyColor.warning600),
@@ -82,7 +104,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   NavigasiViewModel().navigateToRegister(context);
                 },
                 child: Text(
-                  'Skip',
+                  AppLocalizations.of(context)?.skip ?? 'Skip',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel16,
                         color: MyColor.warning600,
@@ -108,7 +130,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           NavigasiViewModel().navigateToRegister(context);
                         },
                         child: Text(
-                          'Get Started',
+                          AppLocalizations.of(context)?.getStarted ??
+                              'Get Started',
                           style:
                               Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel16,
@@ -122,7 +145,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       bottom: AdaptSize.pixel20,
                       child: buttonWidget(
                         sizeHeight: AdaptSize.pixel36,
-                        sizeWidth: AdaptSize.pixel75,
+                        sizeWidth: AdaptSize.pixel75 + AdaptSize.pixel40,
                         backgroundColor: MyColor.warning600,
                         foregroundColor: MyColor.neutral900,
                         onPressed: () {
@@ -131,7 +154,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               curve: Curves.ease);
                         },
                         child: Text(
-                          'Next',
+                          AppLocalizations.of(context)?.next ?? "Next",
                           style:
                               Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     fontSize: AdaptSize.pixel16,
@@ -140,7 +163,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ),
                       ),
                     ),
-            )
+            ),
           ],
         ),
       ),

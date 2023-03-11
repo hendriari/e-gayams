@@ -20,6 +20,7 @@ import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -80,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
                             Row(
                               children: [
                                 Text(
-                                  'Hello ',
+                                 AppLocalizations.of(context)?.hello ?? 'Hello ',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!

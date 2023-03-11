@@ -10,6 +10,7 @@ import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
 import 'package:kkn_siwalan/src/widget/rich_text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -47,14 +48,14 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Login',
+                AppLocalizations.of(context)?.login ?? 'Login',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontSize: AdaptSize.pixel24,
                       color: MyColor.neutral500,
                     ),
               ),
               Text(
-                'Login untuk memulai aplikasi',
+                AppLocalizations.of(context)?.loginDesc ?? 'Login untuk memulai aplikasi',
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: AdaptSize.pixel12,
                       color: MyColor.neutral500,
@@ -87,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 return formFieldWidget(
                   context: context,
                   textEditingController: _password,
-                  hint: 'Password',
-                  label: 'Password',
+                  hint: AppLocalizations.of(context)?.password ?? 'Password',
+                  label: AppLocalizations.of(context)?.password ?? 'Password',
                   obscureText: value.visiblePasswordLogin,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   formFieldValidator: (value) =>
@@ -118,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: richTextWidget(
-                    text1: 'Lupa Kata Sandi? ',
+                    text1: '${AppLocalizations.of(context)?.forgotPassword}? ',
                     text2: 'Reset Passwords',
                     textStyle1: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontSize: AdaptSize.pixel10, color: MyColor.neutral600),
@@ -157,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: MyColor.neutral900,
                         )
                       : Text(
-                          'Login',
+                    AppLocalizations.of(context)?.login ?? 'Login',
                           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                 fontSize: AdaptSize.pixel16,
                               ),
@@ -170,8 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
               /// button to register
               Center(
                 child: richTextWidget(
-                    text1: 'Belum punya akun? ',
-                    text2: 'Daftar',
+                    text1: '${AppLocalizations.of(context)?.dontHaveAccount}? ',
+                    text2: AppLocalizations.of(context)?.register ?? 'Daftar',
                     textStyle1: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: AdaptSize.pixel12,
                           color: MyColor.neutral600,
