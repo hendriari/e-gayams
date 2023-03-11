@@ -183,7 +183,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                             icon: Icon(
                               Icons.bookmark,
                               size: AdaptSize.pixel26,
-                              color: MyColor.warning500,
+                              color: MyColor.danger300,
                             ),
                           );
                         }),

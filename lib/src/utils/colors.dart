@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/utils/hex_color_convert.dart';
 
@@ -98,4 +100,24 @@ class MyColor {
   static HexColor purpel700 = HexColor("BA90D7");
   static HexColor purpel800 = HexColor("DEBCF1");
   static HexColor purpel900 = HexColor("EFDDF8");
+
+  /// gradient colors
+  static List<Color> gradient6Colors = [
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+    Color((Random().nextDouble() * 0xFFFFFF).toInt() << 0).withOpacity(.8),
+  ];
+
+  static LinearGradient likeROG = const LinearGradient(
+    colors: [
+      Color(0xFFFF0000),
+      Color(0xFF00FF00),
+      Color(0xFF0000FF),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }

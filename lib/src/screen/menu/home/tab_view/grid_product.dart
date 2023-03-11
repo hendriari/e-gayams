@@ -6,6 +6,8 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
+import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
+import 'package:kkn_siwalan/src/widget/long_press_detail_product.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -35,15 +37,41 @@ Widget gridProduct({
                 mainAxisExtent: AdaptSize.screenWidth / 1000 * 850,
               ),
               itemBuilder: (context, index) {
-                return InkWell(
+                return GestureDetector(
+                  onLongPress: (){
+                    longPressDetailProduct(
+                      context: context,
+                      productName: listKelurahan[index].productName,
+                      sellerName: listKelurahan[index].sellerName,
+                      ranting: 4.9,
+                      imageProduct: listKelurahan[index].productImage,
+                      availablePayment: 'cod',
+                      productPrice:  listKelurahan[index].productPrice,
+                      onPressedButton: () {},
+                      addWishlistAction: () {
+                        CustomDialogs().singleButtonDialog(
+                          context: context,
+                          image: 'oke',
+                          title:
+                          'Tambahkan ${listKelurahan[index].productName} ke Wishlist ?',
+                          textButton1: 'Kembali',
+                          textButton2: 'Simpan',
+                          onPress1: () {
+                            Navigator.pop(context);
+                          },
+                          onPress2: () {},
+                          bgButton1: MyColor.danger400,
+                          bgButton2: MyColor.warning600,
+                        );
+                      },
+                    );
+                  },
                   onTap: () {
                     NavigasiViewModel().navigasiDetailProduct(
                       context: context,
                       productId: listKelurahan[index].productId,
                     );
                   },
-                  borderRadius: BorderRadius.circular(12),
-                  splashColor: MyColor.neutral900,
                   child: Container(
                     height: AdaptSize.screenWidth / 1000 * 100,
                     margin: EdgeInsets.all(AdaptSize.pixel6),
