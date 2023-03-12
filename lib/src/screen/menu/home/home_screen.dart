@@ -15,11 +15,12 @@ import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/product_category/home_category_product.dart';
-import 'package:kkn_siwalan/src/widget/loading_overlay_widget.dart';
+import 'package:kkn_siwalan/src/widget/loading_widget.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -80,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
                             Row(
                               children: [
                                 Text(
-                                  'Hello ',
+                                 AppLocalizations.of(context)?.hello ?? 'Hello ',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!
@@ -153,212 +154,223 @@ class _HomeScreenState extends State<HomeScreen>
                                 builder: (context, value, child) {
                               if (value.stateOfConnnection ==
                                   StateOfConnnection.isLoading) {
-                                return cardShimmerWidget(
-                                  borderRadius: 16,
-                                  imagesShimmer: 'logo_user.png',
-                                  height: AdaptSize.screenWidth / 1000 * 450,
-                                  width: double.infinity,
+                                return shimmerLoading(
+                                  child: cardShimmerWidget(
+                                    borderRadius: 16,
+                                    imagesShimmer: 'logo_user.png',
+                                    height: AdaptSize.screenWidth / 1000 * 430,
+                                    width: double.infinity,
+                                  ),
                                 );
                               }
                               if (value.stateOfConnnection ==
                                   StateOfConnnection.isReady) {
-                                return value.listOfAllProduct.isNotEmpty
-                                    ? CarouselSlider.builder(
-                                        itemCount:
-                                            value.listOfAllProduct.length >= 5
-                                                ? 5
-                                                : value.listOfAllProduct.length,
-                                        itemBuilder: (BuildContext context,
-                                            int index, int realIndex) {
-                                          return CachedNetworkImage(
-                                            imageUrl: value
-                                                .listOfAllProduct[index]
-                                                .productImage,
-                                            imageBuilder:
-                                                (context, imageProvider) =>
-                                                    Hero(
-                                              tag: value.listOfAllProduct[index]
-                                                  .productImage,
-                                              child: Material(
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    NavigasiViewModel()
-                                                        .navigasiDetailProduct(
-                                                      context: context,
-                                                      productId: value
-                                                          .listOfAllProduct[
-                                                              index]
-                                                          .productId,
-                                                    );
-                                                  },
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                  splashColor:
-                                                      MyColor.neutral900,
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(
-                                                        AdaptSize.pixel8),
-                                                    decoration: BoxDecoration(
-                                                      color: MyColor.danger400,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16),
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          offset: const Offset(
-                                                              2, 3),
-                                                          color: MyColor
-                                                              .neutral600,
-                                                          blurRadius: 3,
-                                                        ),
-                                                      ],
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: imageProvider,
-                                                      ),
-                                                    ),
-                                                    child: Stack(
-                                                      children: [
-                                                        Positioned(
-                                                          left:
-                                                              AdaptSize.pixel3,
-                                                          top: AdaptSize.pixel3,
-                                                          child: Card(
-                                                            color: Colors.red,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5),
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .only(
-                                                                left: AdaptSize
-                                                                    .pixel10,
-                                                                right: AdaptSize
-                                                                    .pixel10,
-                                                                top: AdaptSize
-                                                                    .pixel5,
-                                                                bottom:
-                                                                    AdaptSize
-                                                                        .pixel5,
-                                                              ),
-                                                              child: Text(
-                                                                'NEW',
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .titleLarge!
-                                                                    .copyWith(
-                                                                        fontSize:
-                                                                            AdaptSize
-                                                                                .pixel12,
-                                                                        color: MyColor
-                                                                            .neutral900),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomCenter,
-                                                          child: Container(
-                                                            height: AdaptSize
-                                                                    .screenWidth /
-                                                                1000 *
-                                                                80,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: AdaptSize
-                                                                        .pixel8),
-                                                            alignment: Alignment
-                                                                .centerLeft,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Colors
-                                                                  .black
-                                                                  .withOpacity(
-                                                                      .3),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        16),
-                                                                bottomRight:
-                                                                    Radius
-                                                                        .circular(
-                                                                            16),
-                                                              ),
-                                                            ),
-                                                            child: Text(
-                                                              value
-                                                                  .listOfAllProduct[
-                                                                      index]
-                                                                  .productName,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        AdaptSize
-                                                                            .pixel16,
-                                                                    color: MyColor
-                                                                        .neutral900,
-                                                                  ),
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
+                                return CarouselSlider.builder(
+                                  itemCount: value.listOfAllProduct.length >= 5
+                                      ? 5
+                                      : value.listOfAllProduct.length,
+                                  itemBuilder: (BuildContext context, int index,
+                                      int realIndex) {
+                                    return CachedNetworkImage(
+                                      imageUrl: value
+                                          .listOfAllProduct[index].productImage,
+                                      imageBuilder: (context, imageProvider) =>
+                                          Hero(
+                                        tag: value.listOfAllProduct[index]
+                                            .productImage,
+                                        child: Material(
+                                          child: InkWell(
+                                            onTap: () {
+                                              NavigasiViewModel()
+                                                  .navigasiDetailProduct(
+                                                context: context,
+                                                productId: value
+                                                    .listOfAllProduct[index]
+                                                    .productId,
+                                              );
+                                            },
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            splashColor: MyColor.neutral900,
+                                            child: Stack(
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                    top: AdaptSize.pixel8,
+                                                    left: AdaptSize.pixel8,
+                                                    right:
+                                                        AdaptSize.screenWidth /
+                                                            54,
+                                                    bottom:
+                                                        AdaptSize.screenWidth /
+                                                            54,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    gradient: LinearGradient(
+                                                      colors: MyColor
+                                                          .gradient6Colors,
+                                                      begin:
+                                                          Alignment.bottomLeft,
+                                                      end: Alignment.topRight,
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                            placeholder: (context, url) =>
-                                                shimmerLoading(
-                                              child: cardShimmerWidget(
-                                                borderRadius: 16,
-                                                imagesShimmer: 'logo_user.png',
-                                                margin: EdgeInsets.all(
-                                                  AdaptSize.pixel8,
+                                                Container(
+                                                  margin: EdgeInsets.all(
+                                                      AdaptSize.pixel8),
+                                                  decoration: BoxDecoration(
+                                                    color: MyColor.danger400,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        offset:
+                                                            const Offset(2, 3),
+                                                        color: Colors.purple
+                                                            .withOpacity(.4),
+                                                        blurRadius: 5,
+                                                      ),
+                                                    ],
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: imageProvider,
+                                                    ),
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      Positioned(
+                                                        left: AdaptSize.pixel3,
+                                                        top: AdaptSize.pixel3,
+                                                        child: Card(
+                                                          color: Colors.red,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                              left: AdaptSize
+                                                                  .pixel10,
+                                                              right: AdaptSize
+                                                                  .pixel10,
+                                                              top: AdaptSize
+                                                                  .pixel5,
+                                                              bottom: AdaptSize
+                                                                  .pixel5,
+                                                            ),
+                                                            child: Text(
+                                                              'NEW',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleLarge!
+                                                                  .copyWith(
+                                                                      fontSize:
+                                                                          AdaptSize
+                                                                              .pixel12,
+                                                                      color: MyColor
+                                                                          .neutral900),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment: Alignment
+                                                            .bottomCenter,
+                                                        child: Container(
+                                                          height: AdaptSize
+                                                                  .screenWidth /
+                                                              1000 *
+                                                              80,
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: AdaptSize
+                                                                      .pixel8),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    .3),
+                                                            borderRadius:
+                                                                const BorderRadius
+                                                                    .only(
+                                                              bottomLeft: Radius
+                                                                  .circular(16),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          16),
+                                                            ),
+                                                          ),
+                                                          child: Text(
+                                                            value
+                                                                .listOfAllProduct[
+                                                                    index]
+                                                                .productName,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .copyWith(
+                                                                  fontSize:
+                                                                      AdaptSize
+                                                                          .pixel16,
+                                                                  color: MyColor
+                                                                      .neutral900,
+                                                                ),
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    errorShimmerWidget(
-                                              borderRadius: 16,
-                                              imagesShimmer: 'close.png',
-                                            ),
-                                          );
-                                        },
-                                        options: CarouselOptions(
-                                          height: AdaptSize.screenWidth /
-                                              1000 *
-                                              450,
-                                          viewportFraction: .9,
-                                          autoPlay: true,
-                                          autoPlayCurve: Curves.fastOutSlowIn,
-                                          autoPlayInterval:
-                                              const Duration(seconds: 3),
-                                          onPageChanged: (index, reason) =>
-                                              value.changeIndex(index: index),
+                                          ),
                                         ),
-                                      )
-                                    : Center(
-                                        child: CircularProgressIndicator(
-                                          color: MyColor.warning600,
+                                      ),
+                                      placeholder: (context, url) =>
+                                          shimmerLoading(
+                                        child: cardShimmerWidget(
+                                          borderRadius: 16,
+                                          imagesShimmer: 'logo_user.png',
+                                          margin: EdgeInsets.all(
+                                            AdaptSize.pixel8,
+                                          ),
                                         ),
-                                      );
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          errorShimmerWidget(
+                                        borderRadius: 16,
+                                        imagesShimmer: 'close.png',
+                                      ),
+                                    );
+                                  },
+                                  options: CarouselOptions(
+                                    height: AdaptSize.screenWidth / 1000 * 450,
+                                    viewportFraction: .9,
+                                    autoPlay: true,
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    autoPlayInterval:
+                                        const Duration(seconds: 3),
+                                    onPageChanged: (index, reason) =>
+                                        value.changeIndex(index: index),
+                                  ),
+                                );
                               }
                               if (value.stateOfConnnection ==
                                   StateOfConnnection.isFailed) {
@@ -451,10 +463,33 @@ class _HomeScreenState extends State<HomeScreen>
                 return TabBarView(
                   controller: _tabBarController,
                   children: [
-                    allProductView(
-                      context: context,
-                      listOfProduct: value.listOfAllProduct,
-                    ),
+                    value.listOfAllProduct.isNotEmpty
+                        ? allProductView(
+                            context: context,
+                            listOfProduct: value.listOfAllProduct,
+                          )
+                        : MediaQuery.removePadding(
+                            removeTop: true,
+                            context: context,
+                            child: ListView.builder(
+                                itemCount: 6,
+                                padding: EdgeInsets.only(
+                                  top: AdaptSize.pixel8,
+                                  bottom: AdaptSize.screenWidth / 1000 * 180,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return shimmerLoading(
+                                    child: cardShimmerWidget(
+                                      borderRadius: 16,
+                                      imagesShimmer: 'logo_user.png',
+                                      height:
+                                          AdaptSize.screenWidth / 1000 * 380,
+                                      width: double.infinity,
+                                      margin: EdgeInsets.all(AdaptSize.pixel5),
+                                    ),
+                                  );
+                                }),
+                          ),
                     gridProduct(
                       context: context,
                       listKelurahan: value.kelurahanSiwalan,

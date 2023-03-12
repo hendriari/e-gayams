@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kkn_siwalan/firebase_options.dart';
 import 'package:kkn_siwalan/src/dummy/product_data_dummy.dart';
 import 'package:kkn_siwalan/src/screen/landing/splashscreen1.dart';
@@ -20,6 +21,7 @@ import 'package:kkn_siwalan/src/viewmodel/order_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint("Handling a background message: ${message.messageId}");
@@ -61,6 +63,16 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('id', ''),
+          Locale('en', ''),
+        ],
         theme: ThemeData(
           scaffoldBackgroundColor: MyColor.neutral900,
           textTheme: myTextTheme,

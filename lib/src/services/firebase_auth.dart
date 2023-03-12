@@ -32,6 +32,7 @@ class FirebaseAuthServices {
         rt: rt,
         rw: rw,
         wishList: [],
+        role: 'endUser',
       );
 
       await _firestore

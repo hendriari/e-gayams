@@ -7,7 +7,7 @@ import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/default_appbar.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
-import 'package:kkn_siwalan/src/widget/loading_overlay_widget.dart';
+import 'package:kkn_siwalan/src/widget/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {

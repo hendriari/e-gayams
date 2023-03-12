@@ -6,6 +6,8 @@ import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/widget/custom_dialogs.dart';
+import 'package:kkn_siwalan/src/widget/long_press_detail_product.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -29,9 +31,35 @@ Widget allProductView({
           itemCount: listOfProduct.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            return InkWell(
-              borderRadius: BorderRadius.circular(16),
-              splashColor: MyColor.neutral900,
+            return GestureDetector(
+              onLongPress: () {
+                longPressDetailProduct(
+                  context: context,
+                  productName: listOfProduct[index].productName,
+                  sellerName: listOfProduct[index].sellerName,
+                  ranting: 4.9,
+                  imageProduct: listOfProduct[index].productImage,
+                  availablePayment: 'va',
+                  productPrice: listOfProduct[index].productPrice,
+                  onPressedButton: () {},
+                  addWishlistAction: () {
+                    CustomDialogs().singleButtonDialog(
+                      context: context,
+                      image: 'oke',
+                      title:
+                          'Tambahkan ${listOfProduct[index].productName} ke Wishlist ?',
+                      textButton1: 'Kembali',
+                      textButton2: 'Simpan',
+                      onPress1: () {
+                        Navigator.pop(context);
+                      },
+                      onPress2: () {},
+                      bgButton1: MyColor.danger400,
+                      bgButton2: MyColor.warning600,
+                    );
+                  },
+                );
+              },
               onTap: () {
                 NavigasiViewModel().navigasiDetailProduct(
                   context: context,

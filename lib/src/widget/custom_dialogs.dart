@@ -300,6 +300,7 @@ class CustomDialogs {
                               .labelLarge!
                               .copyWith(
                             fontSize: AdaptSize.pixel14,
+                            color: MyColor.neutral900,
                           ),
                         ),
                       ),
