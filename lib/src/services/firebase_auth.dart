@@ -16,6 +16,8 @@ class FirebaseAuthServices {
     required String alamat,
     required String rt,
     required String rw,
+    required String nomorWhatsApp,
+    required String kelurahan,
   }) async {
     try {
       UserCredential cred = await _auth.createUserWithEmailAndPassword(
@@ -31,8 +33,9 @@ class FirebaseAuthServices {
         alamat: alamat,
         rt: rt,
         rw: rw,
-        wishList: [],
         role: 'endUser',
+        nomorWhatsApp: nomorWhatsApp,
+        kelurahan: kelurahan,
       );
 
       await _firestore

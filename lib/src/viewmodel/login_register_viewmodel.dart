@@ -64,6 +64,8 @@ class LoginRegisterViewModel with ChangeNotifier {
         alamat: alamat,
         rt: rt,
         rw: rw,
+        nomorWhatsApp: '',
+        kelurahan: '',
       );
       Future.delayed(Duration.zero, () {
         ResponseDialog.customResponseDialog(
@@ -149,6 +151,7 @@ class LoginRegisterViewModel with ChangeNotifier {
               description: 'Akun ini sudah terdaftar sebagai Akun Mitra',
               image: 'error',
             );
+            debugPrint('This account is already registered as a mitra account, waiting logout');
             FirebaseAuthServices().logOut();
             _loginLoading = false;
             context.loaderOverlay.hide();
