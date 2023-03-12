@@ -117,7 +117,7 @@ class LoginRegisterViewModel with ChangeNotifier {
 
         DocumentSnapshot<Map<String, dynamic>> snapshot =
             await FirebaseFirestore.instance
-                .collection('newUser')
+                .collection('userPhase2')
                 .doc(currentUser.uid)
                 .get();
 
@@ -146,7 +146,7 @@ class LoginRegisterViewModel with ChangeNotifier {
               context: context,
               height: AdaptSize.screenWidth / 1000 * 700,
               width: AdaptSize.screenWidth / 1000 * 800,
-              description: 'Akun ini sudah terdaftar sebagai Mitra',
+              description: 'Akun ini sudah terdaftar sebagai Akun Mitra',
               image: 'error',
             );
             FirebaseAuthServices().logOut();

@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
                             Row(
                               children: [
                                 Text(
-                                 AppLocalizations.of(context)?.hello ?? 'Hello ',
+                                 '${AppLocalizations.of(context)?.hello ?? 'Hello '} ',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!

@@ -27,7 +27,7 @@ class AccountViewModel with ChangeNotifier {
   /// get user data from firestore
   final Stream<DocumentSnapshot<Map<String, dynamic>>> _userData =
   FirebaseFirestore.instance
-      .collection('newUser')
+      .collection('userPhase2')
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .snapshots();
 

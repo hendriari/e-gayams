@@ -38,6 +38,7 @@ class ResponseDialog {
               ),
               child: Column(
                 children: [
+                  const Spacer(),
                   Image.asset(
                     'assets/image/$image.png',
                     height: AdaptSize.screenWidth / 1000 * 290,
@@ -53,6 +54,7 @@ class ResponseDialog {
                         ),
                     textAlign: TextAlign.center,
                   ),
+                  const Spacer(),
                 ],
               ),
             ),
@@ -90,6 +92,7 @@ class ResponseDialog {
               ),
               child: Column(
                 children: [
+                  const Spacer(),
                   Image.asset(
                     'assets/image/$image',
                     height: AdaptSize.screenWidth / 1000 * 350,
@@ -104,6 +107,7 @@ class ResponseDialog {
                           fontSize: AdaptSize.pixel14,
                         ),
                   ),
+                  const Spacer(),
                 ],
               ),
             ),
