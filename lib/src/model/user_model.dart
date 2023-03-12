@@ -8,6 +8,7 @@ class UserModel {
   String alamat;
   String rt;
   String rw;
+  String role;
   List wishList;
 
   UserModel({
@@ -18,6 +19,7 @@ class UserModel {
     required this.alamat,
     required this.rt,
     required this.rw,
+    required this.role,
     required this.wishList,
   });
 
@@ -33,6 +35,7 @@ class UserModel {
       rt: snapshot["rt"],
       rw: snapshot["rw"],
       wishList: snapshot["wishList"],
+      role: snapshot["role"],
     );
   }
 
@@ -45,5 +48,6 @@ class UserModel {
         "rt": rt,
         "rw": rw,
         "wishList": wishList,
+        "role": role,
       };
 }

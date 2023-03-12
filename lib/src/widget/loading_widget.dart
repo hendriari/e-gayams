@@ -10,10 +10,22 @@ Widget loadingOverlayWidget({
   return LoaderOverlay(
     useDefaultLoading: false,
     overlayWidget: Center(
-        child: SpinKitThreeBounce(
-      size: AdaptSize.screenWidth / 1000 * 130,
-      color: MyColor.warning400,
-    )),
+      child: SpinKitThreeBounce(
+        size: AdaptSize.screenWidth / 1000 * 130,
+        color: MyColor.warning400,
+      ),
+    ),
     child: child,
+  );
+}
+
+/// only spinkit loading
+Widget spinKitLoading({
+  Color? color,
+  double? size,
+}) {
+  return SpinKitThreeBounce(
+    size: size ?? AdaptSize.pixel16,
+    color: color ?? MyColor.warning400,
   );
 }

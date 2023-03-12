@@ -15,7 +15,7 @@ import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/product_category/home_category_product.dart';
-import 'package:kkn_siwalan/src/widget/loading_overlay_widget.dart';
+import 'package:kkn_siwalan/src/widget/loading_widget.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
 import 'package:provider/provider.dart';
