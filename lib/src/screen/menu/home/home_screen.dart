@@ -5,6 +5,7 @@ import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/tab_view/all_product.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/tab_view/grid_product.dart';
 import 'package:kkn_siwalan/src/screen/menu/home/tab_view/tab_bar.dart';
+import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,7 +15,7 @@ import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_parser.dart';
 import 'package:kkn_siwalan/src/viewmodel/product_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/card_shimmer_widget.dart';
-import 'package:kkn_siwalan/src/screen/menu/home/product_category/home_category_product.dart';
+import 'package:kkn_siwalan/src/screen/menu/home/product_category/category_product_card_widget.dart';
 import 'package:kkn_siwalan/src/widget/loading_widget.dart';
 import 'package:kkn_siwalan/src/widget/read_only_form.dart';
 import 'package:kkn_siwalan/src/widget/shimmer_widget.dart';
@@ -32,14 +33,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabBarController;
+  final FirebaseAuthServices _authServices = FirebaseAuthServices();
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      Duration.zero,
-      () => context.read<AccountViewModel>().refreshUsers(),
-    );
+    if (_authServices.uidUsers.isNotEmpty) {
+      Future.delayed(
+        Duration.zero,
+        () => context.read<AccountViewModel>().refreshUsers(),
+      );
+    }
     final productParsers = Provider.of<ProductParsers>(context, listen: false);
     Future.delayed(Duration.zero, () {
       if (productParsers.listOfAllProduct.isEmpty) {
@@ -81,26 +85,37 @@ class _HomeScreenState extends State<HomeScreen>
                             Row(
                               children: [
                                 Text(
-                                 '${AppLocalizations.of(context)?.hello ?? 'Hello '} ',
+                                  '${AppLocalizations.of(context)?.hello ?? 'Hello '} ',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!
                                       .copyWith(fontSize: AdaptSize.pixel20),
                                 ),
                                 Expanded(
-                                  child: Consumer<AccountViewModel>(
-                                      builder: (context, value, child) {
-                                    return Text(
-                                      value.usermodel?.username ?? 'Loading..',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .copyWith(
-                                              fontSize: AdaptSize.pixel20),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    );
-                                  }),
+                                  child: _authServices.uidUsers.isNotEmpty
+                                      ? Consumer<AccountViewModel>(
+                                          builder: (context, value, child) {
+                                          return Text(
+                                            value.usermodel?.username ??
+                                                'Loading..',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                    fontSize:
+                                                        AdaptSize.pixel20),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          );
+                                        })
+                                      : Text(
+                                          'Guest',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge!
+                                              .copyWith(
+                                                  fontSize: AdaptSize.pixel20),
+                                        ),
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -439,8 +454,7 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
 
                             /// category product
-                            categoryProductWidget(
-                              context: context,
+                            CategoryProductCardWidget(
                               gridContent: productProvider.listGridCategory,
                             ),
                           ],

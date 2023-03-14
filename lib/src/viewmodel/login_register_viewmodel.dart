@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/services/firebase_auth.dart';
-import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -70,8 +69,6 @@ class LoginRegisterViewModel with ChangeNotifier {
       Future.delayed(Duration.zero, () {
         ResponseDialog.customResponseDialog(
           context: context,
-          height: AdaptSize.screenWidth / 1000 * 650,
-          width: AdaptSize.screenWidth / 1000 * 500,
           description: 'Register berhasil !',
           image: 'success',
         );
@@ -85,8 +82,6 @@ class LoginRegisterViewModel with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       ResponseDialog.customResponseDialog(
         context: context,
-        height: AdaptSize.screenWidth / 1000 * 650,
-        width: AdaptSize.screenWidth / 1000 * 800,
         description: e.message!,
         image: 'error',
       );
@@ -128,8 +123,6 @@ class LoginRegisterViewModel with ChangeNotifier {
           Future.delayed(Duration.zero, () {
             ResponseDialog.customResponseDialog(
               context: context,
-              height: AdaptSize.screenWidth / 1000 * 500,
-              width: AdaptSize.screenWidth / 1000 * 500,
               description: 'Login berhasil',
               image: 'success',
             );
@@ -146,12 +139,11 @@ class LoginRegisterViewModel with ChangeNotifier {
           Future.delayed(Duration.zero, () {
             ResponseDialog.customResponseDialog(
               context: context,
-              height: AdaptSize.screenWidth / 1000 * 700,
-              width: AdaptSize.screenWidth / 1000 * 800,
               description: 'Akun ini sudah terdaftar sebagai Akun Mitra',
               image: 'error',
             );
-            debugPrint('This account is already registered as a mitra account, waiting logout');
+            debugPrint(
+                'This account is already registered as a mitra account, waiting logout');
             FirebaseAuthServices().logOut();
             _loginLoading = false;
             context.loaderOverlay.hide();
@@ -162,8 +154,6 @@ class LoginRegisterViewModel with ChangeNotifier {
         Future.delayed(Duration.zero, () {
           ResponseDialog.customResponseDialog(
             context: context,
-            height: AdaptSize.screenWidth / 1000 * 700,
-            width: AdaptSize.screenWidth / 1000 * 800,
             description: e.message!,
             image: 'error',
           );
@@ -177,8 +167,6 @@ class LoginRegisterViewModel with ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       ResponseDialog.customResponseDialog(
         context: context,
-        height: AdaptSize.screenWidth / 1000 * 700,
-        width: AdaptSize.screenWidth / 1000 * 800,
         description: e.message!,
         image: 'error',
       );
@@ -187,6 +175,22 @@ class LoginRegisterViewModel with ChangeNotifier {
       _loginLoading = false;
       notifyListeners();
     }
+  }
+
+  /// guest sign in
+  void guestSignIn({
+    required BuildContext context,
+  }) async {
+    ResponseDialog.customResponseDialog(
+      context: context,
+      description: 'Anda login sebagai Tamu',
+      image: 'success',
+    );
+    debugPrint('login as guest success');
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      NavigasiViewModel().navigasiMenuScreen(context);
+    });
+    notifyListeners();
   }
 
   /// logout

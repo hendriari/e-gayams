@@ -89,20 +89,23 @@ Widget allProductView({
                   children: [
                     CachedNetworkImage(
                       imageUrl: listOfProduct[index].productImage,
-                      imageBuilder: (context, imageProvider) => Container(
-                        width: AdaptSize.screenWidth / 1000 * 380,
-                        margin: EdgeInsets.only(right: AdaptSize.pixel8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          boxShadow: [
-                            BoxShadow(
-                                color: MyColor.neutral700,
-                                blurRadius: 3,
-                                blurStyle: BlurStyle.solid),
-                          ],
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: imageProvider,
+                      imageBuilder: (context, imageProvider) => Hero(
+                        tag: listOfProduct[index].productImage,
+                        child: Container(
+                          width: AdaptSize.screenWidth / 1000 * 380,
+                          margin: EdgeInsets.only(right: AdaptSize.pixel8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: MyColor.neutral700,
+                                  blurRadius: 3,
+                                  blurStyle: BlurStyle.solid),
+                            ],
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: imageProvider,
+                            ),
                           ),
                         ),
                       ),

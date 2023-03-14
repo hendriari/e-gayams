@@ -10,7 +10,6 @@ import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 
 class AccountViewModel with ChangeNotifier {
-
   final FirebaseAuthServices _firebaseAuthServices = FirebaseAuthServices();
 
   UserModel? _userModel;
@@ -22,16 +21,6 @@ class AccountViewModel with ChangeNotifier {
     _userModel = userModels;
     notifyListeners();
   }
-
-
-  /// get user data from firestore
-  final Stream<DocumentSnapshot<Map<String, dynamic>>> _userData =
-  FirebaseFirestore.instance
-      .collection('userPhase2')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .snapshots();
-
-  get userData => _userData;
 
   /// -------------------------------------------------------------------------
 

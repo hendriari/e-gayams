@@ -8,6 +8,7 @@ import 'package:kkn_siwalan/src/viewmodel/login_register_viewmodel.dart';
 import 'package:kkn_siwalan/src/viewmodel/navigasi_viewmodel.dart';
 import 'package:kkn_siwalan/src/widget/button_widget.dart';
 import 'package:kkn_siwalan/src/widget/form_field_widget.dart';
+import 'package:kkn_siwalan/src/widget/line_dash_widget.dart';
 import 'package:kkn_siwalan/src/widget/loading_widget.dart';
 import 'package:kkn_siwalan/src/widget/rich_text_widget.dart';
 import 'package:provider/provider.dart';
@@ -181,6 +182,58 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                 }),
 
+                SizedBox(
+                  height: AdaptSize.pixel40,
+                ),
+
+                /// text or / atau
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    lineDash(),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: AdaptSize.pixel10, right: AdaptSize.pixel10),
+                      child: Text(
+                        'Atau',
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontSize: AdaptSize.pixel12,
+                              color: MyColor.neutral600,
+                            ),
+                      ),
+                    ),
+                    lineDash(),
+                  ],
+                ),
+
+                SizedBox(
+                  height: AdaptSize.pixel26,
+                ),
+
+                /// login as guest & login with google
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    /// login as guest
+                    anotherLogin(
+                        context: context,
+                        image: 'assets/icon3d/guest.png',
+                        textDesc: 'Login as Guest',
+                        onTap: () {
+                          context
+                              .read<LoginRegisterViewModel>()
+                              .guestSignIn(context: context);
+                        }),
+
+                    /// login with google
+                    anotherLogin(
+                      context: context,
+                      image: 'assets/icon3d/google.png',
+                      textDesc: 'Login with Google',
+                    ),
+                  ],
+                ),
+
                 const Spacer(),
 
                 /// button to register
@@ -211,4 +264,67 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+Widget anotherLogin({
+  required BuildContext context,
+  required String image,
+  required String textDesc,
+  Function()? onTap,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Column(
+      children: [
+        Container(
+          width: AdaptSize.screenWidth / 2.5,
+          margin: EdgeInsets.only(
+            bottom: AdaptSize.pixel6,
+            left: AdaptSize.pixel8,
+            right: AdaptSize.pixel8,
+          ),
+          padding: EdgeInsets.fromLTRB(
+            AdaptSize.pixel6,
+            AdaptSize.pixel4,
+            AdaptSize.pixel6,
+            AdaptSize.pixel4,
+          ),
+          decoration: BoxDecoration(
+              color: MyColor.neutral900,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: MyColor.neutral600,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: MyColor.neutral700,
+                  blurStyle: BlurStyle.solid,
+                  blurRadius: 3,
+                )
+              ]),
+          child: Image.asset(
+            image,
+            height: AdaptSize.pixel40 + AdaptSize.pixel6,
+            width: AdaptSize.pixel40 + AdaptSize.pixel6,
+          ),
+        ),
+        Text(
+          textDesc,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(fontSize: AdaptSize.pixel10),
+        )
+      ],
+    ),
+  );
+}
+
+Widget lineDash() {
+  return SizedBox(
+    width: AdaptSize.screenWidth / 2.6,
+    child: LineDashWidget(
+      color: MyColor.neutral600,
+    ),
+  );
 }

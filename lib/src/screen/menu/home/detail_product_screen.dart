@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kkn_siwalan/src/model/product_model.dart';
+import 'package:kkn_siwalan/src/model/user_model.dart';
 import 'package:kkn_siwalan/src/screen/error/network_aware.dart';
 import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
+import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
@@ -30,10 +32,14 @@ class DetailProductScreen extends StatefulWidget {
 }
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
+  final FirebaseAuthServices _authServices = FirebaseAuthServices();
+
   @override
   void initState() {
     super.initState();
-    context.read<AccountViewModel>().refreshUsers();
+    if (_authServices.uidUsers.isNotEmpty) {
+      context.read<AccountViewModel>().refreshUsers();
+    }
   }
 
   @override
@@ -140,54 +146,61 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       ),
 
                       /// wish list button
-                      Positioned(
-                        right: AdaptSize.pixel8,
-                        top: AdaptSize.pixel2,
-                        child: Consumer<ProductViewModel>(
-                            builder: (context, value, child) {
-                          return IconButton(
-                            onPressed: () async {
-                              var addWishListProduct = UserWishlistModel(
-                                productId: productByID.productId,
-                                uid: userData!.uid,
-                                productName: productByID.productName,
-                                productImage: productByID.productImage,
-                                productGridImage: productByID.productGridImage,
-                                productDescrtiption:
-                                    productByID.productDescrtiption,
-                                productLocation: productByID.productLocation,
-                                productBenefit: productByID.productBenefit,
-                                productPrice: productByID.productPrice,
-                                productCategory: productByID.productCategory,
-                                productRW: productByID.productRW,
-                                productRT: productByID.productRT,
-                                sellerName: productByID.sellerName,
-                                datePublished: productByID.datePublished,
-                              );
+                      _authServices.uidUsers.isNotEmpty
+                          ? Positioned(
+                              right: AdaptSize.pixel8,
+                              top: AdaptSize.pixel2,
+                              child: Consumer<ProductViewModel>(
+                                  builder: (context, value, child) {
+                                return IconButton(
+                                  onPressed: () async {
+                                    var addWishListProduct = UserWishlistModel(
+                                      productId: productByID.productId,
+                                      uid: userData!.uid,
+                                      productName: productByID.productName,
+                                      productImage: productByID.productImage,
+                                      productGridImage:
+                                          productByID.productGridImage,
+                                      productDescrtiption:
+                                          productByID.productDescrtiption,
+                                      productLocation:
+                                          productByID.productLocation,
+                                      productBenefit:
+                                          productByID.productBenefit,
+                                      productPrice: productByID.productPrice,
+                                      productCategory:
+                                          productByID.productCategory,
+                                      productRW: productByID.productRW,
+                                      productRT: productByID.productRT,
+                                      sellerName: productByID.sellerName,
+                                      datePublished: productByID.datePublished,
+                                    );
 
-                              value.addProductWishList(addWishListProduct);
-                              CustomDialogs().singleButtonDialog(
-                                  context: context,
-                                  image: 'oke',
-                                  title:
-                                      '${productByID.productName} berhasil ditambah ke Wishlist',
-                                  textButton1: 'Kembali',
-                                  textButton2: '',
-                                  singleButton: true,
-                                  singleOnpressed: () {
-                                    Navigator.pop(context);
+                                    value
+                                        .addProductWishList(addWishListProduct);
+                                    CustomDialogs().singleButtonDialog(
+                                        context: context,
+                                        image: 'oke',
+                                        title:
+                                            '${productByID.productName} berhasil ditambah ke Wishlist',
+                                        textButton1: 'Kembali',
+                                        textButton2: '',
+                                        singleButton: true,
+                                        singleOnpressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        bgSingleButton: MyColor.warning400);
+                                    debugPrint('add wishlist success');
                                   },
-                                  bgSingleButton: MyColor.warning400);
-                              debugPrint('add wishlist success');
-                            },
-                            icon: Icon(
-                              Icons.bookmark,
-                              size: AdaptSize.pixel26,
-                              color: MyColor.danger300,
-                            ),
-                          );
-                        }),
-                      ),
+                                  icon: Icon(
+                                    Icons.bookmark,
+                                    size: AdaptSize.pixel26,
+                                    color: MyColor.danger300,
+                                  ),
+                                );
+                              }),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
 
@@ -526,83 +539,20 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                         ],
                       ),
                     ),
+
+                    /// output
                     InkWell(
                       splashColor: MyColor.neutral900,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(10),
                       ),
                       onTap: () {
-                        modalBottomSheed(
-                          context: context,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: AdaptSize.pixel10,
-                              right: AdaptSize.pixel10,
-                              top: AdaptSize.pixel2,
-                              bottom: AdaptSize.pixel20,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox(
-                                  width: AdaptSize.pixel40,
-                                  child: Divider(
-                                    color: MyColor.neutral700,
-                                    thickness: 2,
-                                  ),
-                                ),
-
-                                Text(
-                                  'Chat akan diteruskan menggunakan aplikasi Whatsapp',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(fontSize: AdaptSize.pixel16),
-                                  textAlign: TextAlign.center,
-                                ),
-
-                                SizedBox(
-                                  height: AdaptSize.pixel14,
-                                ),
-
-                                /// button direct wa
-                                buttonWidget(
-                                  onPressed: () {
-                                    launchUrl(
-                                        Uri.parse(
-                                          'https://wa.me/+62${productByID.sellerContact}?text=Hai%20Kak%2C%20saya%20${userData!.username}%0AApakah%20produk%20*${productByID.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
-                                        ),
-                                        mode: LaunchMode.externalApplication);
-                                  },
-                                  backgroundColor: MyColor.warning400,
-                                  foregroundColor: MyColor.neutral900,
-                                  sizeWidth: AdaptSize.screenWidth / 2,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        'Buka WhatsApp',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge!
-                                            .copyWith(
-                                              fontSize: AdaptSize.pixel15,
-                                            ),
-                                      ),
-                                      Icon(
-                                        Icons.call,
-                                        size: AdaptSize.pixel20,
-                                        color: Colors.black,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        _authServices.uidUsers.isNotEmpty
+                            ? chatWhatSellers(
+                                productByID: productByID,
+                                userModel: userData!,
+                              )
+                            : null;
                       },
                       child: Container(
                         width: AdaptSize.screenWidth / 2,
@@ -621,7 +571,9 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           ],
                         ),
                         child: Text(
-                          'CHAT PENJUAL',
+                          _authServices.uidUsers.isNotEmpty
+                              ? 'CHAT PENJUAL'
+                              : 'SHARE PRODUCT',
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     color: MyColor.neutral900,
@@ -650,6 +602,81 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
       style: Theme.of(context).textTheme.titleLarge!.copyWith(
             fontSize: AdaptSize.pixel16,
           ),
+    );
+  }
+
+  Future chatWhatSellers({
+    required ProductModel productByID,
+    required UserModel userModel,
+  }) {
+    return modalBottomSheed(
+      context: context,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: AdaptSize.pixel10,
+          right: AdaptSize.pixel10,
+          top: AdaptSize.pixel2,
+          bottom: AdaptSize.pixel20,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: AdaptSize.pixel40,
+              child: Divider(
+                color: MyColor.neutral700,
+                thickness: 2,
+              ),
+            ),
+
+            Text(
+              'Chat akan diteruskan menggunakan aplikasi Whatsapp',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: AdaptSize.pixel16),
+              textAlign: TextAlign.center,
+            ),
+
+            SizedBox(
+              height: AdaptSize.pixel14,
+            ),
+
+            /// button direct wa
+            buttonWidget(
+              onPressed: () {
+                _authServices.uidUsers.isNotEmpty
+                    ? launchUrl(
+                        Uri.parse(
+                          'https://wa.me/+62${productByID.sellerContact}?text=Hai%20Kak%2C%20saya%20${userModel.username}%0AApakah%20produk%20*${productByID.productName}*%20tersedia%20%3F%0A%0A*_e-siwalan%20app_*',
+                        ),
+                        mode: LaunchMode.externalApplication)
+                    : null;
+              },
+              backgroundColor: MyColor.warning400,
+              foregroundColor: MyColor.neutral900,
+              sizeWidth: AdaptSize.screenWidth / 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Buka WhatsApp',
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontSize: AdaptSize.pixel15,
+                        ),
+                  ),
+                  Icon(
+                    Icons.call,
+                    size: AdaptSize.pixel20,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

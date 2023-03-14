@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/menu_viewmodel.dart';
+import 'package:kkn_siwalan/src/widget/response_dialog.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -17,10 +19,12 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  final FirebaseAuthServices _authServices = FirebaseAuthServices();
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero,(){
+    Future.delayed(Duration.zero, () {
       context.read<MenuViewModel>().menuIndex(index: widget.currentIndex);
     });
   }
@@ -66,7 +70,14 @@ class _MenuScreenState extends State<MenuScreen> {
             selectedLabelStyle: TextStyle(fontSize: AdaptSize.pixel12),
             unselectedFontSize: AdaptSize.pixel10,
             onTap: (index) {
-              value.onTapped = index;
+              if (_authServices.uidUsers.isNotEmpty) {
+                value.onTapped = index;
+              } else if (index == 1 || index == 2 || index == 3) {
+                ResponseDialog.witoutLoginDialog(
+                  context: context,
+                  onTapViewOnly: () => Navigator.pop(context),
+                );
+              }
             },
             currentIndex: value.currentIndex,
             items: const <BottomNavigationBarItem>[

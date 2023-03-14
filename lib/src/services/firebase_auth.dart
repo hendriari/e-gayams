@@ -6,6 +6,7 @@ import 'package:kkn_siwalan/src/model/user_model.dart';
 class FirebaseAuthServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String uidUsers = FirebaseAuth.instance.currentUser?.uid ?? '';
 
   /// register
   Future registerUser({

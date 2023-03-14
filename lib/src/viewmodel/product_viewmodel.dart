@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:kkn_siwalan/src/model/product_model.dart';
 
 class ProductViewModel with ChangeNotifier {
-
-
   /// ----------------------------------------------------------------------
   /// index dot indicator carousel home screen
   int _indexSlider = 0;
@@ -58,4 +56,28 @@ class ProductViewModel with ChangeNotifier {
   ];
 
   List<Map<String, dynamic>> filterByCategoryProduct = [];
+
+  ///-----------------------------------------------------------------------
+  /// animation in container list product category home screen
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  int _indexAnimation = 0;
+
+  int get indexAnimation => _indexAnimation;
+
+  void triggerAnimation({
+    required int index,
+  }) {
+    controller.forward();
+    _indexAnimation = index;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      controller.reverse();
+    });
+    notifyListeners();
+  }
+
+  void listen() {
+    notifyListeners();
+  }
 }

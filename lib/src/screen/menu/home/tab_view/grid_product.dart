@@ -38,7 +38,7 @@ Widget gridProduct({
               ),
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onLongPress: (){
+                  onLongPress: () {
                     longPressDetailProduct(
                       context: context,
                       productName: listKelurahan[index].productName,
@@ -46,14 +46,14 @@ Widget gridProduct({
                       ranting: 4.9,
                       imageProduct: listKelurahan[index].productImage,
                       availablePayment: 'cod',
-                      productPrice:  listKelurahan[index].productPrice,
+                      productPrice: listKelurahan[index].productPrice,
                       onPressedButton: () {},
                       addWishlistAction: () {
                         CustomDialogs().singleButtonDialog(
                           context: context,
                           image: 'oke',
                           title:
-                          'Tambahkan ${listKelurahan[index].productName} ke Wishlist ?',
+                              'Tambahkan ${listKelurahan[index].productName} ke Wishlist ?',
                           textButton1: 'Kembali',
                           textButton2: 'Simpan',
                           onPress1: () {
@@ -95,11 +95,14 @@ Widget gridProduct({
                           height: AdaptSize.screenWidth / 1000 * 400,
                           child: CachedNetworkImage(
                             imageUrl: listKelurahan[index].productImage,
-                            imageBuilder: (context, imageProvider) => ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
+                            imageBuilder: (context, imageProvider) => Hero(
+                              tag: listKelurahan[index].productImage,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                             placeholder: (context, url) => shimmerLoading(

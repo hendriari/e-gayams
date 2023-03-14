@@ -107,9 +107,13 @@ class NavigasiViewModel {
   }) {
     Navigator.push(
       context,
-      CupertinoPageRoute(
-        builder: (context) => DetailProductScreen(
-          productID: productId,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondAnimation) =>
+            DetailProductScreen(productID: productId),
+        transitionsBuilder: (context, animation, secondAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
         ),
       ),
     );
@@ -165,5 +169,20 @@ class NavigasiViewModel {
         ),
       ),
     );
+  }
+
+  /// navigate guest logout
+  void navigateGuestLogout(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondAnimation) =>
+              const LoginScreen(),
+          transitionsBuilder: (context, animation, secondAnimation, child) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        ),
+        (route) => false);
   }
 }

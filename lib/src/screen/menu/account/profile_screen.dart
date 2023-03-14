@@ -4,6 +4,7 @@ import 'package:kkn_siwalan/src/screen/error/no_connection_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/about_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/change_password_screen.dart';
 import 'package:kkn_siwalan/src/screen/menu/account/edit_profile.dart';
+import 'package:kkn_siwalan/src/services/firebase_auth.dart';
 import 'package:kkn_siwalan/src/utils/adapt_size.dart';
 import 'package:kkn_siwalan/src/utils/colors.dart';
 import 'package:kkn_siwalan/src/viewmodel/account_viewmodel.dart';
@@ -21,10 +22,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final FirebaseAuthServices _authServices = FirebaseAuthServices();
+
   @override
   void initState() {
     super.initState();
-    context.read<AccountViewModel>().refreshUsers();
+    if (_authServices.uidUsers.isNotEmpty) {
+      context.read<AccountViewModel>().refreshUsers();
+    }
   }
 
   @override
@@ -92,30 +97,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Consumer<AccountViewModel>(
-                              builder: (context, value, child) {
-                            return Text(
-                              value.usermodel?.username ?? 'Loading..',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontSize: AdaptSize.pixel20,
-                                  ),
-                            );
-                          }),
-                          Consumer<AccountViewModel>(
-                              builder: (context, value, child) {
-                            return Text(
-                              value.usermodel?.email ?? 'Loading..',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge!
-                                  .copyWith(
-                                    fontSize: AdaptSize.pixel16,
-                                  ),
-                            );
-                          })
+                          _authServices.uidUsers.isNotEmpty
+                              ? Consumer<AccountViewModel>(
+                                  builder: (context, value, child) {
+                                  return Text(
+                                    value.usermodel?.username ?? 'Loading..',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontSize: AdaptSize.pixel20,
+                                        ),
+                                  );
+                                })
+                              : Text(
+                                  'Guest',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        fontSize: AdaptSize.pixel20,
+                                      ),
+                                ),
+
+                          /// email
+                          _authServices.uidUsers.isNotEmpty
+                              ? Consumer<AccountViewModel>(
+                                  builder: (context, value, child) {
+                                  return Text(
+                                    value.usermodel?.email ?? 'Loading..',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge!
+                                        .copyWith(
+                                          fontSize: AdaptSize.pixel16,
+                                        ),
+                                  );
+                                })
+                              : Text(
+                                  'Semoga Bahagia Selalu',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .copyWith(
+                                        fontSize: AdaptSize.pixel16,
+                                      ),
+                                ),
                         ],
                       ),
                     )
@@ -129,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               /// menu
               Container(
-                height: AdaptSize.screenWidth / 1000 * 410,
+                height: AdaptSize.screenWidth / 1000 * 450,
                 width: double.infinity,
                 padding: EdgeInsets.all(AdaptSize.pixel8),
                 decoration: BoxDecoration(
